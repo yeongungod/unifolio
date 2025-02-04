@@ -1,19 +1,19 @@
 import { InlineCode } from "@/once-ui/components";
 
 const person = {
-  firstName: "Selene",
-  lastName: "Yu",
+  firstName: "Yeong Un",
+  lastName: "Park",
   get name() {
     return `${this.firstName} ${this.lastName}`;
   },
-  role: "Design Engineer",
+  role: "Sound Designer",
   avatar: "/images/avatar.jpg",
-  location: "Asia/Jakarta", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
-  languages: ["English", "Bahasa"], // optional: Leave the array empty if you don't want to display languages
+  location: "", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
+  languages: [""], // optional: Leave the array empty if you don't want to display languages
 };
 
 const newsletter = {
-  display: true,
+  display: false,
   title: <>Subscribe to {person.firstName}'s Newsletter</>,
   description: (
     <>
@@ -32,15 +32,15 @@ const social = [
     link: "https://github.com/once-ui-system/nextjs-starter",
   },
   {
-    name: "LinkedIn",
+    name: "Youtube",
     icon: "linkedin",
     link: "https://www.linkedin.com/company/once-ui/",
   },
-  {
-    name: "X",
-    icon: "x",
-    link: "",
-  },
+  // {
+  //   name: "X",
+  //   icon: "x",
+  //   link: "",
+  // },
   {
     name: "Email",
     icon: "email",
@@ -52,11 +52,11 @@ const home = {
   label: "Home",
   title: `${person.name}'s Portfolio`,
   description: `Portfolio website showcasing my work as a ${person.role}`,
-  headline: <>Design engineer and builder</>,
+  headline: <>사운드 디자이너 박영운</>,
   subline: (
     <>
-      I'm Selene, a design engineer at <InlineCode>FLY</InlineCode>, where I craft intuitive
-      <br /> user experiences. After hours, I build my own projects.
+      간단한 소개와 <InlineCode>기술!</InlineCode>, 적을게 많다
+      <br /> 뭔가 적어야한다!
     </>
   ),
 };
@@ -73,7 +73,7 @@ const about = {
     display: true,
   },
   calendar: {
-    display: true,
+    display: false,
     link: "https://cal.com",
   },
   intro: {
@@ -92,9 +92,9 @@ const about = {
     title: "Work Experience",
     experiences: [
       {
-        company: "FLY",
-        timeframe: "2022 - Present",
-        role: "Senior Design Engineer",
+        company: "사운드 디자이너",
+        timeframe: "2018 - Present",
+        role: "프리랜서",
         achievements: [
           <>
             Redesigned the UI/UX for the FLY platform, resulting in a 20% increase in user
@@ -116,17 +116,15 @@ const about = {
         ],
       },
       {
-        company: "Creativ3",
-        timeframe: "2018 - 2022",
-        role: "Lead Designer",
+        company: "레이븐어스",
+        timeframe: "2020 - 2020",
+        role: "콘텐츠 제작팀 / 인턴",
         achievements: [
           <>
-            Developed a design system that unified the brand across multiple platforms, improving
-            design consistency by 40%.
+            쎄믹스 편집등 뭐시기 해서 몇 편의 강읠르 성공적으로 납품했습니다.
           </>,
           <>
-            Led a cross-functional team to launch a new product line, contributing to a 15% increase
-            in overall company revenue.
+            큐베이스 납입을 해서 계약을 따냈습니다(성과  몇퍼센트 어케 적지, 아니면 몇 대 납품했는지).
           </>,
         ],
         images: [],
@@ -138,12 +136,12 @@ const about = {
     title: "Studies",
     institutions: [
       {
-        name: "University of Jakarta",
-        description: <>Studied software engineering.</>,
+        name: "서울예술대학교 (2019-2024)",
+        description: <>방송영상과 음향전공으로 사운드를 공부했습니다.</>,
       },
       {
-        name: "Build the Future",
-        description: <>Studied online marketing and personal branding.</>,
+        name: "용문고등학교 (2016-2019",
+        description: <>농구를 재밌게 했습니다.</>,
       },
     ],
   },
@@ -152,7 +150,7 @@ const about = {
     title: "Technical skills",
     skills: [
       {
-        title: "Figma",
+        title: "pro tools",
         description: <>Able to prototype in Figma with Once UI with unnatural speed.</>,
         // optional: leave the array empty if you don't want to display images
         images: [
@@ -171,7 +169,46 @@ const about = {
         ],
       },
       {
-        title: "Next.js",
+        title: "cubase",
+        description: <>Building next gen apps with Next.js + Once UI + Supabase.</>,
+        // optional: leave the array empty if you don't want to display images
+        images: [
+          {
+            src: "/images/projects/project-01/cover-04.jpg",
+            alt: "Project image",
+            width: 16,
+            height: 9,
+          },
+        ],
+      },
+      {
+        title: "ableton",
+        description: <>Building next gen apps with Next.js + Once UI + Supabase.</>,
+        // optional: leave the array empty if you don't want to display images
+        images: [
+          {
+            src: "/images/projects/project-01/cover-04.jpg",
+            alt: "Project image",
+            width: 16,
+            height: 9,
+          },
+        ],
+      },
+      {
+        title: "adobe",
+        description: <>Building next gen apps with Next.js + Once UI + Supabase.</>,
+        // optional: leave the array empty if you don't want to display images
+        images: [
+          {
+            src: "/images/projects/project-01/cover-04.jpg",
+            alt: "Project image",
+            width: 16,
+            height: 9,
+          },
+        ],
+      },
+      {
+        title: "thrid party plugin",
         description: <>Building next gen apps with Next.js + Once UI + Supabase.</>,
         // optional: leave the array empty if you don't want to display images
         images: [
