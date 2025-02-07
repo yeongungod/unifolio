@@ -8,8 +8,8 @@ const person = {
   },
   role: "Sound Designer",
   avatar: "/images/avatar.jpg",
-  location: "", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
-  languages: [""], // optional: Leave the array empty if you don't want to display languages
+  location: "Asia/Seoul", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
+  languages: [], // optional: Leave the array empty if you don't want to display languages
 };
 
 const newsletter = {
@@ -33,7 +33,7 @@ const social = [
   },
   {
     name: "Youtube",
-    icon: "linkedin",
+    icon: "youtube",
     link: "https://www.linkedin.com/company/once-ui/",
   },
   // {
@@ -81,9 +81,7 @@ const about = {
     title: "Introduction",
     description: (
       <>
-        Selene is a Jakarta-based design engineer with a passion for transforming complex challenges
-        into simple, elegant design solutions. Her work spans digital interfaces, interactive
-        experiences, and the convergence of design and technology.
+        자기소개 들어가자.
       </>
     ),
   },
