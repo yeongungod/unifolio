@@ -1,6 +1,33 @@
 ---
-title: "Simple portfolio creator built with Once UI and Next.js"
-publishedAt: "2024-04-08"
+title: "반응형 YouTube 영상"
+publishedAt: "2025-02-08"
+summary: "이 문서에서는 반응형 YouTube 영상을 MDX에 삽입하는 방법을 테스트합니다."
 images:
-  - "/images/projects/project-01/video-01.mp4"
+  - "/images/projects/project-01/cover-01.jpg"
+  - "/images/projects/project-01/cover-02.jpg"
+  - "/images/projects/project-01/cover-03.jpg"
+  - "/images/projects/project-01/cover-04.jpg"
+link: "https://youtu.be/xUKudCftBCw"
 ---
+
+# 반응형 YouTube 영상
+
+아래는 반응형 스타일이 적용된 YouTube 영상입니다.
+
+<div style={{ position: "relative", paddingBottom: "56.25%", height: 0, overflow: "hidden" }}>
+  <iframe
+    src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+    style={{
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+    }}
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+  ></iframe>
+</div>
+
+위처럼 **div로 감싸서 스타일을 적용하면, 반응형 YouTube 영상이 자동으로 조정됨!**
