@@ -29,12 +29,12 @@ const social = [
   {
     name: "GitHub",
     icon: "github",
-    link: "https://github.com/once-ui-system/nextjs-starter",
+    link: "https://github.com/yeongungod/unifolio",
   },
   {
     name: "Youtube",
     icon: "youtube",
-    link: "https://www.linkedin.com/company/once-ui/",
+    link: "https://www.youtube.com/@unisound0205",
   },
   // {
   //   name: "X",
@@ -44,19 +44,20 @@ const social = [
   {
     name: "Email",
     icon: "email",
-    link: "mailto:example@gmail.com",
+    link: "mailto:pyu0205@naver.com",
   },
 ];
 
 const home = {
   label: "Home",
-  title: `${person.name}'s Portfolio`,
+  title: `사운드 디자니어 박영운`,
   description: `Portfolio website showcasing my work as a ${person.role}`,
   headline: <>사운드 디자이너 박영운</>,
   subline: (
     <>
-      간단한 소개와 <InlineCode>기술!</InlineCode>, 적을게 많다
-      <br /> 뭔가 적어야한다!
+      게임에 새로운 세계와 경험을 주고 싶은 사운드 디자이너 박영운입니다.
+      <br /><InlineCode>UAD</InlineCode>, <InlineCode>Waves</InlineCode>, <InlineCode>Izotope</InlineCode> 등의 플러그인을 사용하며
+      <br />메인 DAW로는 <InlineCode>Pro Tools</InlineCode>, <InlineCode>Cubase</InlineCode>를 사용하고 있습니다.
     </>
   ),
 };
@@ -81,7 +82,7 @@ const about = {
     title: "Introduction",
     description: (
       <>
-        자기소개 들어가자.
+      게임에 새로운 세계와 경험을 주고 싶은 사운드 디자이너 박영운입니다.
       </>
     ),
   },
@@ -138,17 +139,44 @@ const about = {
         description: <>방송영상과 음향전공으로 사운드를 공부했습니다.</>,
       },
       {
-        name: "용문고등학교 (2016-2019",
+        name: "용문고등학교 (2016-2019)",
         description: <>농구를 재밌게 했습니다.</>,
       },
     ],
   },
+
+    certificate: {
+      display: true, // set to false to hide this section
+      title: "보유 자격증",
+      experiences: [
+        {
+          company: "Pro Tools 110",
+          timeframe: "2025",
+          role: "Avid",
+        },
+        {
+          company: "Pro Tools 101",
+          timeframe: "2023",
+          role: "Avid",
+        },
+        {
+          company: "ACA Premiere CC 2015",
+          timeframe: "2020",
+          role: "Adobe",
+        },
+        {
+          company: "ACA Illustrator CC 2015",
+          timeframe: "2020",
+          role: "Avobe",
+        },
+      ],
+    },
   technical: {
     display: true, // set to false to hide this section
-    title: "Technical skills",
+    title: "보유 기술",
     skills: [
       {
-        title: "pro tools",
+        title: "Pro Tools",
         description: <>Able to prototype in Figma with Once UI with unnatural speed.</>,
         // optional: leave the array empty if you don't want to display images
         images: [
@@ -167,7 +195,7 @@ const about = {
         ],
       },
       {
-        title: "cubase",
+        title: "Cubase",
         description: <>Building next gen apps with Next.js + Once UI + Supabase.</>,
         // optional: leave the array empty if you don't want to display images
         images: [
@@ -180,7 +208,7 @@ const about = {
         ],
       },
       {
-        title: "ableton",
+        title: "Ableton Live",
         description: <>Building next gen apps with Next.js + Once UI + Supabase.</>,
         // optional: leave the array empty if you don't want to display images
         images: [
@@ -193,7 +221,7 @@ const about = {
         ],
       },
       {
-        title: "adobe",
+        title: "Adobe",
         description: <>Building next gen apps with Next.js + Once UI + Supabase.</>,
         // optional: leave the array empty if you don't want to display images
         images: [
@@ -206,8 +234,8 @@ const about = {
         ],
       },
       {
-        title: "thrid party plugin",
-        description: <>Building next gen apps with Next.js + Once UI + Supabase.</>,
+        title: "Thrid-Party Plug-In",
+        description: <>UAD, Waves, Izotope 등 다양한 플러그인을 사용하고 있습니다.</>,
         // optional: leave the array empty if you don't want to display images
         images: [
           {
