@@ -96,13 +96,21 @@ const about = {
         role: "프리랜서",
         achievements: [
           <>
-            Redesigned the UI/UX for the FLY platform, resulting in a 20% increase in user
-            engagement and 30% faster load times.
+            독립영화 '침묵' 사운드디자인/믹싱 수행 - 제18회 대한민국대학영화제(최우수작품상, 여자연기상)
           </>,
           <>
-            Spearheaded the integration of AI tools into design workflows, enabling designers to
-            iterate 50% faster.
+            '대한민국 해군', '한국연예제작자협회' 외 약 40여편 웹 콘텐츠 동시녹음/사운드디자인/믹싱 수행
+         </>,
+         <>
+            'RAPBEAT', 'Deepshower, 펀치넬로’, '곽태풍' - 라이브, M/V 녹음/사운드디자인/믹싱/마스터링 수행
+        </>,
+          <>
+            '수련수련', '마젠타', '해나', '고라니율' 팬미팅 사운드 오퍼레이팅 수행
           </>,
+          <>
+            그 외 다수
+        </>,
+
         ],
         images: [
           // optional: leave the array empty if you don't want to display images
@@ -116,14 +124,14 @@ const about = {
       },
       {
         company: "레이븐어스",
-        timeframe: "2020 - 2020",
+        timeframe: "2023 - 2023",
         role: "콘텐츠 제작팀 / 인턴",
         achievements: [
           <>
-            쎄믹스 편집등 뭐시기 해서 몇 편의 강읠르 성공적으로 납품했습니다.
+            SEMICS 기업의 강의 영상을 편집하여 총 13편을 납품하였습니다.
           </>,
           <>
-            큐베이스 납입을 해서 계약을 따냈습니다(성과  몇퍼센트 어케 적지, 아니면 몇 대 납품했는지).
+            입찰에 성공하여 한양대학교 ERICA캠퍼스에 Cubase Elements 12 30개, Novation Launchkey2 5 MK3 5대, Serum 2개를 성공적으로 납품한 성과가 있습니다.
           </>,
         ],
         images: [],
@@ -140,7 +148,7 @@ const about = {
       },
       {
         name: "용문고등학교 (2016-2019)",
-        description: <>농구를 재밌게 했습니다.</>,
+        description: <>이공계를 졸업했습니다.</>,
       },
     ],
   },
@@ -177,74 +185,74 @@ const about = {
     skills: [
       {
         title: "Pro Tools",
-        description: <>Able to prototype in Figma with Once UI with unnatural speed.</>,
+        description: <>메인으로 사용하는 DAW로, 믹싱/마스터링에 주로 사용합니다.</>,
         // optional: leave the array empty if you don't want to display images
-        images: [
-          {
-            src: "/images/projects/project-01/cover-02.jpg",
-            alt: "Project image",
-            width: 16,
-            height: 9,
-          },
-          {
-            src: "/images/projects/project-01/cover-03.jpg",
-            alt: "Project image",
-            width: 16,
-            height: 9,
-          },
-        ],
+        // images: [
+        //   {
+        //     src: "/images/projects/project-01/cover-02.jpg",
+        //     alt: "Project image",
+        //     width: 16,
+        //     height: 9,
+        //   },
+        //   {
+        //     src: "/images/projects/project-01/cover-03.jpg",
+        //     alt: "Project image",
+        //     width: 16,
+        //     height: 9,
+        //   },
+        // ],
       },
       {
         title: "Cubase",
-        description: <>Building next gen apps with Next.js + Once UI + Supabase.</>,
+        description: <>서브로 사용하는 DAW로, 사운드 디자인에 주로 사용합니다.</>,
         // optional: leave the array empty if you don't want to display images
-        images: [
-          {
-            src: "/images/projects/project-01/cover-04.jpg",
-            alt: "Project image",
-            width: 16,
-            height: 9,
-          },
-        ],
+        // images: [
+        //   {
+        //     src: "/images/projects/project-01/cover-04.jpg",
+        //     alt: "Project image",
+        //     width: 16,
+        //     height: 9,
+        //   },
+        // ],
       },
       {
         title: "Ableton Live",
-        description: <>Building next gen apps with Next.js + Once UI + Supabase.</>,
+        description: <>배우고 있는 DAW로, 아직 미숙합니다.</>,
         // optional: leave the array empty if you don't want to display images
-        images: [
-          {
-            src: "/images/projects/project-01/cover-04.jpg",
-            alt: "Project image",
-            width: 16,
-            height: 9,
-          },
-        ],
-      },
-      {
-        title: "Adobe",
-        description: <>Building next gen apps with Next.js + Once UI + Supabase.</>,
-        // optional: leave the array empty if you don't want to display images
-        images: [
-          {
-            src: "/images/projects/project-01/cover-04.jpg",
-            alt: "Project image",
-            width: 16,
-            height: 9,
-          },
-        ],
+        // images: [
+        //   {
+        //     src: "/images/projects/project-01/cover-04.jpg",
+        //     alt: "Project image",
+        //     width: 16,
+        //     height: 9,
+        //   },
+        // ],
       },
       {
         title: "Thrid-Party Plug-In",
         description: <>UAD, Waves, Izotope 등 다양한 플러그인을 사용하고 있습니다.</>,
         // optional: leave the array empty if you don't want to display images
-        images: [
-          {
-            src: "/images/projects/project-01/cover-04.jpg",
-            alt: "Project image",
-            width: 16,
-            height: 9,
-          },
-        ],
+        // images: [
+        //   {
+        //     src: "/images/projects/project-01/cover-04.jpg",
+        //     alt: "Project image",
+        //     width: 16,
+        //     height: 9,
+        //   },
+        // ],
+      },
+      {
+        title: "Adobe",
+        description: <>사진, 영상 편집등에 사용합니다.</>,
+        // optional: leave the array empty if you don't want to display images
+        // images: [
+        //   {
+        //     src: "/images/projects/project-01/cover-04.jpg",
+        //     alt: "Project image",
+        //     width: 16,
+        //     height: 9,
+        //   },
+        // ],
       },
     ],
   },
