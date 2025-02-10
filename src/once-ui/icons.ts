@@ -31,6 +31,8 @@ import {
   PiImageDuotone,
 } from "react-icons/pi";
 
+import { RiNotionFill } from "react-icons/ri";
+
 import { FaDiscord, FaGithub, FaLinkedin, FaXTwitter, FaYoutube } from "react-icons/fa6";
 
 export const iconLibrary: Record<string, IconType> = {
@@ -64,4 +66,5 @@ export const iconLibrary: Record<string, IconType> = {
   clipboard: HiClipboard,
   arrowUpRightFromSquare: HiArrowTopRightOnSquare,
   youtube: FaYoutube,
+  notion: RiNotionFill,
 };

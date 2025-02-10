@@ -27,9 +27,9 @@ const social = [
   // Links are automatically displayed.
   // Import new icons in /once-ui/icons.ts
   {
-    name: "GitHub",
-    icon: "github",
-    link: "https://github.com/yeongungod/unifolio",
+    name: "Notion",
+    icon: "notion",
+    link: "https://yeongungod.notion.site",
   },
   {
     name: "Youtube",
@@ -79,7 +79,7 @@ const about = {
   },
   intro: {
     display: true,
-    title: "Introduction",
+    title: "자기소개",
     description: (
       <>
       게임에 새로운 세계와 경험을 주고 싶은 사운드 디자이너 박영운입니다.
@@ -88,7 +88,7 @@ const about = {
   },
   work: {
     display: true, // set to false to hide this section
-    title: "Work Experience",
+    title: "경력사항",
     experiences: [
       {
         company: "사운드 디자이너",
@@ -140,7 +140,7 @@ const about = {
   },
   studies: {
     display: true, // set to false to hide this section
-    title: "Studies",
+    title: "학력사항",
     institutions: [
       {
         name: "서울예술대학교 (2019-2024)",
@@ -155,7 +155,7 @@ const about = {
 
     certificate: {
       display: true, // set to false to hide this section
-      title: "보유 자격증",
+      title: "자격증",
       experiences: [
         {
           company: "Pro Tools 110",
