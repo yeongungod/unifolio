@@ -12,12 +12,12 @@ export default function NotionLink() {
         borderTop: "1px solid #eaeaea",
       }}
     >
-      <Text variant="body-default-m">
-        더 자세한 정보는 노션 포트폴리오에 정리돼있습니다!
+      <Text variant="heading-strong-l">
+        자세한 내용은 Notion에서 확인 가능합니다.
       </Text>
       <Link href="https://www.notion.so/your-portfolio-link" passHref>
-        <Button as="a" target="_blank" rel="noopener noreferrer" variant="primary">
-          노션 포트폴리오 보러가기
+        <Button target="_blank" rel="noopener noreferrer" variant="primary">
+          Notion 보러가기
         </Button>
       </Link>
     </Column>
