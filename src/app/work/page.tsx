@@ -80,7 +80,7 @@ export default function Work() {
          자세한 내용은 Notion에서 확인 가능합니다.
         </Text>
         <Link href="https://www.notion.so/your-portfolio-link" passHref>
-          <Button as="a" target="_blank" rel="noopener noreferrer" variant="primary">
+          <Button target="_blank" rel="noopener noreferrer" variant="primary">
             Notion 보러가기
           </Button>
         </Link>

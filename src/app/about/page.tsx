@@ -387,7 +387,6 @@ export default function About() {
             </Text>
             <Link href="https://yeongungod.notion.site" passHref>
               <Button
-                as="a"
                 target="_blank"
                 rel="noopener
                 noreferrer"
