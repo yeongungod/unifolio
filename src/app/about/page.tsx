@@ -14,6 +14,7 @@ import { baseURL } from "@/app/resources";
 import TableOfContents from "@/components/about/TableOfContents";
 import styles from "@/components/about/about.module.scss";
 import { person, about, social } from "@/app/resources/content";
+import Link from "next/link"; // ✅ Notion 링크를 위해 추가
 
 export async function generateMetadata() {
   const title = about.title;
@@ -370,6 +371,27 @@ export default function About() {
               </Column>
             </>
           )}
+           {/* ──────────────────────────────────────────────── */}
+          {/* Notion 링크 섹션 추가 */}
+          <Column
+            horizontal="center"
+            gap="m"
+            style={{
+              marginTop: "2rem",
+              paddingTop: "2rem",
+              borderTop: "1px solid #eaeaea",
+            }}
+          >
+            <Text variant="heading-strong-l">
+              더 자세한 정보는 노션 포트폴리오에 정리돼있습니다!
+            </Text>
+            <Link href="https://yeongungod.notion.site" passHref>
+              <Button as="a" target="_blank" rel="noopener noreferrer" variant="primary">
+                노션 포트폴리오 보러가기
+              </Button>
+            </Link>
+          </Column>
+          {/* ──────────────────────────────────────────────── */}
         </Column>
       </Flex>
     </Column>
