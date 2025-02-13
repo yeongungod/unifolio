@@ -15,7 +15,7 @@ export default function NotionLink() {
       <Text variant="heading-strong-l">
         자세한 내용은 Notion에서 확인 가능합니다.
       </Text>
-      <Link href="https://www.notion.so/your-portfolio-link" passHref>
+      <Link href="https://yeongungod.notion.site" passHref>
         <Button target="_blank" rel="noopener noreferrer" variant="primary">
           Notion 보러가기
         </Button>
