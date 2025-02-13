@@ -1,8 +1,10 @@
 import { getPosts } from "@/app/utils/utils";
-import { Column } from "@/once-ui/components";
+import { Button, Column, Text } from "@/once-ui/components";
 import { Projects } from "@/components/work/Projects";
 import { baseURL } from "@/app/resources";
 import { person, work } from "@/app/resources/content";
+import Link from "next/link"; // Notion 링크를 위해 추가
+
 
 export async function generateMetadata() {
   const title = work.title;
@@ -64,6 +66,26 @@ export default function Work() {
         }}
       />
       <Projects />
+            {/* ───────── Notion 링크 섹션 추가 ───────── */}
+            <Column
+        horizontal="center"
+        gap="m"
+        style={{
+          marginTop: "2rem",
+          paddingTop: "2rem",
+          borderTop: "1px solid #eaeaea",
+        }}
+      >
+        <Text variant="heading-strong-l">
+         자세한 내용은 Notion에서 확인 가능합니다.
+        </Text>
+        <Link href="https://www.notion.so/your-portfolio-link" passHref>
+          <Button as="a" target="_blank" rel="noopener noreferrer" variant="primary">
+            Notion 보러가기
+          </Button>
+        </Link>
+      </Column>
+      {/* ───────── Notion 링크 섹션 끝 ───────── */}
     </Column>
   );
 }

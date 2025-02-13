@@ -7,6 +7,8 @@ import { baseURL, routes } from "@/app/resources";
 import { home, about, person, newsletter } from "@/app/resources/content";
 import { Mailchimp } from "@/components";
 import { Posts } from "@/components/blog/Posts";
+import Link from "next/link"; // Notion 링크를 위해 추가
+
 
 export async function generateMetadata() {
   const title = home.title;
@@ -114,6 +116,26 @@ export default function Home() {
       )}
       <Projects range={[2]} />
       {newsletter.display && <Mailchimp newsletter={newsletter} />}
+        {/* ───────── Notion 링크 섹션 추가 ───────── */}
+        <Column
+        horizontal="center"
+        gap="m"
+        style={{
+          marginTop: "2rem",
+          paddingTop: "2rem",
+          borderTop: "1px solid #eaeaea",
+        }}
+      >
+        <Text variant="heading-strong-l">
+         자세한 내용은 Notion에서 확인 가능합니다.
+        </Text>
+        <Link href="https://www.notion.so/your-portfolio-link" passHref>
+          <Button as="a" target="_blank" rel="noopener noreferrer" variant="primary">
+            Notion 보러가기
+          </Button>
+        </Link>
+      </Column>
+      {/* ───────── Notion 링크 섹션 끝 ───────── */}
     </Column>
   );
 }
