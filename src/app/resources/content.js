@@ -50,8 +50,8 @@ const social = [
 
 const home = {
   label: "Home",
-  title: `사운드 디자니어 박영운`,
-  description: `Portfolio website showcasing my work as a ${person.role}`,
+  title: `박영운 포트폴리오`,
+  description: `게임에 새로운 세계와 경험을 주고 싶은 사운드 디자이너 박영운입니다.`,
   headline: <>사운드 디자이너 박영운</>,
   subline: (
     <>
@@ -64,8 +64,8 @@ const home = {
 
 const about = {
   label: "About",
-  title: "About me",
-  description: `Meet ${person.name}, ${person.role} from ${person.location}`,
+  title: "박영운 포트폴리오",
+  description: `게임에 새로운 세계와 경험을 주고 싶은 사운드 디자이너 박영운입니다.`,
   tableOfContent: {
     display: true,
     subItems: false,
@@ -215,19 +215,19 @@ const about = {
         //   },
         // ],
       },
-      {
-        title: "Ableton Live",
-        description: <>배우고 있는 DAW로, 아직 미숙합니다.</>,
-        // optional: leave the array empty if you don't want to display images
-        // images: [
-        //   {
-        //     src: "/images/projects/project-01/cover-04.jpg",
-        //     alt: "Project image",
-        //     width: 16,
-        //     height: 9,
-        //   },
-        // ],
-      },
+      // {
+      //   title: "Ableton Live",
+      //   description: <>배우고 있는 DAW로, 아직 미숙합니다.</>,
+      //   // optional: leave the array empty if you don't want to display images
+      //   // images: [
+      //   //   {
+      //   //     src: "/images/projects/project-01/cover-04.jpg",
+      //   //     alt: "Project image",
+      //   //     width: 16,
+      //   //     height: 9,
+      //   //   },
+      //   // ],
+      // },
       {
         title: "Thrid-Party Plug-In",
         description: <>UAD, Waves, Izotope 등 다양한 플러그인을 사용하고 있습니다.</>,
@@ -268,8 +268,8 @@ const blog = {
 
 const work = {
   label: "Work",
-  title: "My projects",
-  description: `Design and dev projects by ${person.name}`,
+  title: "박영운 포트폴리오",
+  description: `게임에 새로운 세계와 경험을 주고 싶은 사운드 디자이너 박영운입니다.`,
   // Create new project pages by adding a new .mdx file to app/blog/posts
   // All projects will be listed on the /home and /work routes
 };
