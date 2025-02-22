@@ -18,6 +18,7 @@ type Metadata = {
   tag?: string;
   team: Team[];
   link?: string;
+  order?: number;
 };
 
 import { notFound } from 'next/navigation';
@@ -47,6 +48,7 @@ function readMDXFile(filePath: string) {
     tag: data.tag || [],
     team: data.team || [],
     link: data.link || "",
+    order: data.order || 0,
   };
 
   return { metadata, content };
@@ -66,7 +68,11 @@ function getMDXData(dir: string) {
   });
 }
 
+// postsDir에서 MDX 데이터를 읽어오고, order 값을 기준으로 오름차순 정렬하여 반환
 export function getPosts(customPath = ["", "", "", ""]) {
   const postsDir = path.join(process.cwd(), ...customPath);
-  return getMDXData(postsDir);
+  const posts = getMDXData(postsDir);
+
+  // order 필드 기준 오름차순 정렬 (order가 없으면 0으로 간주)
+  return posts.sort((a, b) => (b.metadata.order || 0) - (a.metadata.order || 0));
 }
