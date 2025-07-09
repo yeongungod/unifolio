@@ -2,7 +2,7 @@
     "redirects": [
       {
         "source": "/",
-        "destination": "https://yeongungod.notion.site/landing",
+        "destination": "https://yeongungod.notion.site",
         "permanent": true
       }
     ],
