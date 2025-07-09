@@ -112,19 +112,19 @@ const about = {
         </>,
 
         ],
-        images: [
-          // optional: leave the array empty if you don't want to display images
-          {
-            src: "/images/projects/project-01/cover-01.jpg",
-            alt: "Once UI Project",
-            width: 16,
-            height: 9,
-          },
-        ],
+        // images: [
+        //   // optional: leave the array empty if you don't want to display images
+        //   {
+        //     src: "/images/projects/project-01/cover-01.jpg",
+        //     alt: "Once UI Project",
+        //     width: 16,
+        //     height: 9,
+        //   },
+        // ],
       },
       {
         company: "레이븐어스",
-        timeframe: "2023 - 2023",
+        timeframe: "2022 - 2023",
         role: "콘텐츠 제작팀 / 인턴",
         achievements: [
           <>
