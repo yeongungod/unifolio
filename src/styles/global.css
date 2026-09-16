@@ -46,3 +46,15 @@ section { padding: 72px 0; border-top: 1px solid var(--line); }
 @media (max-width: 600px) {
   section { padding: 48px 0; }
 }
+
+/* /intro 인쇄 */
+.intro-body .site-header, .intro-body .site-footer { display: none; }
+.intro-body { background: #2a2724; }
+@media print {
+  @page { size: A4; margin: 0; }
+  body, .intro-body { background: #fff; }
+  .no-print { display: none !important; }
+  .sheet { margin: 0; width: 210mm; height: 297mm; min-height: 0; box-shadow: none; display: flex; flex-direction: column; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+.sheet { display: flex; flex-direction: column; }
