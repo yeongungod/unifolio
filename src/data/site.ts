@@ -1,5 +1,37 @@
 export const site = {
   name: '우니스튜디오',
+  nameEn: 'uniStudio',
   owner: '박영운',
   bizNo: '898-11-03021',
+  email: 'unistudio@yeongungod.com',
+  phone: '010-5925-6367',
+  phoneHref: 'tel:+821059256367',
+  address: '경기도 양평군 용문면 용문로371번길 6, 202호',
+  hero: {
+    title: '영상 편집과 사운드를 한 곳에서.',
+    sub: '유튜브 롱폼·쇼츠 편집, 영화·웹콘텐츠 믹싱. 2019년부터 100건 이상.',
+  },
+  services: [
+    { title: '유튜브 롱폼·쇼츠 편집', desc: '라이브 원본에서 본편과 쇼츠까지. 풀자막·밈·썸네일 문구 포함.' },
+    { title: '영화·웹콘텐츠 믹싱·사운드디자인', desc: 'ADR·폴리·사운드디자인·마스터링. 영화제 출품 규격 대응.' },
+    { title: '음악 녹음·믹싱·마스터링', desc: '라이브 클립, 커버곡, 싱글.' },
+    { title: '라이브 PA', desc: '팬미팅·콘서트·행사 현장 음향.' },
+  ],
+  process: ['문의', '견적', '작업', '납품'],
+  processNote: '일반과세 사업자라 세금계산서 발행이 됩니다. 견적은 작업 범위를 듣고 드립니다.',
+  about: {
+    intro: '서울예술대학교 방송영상과에서 음향을 전공했고, 2019년부터 영화·웹콘텐츠·라이브·음악 사운드를 해왔습니다. 2025년부터 유튜브 편집을 함께 하고, 2026년 9월 우니스튜디오를 열었습니다.',
+    edu: '서울예술대학교 방송영상과 음향 전공 (2019–2024)',
+    awards: [
+      { year: '2024.12', title: '제24회 대한민국국제청소년영화제', body: '「날치」 작품상 대학부 은상' },
+      { year: '2023.12', title: '서울아트비디오페스티벌', body: '「살아지다」 음향상' },
+      { year: '2023.11', title: '제18회 대한민국대학영화제', body: '「침묵」 최우수작품상 · 여자연기상' },
+      { year: '2023.08', title: '제1회 싸이파이안페스타', body: '「PD님이 책임지세요」 관객상' },
+      { year: '2021.10', title: '제6회 충무로영화제', body: '「목화토금수」 올해의 각본상' },
+      { year: '2021.05', title: '대한민국 육군 아미로그 공모전', body: '최우수상' },
+      { year: '2020.01', title: '주식회사 아론 이어폰 광고 공모전', body: '동상' },
+    ],
+    tools: ['Premiere Pro', 'Pro Tools', 'Vrew', 'After Effects', 'Photoshop', 'Cubase', 'iZotope', 'Waves', 'UAD'],
+    certs: ['Pro Tools 101 · 110 (Avid)', 'ACA Premiere · Illustrator (Adobe)'],
+  },
 };
