@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import WorkGrid from '../components/WorkGrid.astro';
+import Services from '../components/Services.astro';
+import About from '../components/About.astro';
+import Contact from '../components/Contact.astro';
+import { site } from '../data/site';
+---
+<Base title={`${site.name} — 영상 편집 · 사운드`} description={site.hero.sub}>
+  <Hero />
+  <WorkGrid />
+  <Services />
+  <About />
+  <Contact />
+</Base>

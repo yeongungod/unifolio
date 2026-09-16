@@ -1,0 +1,37 @@
+---
+import { site } from '../data/site';
+const a = site.about;
+---
+<section id="studio">
+  <div class="wrap">
+    <p class="label">Studio</p>
+    <h2>{site.name} · 대표 {site.owner}</h2>
+    <p class="intro">{a.intro}</p>
+    <div class="cols">
+      <div>
+        <h3>수상</h3>
+        <ul class="awards">
+          {a.awards.map((w) => <li><span class="muted">{w.year}</span><strong>{w.title}</strong><span>{w.body}</span></li>)}
+        </ul>
+      </div>
+      <div>
+        <h3>학력 · 자격</h3>
+        <p>{a.edu}</p>
+        <ul class="plain">{a.certs.map((c) => <li>{c}</li>)}</ul>
+        <h3 style="margin-top:24px">사용 툴</h3>
+        <p class="tools">{a.tools.join(' · ')}</p>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .intro { margin-top: 18px; max-width: 60ch; font-size: 17px; }
+  .cols { display: grid; gap: 40px; grid-template-columns: 1.4fr 1fr; margin-top: 40px; }
+  .awards, .plain { list-style: none; padding: 0; margin: 12px 0 0; }
+  .awards li { display: grid; grid-template-columns: 70px 1fr; gap: 2px 14px; padding: 10px 0; border-top: 1px solid var(--line); font-size: 14px; }
+  .awards strong { grid-column: 2; }
+  .awards li > span:last-child { grid-column: 2; color: var(--muted); }
+  .plain li { font-size: 14px; color: var(--muted); }
+  .tools { font-size: 14px; color: var(--muted); }
+  @media (max-width: 700px) { .cols { grid-template-columns: 1fr; gap: 28px; } }
+</style>

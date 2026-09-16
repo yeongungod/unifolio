@@ -1,0 +1,53 @@
+---
+import type { Featured } from '../data/featured';
+interface Props { item: Featured; compact?: boolean }
+const { item, compact = false } = Astro.props;
+const thumb = item.youtube ? `https://i.ytimg.com/vi/${item.youtube}/hqdefault.jpg` : item.image;
+---
+<article class:list={['card', { compact }]}>
+  {item.youtube ? (
+    <button class="media yt" data-id={item.youtube} aria-label={`${item.title} 재생`}>
+      <img src={thumb} alt="" loading="lazy" width="480" height="360" />
+      <span class="play" aria-hidden="true">▶</span>
+    </button>
+  ) : (
+    <div class="media"><img src={thumb} alt="" loading="lazy" width="1280" height="720" /></div>
+  )}
+  <div class="body">
+    <p class="label">{item.year} · {item.client}</p>
+    <h3>{item.title}</h3>
+    <p class="role">{item.role}</p>
+    {!compact && <p class="note muted">{item.note}</p>}
+  </div>
+</article>
+
+<style>
+  .card { display: flex; flex-direction: column; gap: 12px; }
+  .media { position: relative; aspect-ratio: 16/9; overflow: hidden; border-radius: 6px; background: var(--ink-2); padding: 0; border: 0; width: 100%; cursor: pointer; }
+  .media img { width: 100%; height: 100%; object-fit: cover; }
+  .play { position: absolute; inset: 0; display: grid; place-items: center; color: var(--paper); font-size: 28px; background: rgba(20,18,16,0.25); transition: background .15s; }
+  .yt:hover .play { background: rgba(156,195,213,0.35); }
+  .media :global(iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .role { font-size: 14px; color: var(--accent); margin-top: 4px; }
+  .note { font-size: 14px; margin-top: 6px; }
+  .compact .note { display: none; }
+</style>
+
+<script>
+  // 클릭한 카드만 iframe으로 교체 — 페이지 로드 시 유튜브 스크립트 0
+  document.querySelectorAll<HTMLButtonElement>('.yt').forEach((b) => {
+    b.addEventListener('click', () => {
+      const id = b.dataset.id;
+      const f = document.createElement('iframe');
+      f.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+      f.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+      f.allowFullscreen = true;
+      f.title = b.getAttribute('aria-label') ?? '';
+      const div = document.createElement('div');
+      div.className = 'media';
+      for (const a of b.attributes) if (a.name.startsWith('data-astro-cid')) div.setAttribute(a.name, '');
+      div.appendChild(f);
+      b.replaceWith(div);
+    }, { once: true });
+  });
+</script>
