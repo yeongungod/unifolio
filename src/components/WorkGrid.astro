@@ -1,0 +1,14 @@
+---
+import { featured } from '../data/featured';
+import VideoCard from './VideoCard.astro';
+---
+<section id="work">
+  <div class="wrap">
+    <p class="label">Selected work</p>
+    <h2>대표작</h2>
+    <div class="grid" style="margin-top:28px">
+      {featured.map((item) => <VideoCard item={item} />)}
+    </div>
+    <p style="margin-top:28px"><a class="btn" href="/work">전체 작업 117건 보기 →</a></p>
+  </div>
+</section>
