@@ -1,5 +1,5 @@
 // npm run build 후 실행. dist/intro를 크롬 헤드리스로 A4 PDF로 뽑아 G:에 저장.
-import { spawn, execFileSync } from 'node:child_process';
+import { spawn, execFileSync, execSync } from 'node:child_process';
 import { mkdirSync, copyFileSync, existsSync } from 'node:fs';
 
 const CHROME = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
@@ -11,11 +11,19 @@ const tmp = `${process.cwd()}\\dist\\intro.pdf`;
 
 const server = spawn('npx', ['astro', 'preview', '--port', '4399'], { shell: true, stdio: 'ignore' });
 await new Promise((r) => setTimeout(r, 3000));
+let ok = false;
 try {
-  execFileSync(CHROME, ['--headless', '--disable-gpu', '--no-pdf-header-footer', `--print-to-pdf=${tmp}`, 'http://localhost:4399/intro/'], { stdio: 'ignore' });
+  execFileSync(CHROME, ['--headless', '--disable-gpu', '--no-pdf-header-footer', `--print-to-pdf=${tmp}`, 'http://localhost:4399/intro/'], { stdio: 'pipe' });
   if (existsSync('G:\\')) { mkdirSync(OUT_DIR, { recursive: true }); copyFileSync(tmp, out); console.log('saved', out); }
   else console.log('G: 없음 — dist/intro.pdf 만 남김');
+  ok = true;
+} catch (e) {
+  console.error('Chrome PDF 생성 실패:', e.message);
 } finally {
-  server.kill();
-  process.exit(0);
+  if (process.platform === 'win32') {
+    try { execSync(`taskkill /pid ${server.pid} /T /F`, { stdio: 'ignore' }); } catch {}
+  } else {
+    server.kill();
+  }
+  process.exit(ok ? 0 : 1);
 }

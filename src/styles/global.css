@@ -8,6 +8,10 @@
   --paper: #FBF9F6;
   --muted: #8A837C;
   --line: rgba(251, 249, 246, 0.12);
+  --accent-on-paper: #4f8aa3; /* 종이 위 대비용 — 아쿠아마린은 면적에만, 글자는 진하게 */
+  --paper-line: #e6e2dc;
+  --ink-2: #26231f;
+  --ink-3: #2a2724;
 }
 
 * { box-sizing: border-box; }
@@ -31,7 +35,7 @@ h3 { font-size: 17px; }
 p { margin: 0; }
 
 .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
-section { padding: 72px 0; border-top: 1px solid var(--line); }
+section { padding: 72px 0; border-top: 1px solid var(--line); scroll-margin-top: 72px; }
 .label { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
 .muted { color: var(--muted); }
 .accent-bar { width: 56px; height: 3px; background: var(--accent); margin: 20px 0; }
@@ -49,7 +53,7 @@ section { padding: 72px 0; border-top: 1px solid var(--line); }
 
 /* /intro 인쇄 */
 .intro-body .site-header, .intro-body .site-footer { display: none; }
-.intro-body { background: #2a2724; }
+.intro-body { background: var(--ink-3); }
 @media print {
   @page { size: A4; margin: 0; }
   body, .intro-body { background: #fff; }

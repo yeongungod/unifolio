@@ -27,7 +27,7 @@ for (const h of htmls) {
   for (const b of banned) if (html.includes(b)) err(`${h}: 금지 문자열 "${b}"`);
   if (!/<meta name="description" content="[^"]{10,}"/.test(html)) err(`${h}: description 없음`);
   // 내부 링크·자산 존재 확인
-  for (const m of html.matchAll(/(?:href|src)="(\/[^"#?]*)/g)) {
+  for (const m of html.matchAll(/(?:href|src|content)="(\/[^"#?]*)/g)) {
     const path = m[1] === '/' ? '/index.html' : m[1];
     const cands = [join(DIST, path), join(DIST, path, 'index.html')];
     if (!cands.some(existsSync)) err(`${h}: 깨진 내부 링크 ${m[1]}`);

@@ -23,11 +23,11 @@ const thumb = item.youtube ? `https://i.ytimg.com/vi/${item.youtube}/hqdefault.j
 
 <style>
   .card { display: flex; flex-direction: column; gap: 12px; }
-  .media { position: relative; aspect-ratio: 16/9; overflow: hidden; border-radius: 6px; background: #26231f; padding: 0; border: 0; width: 100%; cursor: pointer; }
+  .media { position: relative; aspect-ratio: 16/9; overflow: hidden; border-radius: 6px; background: var(--ink-2); padding: 0; border: 0; width: 100%; cursor: pointer; }
   .media img { width: 100%; height: 100%; object-fit: cover; }
   .play { position: absolute; inset: 0; display: grid; place-items: center; color: var(--paper); font-size: 28px; background: rgba(20,18,16,0.25); transition: background .15s; }
   .yt:hover .play { background: rgba(156,195,213,0.35); }
-  .media iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .media :global(iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .role { font-size: 14px; color: var(--accent); margin-top: 4px; }
   .note { font-size: 14px; margin-top: 6px; }
   .compact .note { display: none; }
@@ -43,7 +43,11 @@ const thumb = item.youtube ? `https://i.ytimg.com/vi/${item.youtube}/hqdefault.j
       f.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
       f.allowFullscreen = true;
       f.title = b.getAttribute('aria-label') ?? '';
-      b.replaceChildren(f);
+      const div = document.createElement('div');
+      div.className = 'media';
+      for (const a of b.attributes) if (a.name.startsWith('data-astro-cid')) div.setAttribute(a.name, '');
+      div.appendChild(f);
+      b.replaceWith(div);
     }, { once: true });
   });
 </script>
