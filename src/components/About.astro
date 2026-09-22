@@ -1,6 +1,9 @@
 ---
 import { site } from '../data/site';
+import rows from '../data/archive.json';
+import { mainRecognition } from '../lib/recognition.mjs';
 const a = site.about;
+const { events, releases } = mainRecognition(rows, a.awards, site.screenings);
 const toolLogos: Record<string, { file: string; url: string }> = {
   'Premiere Pro': { file: 'premiere-pro.svg', url: 'https://www.adobe.com/products/premiere.html' },
   'Pro Tools': { file: 'pro-tools.png', url: 'https://www.avid.com/pro-tools' },
@@ -20,10 +23,13 @@ const toolLogos: Record<string, { file: string; url: string }> = {
     <p class="intro">{a.intro}</p>
     <div class="cols">
       <div>
-        <h3>수상</h3>
+        <h3>수상 · 상영 · 선정</h3>
+        <p class="recognition-note muted">개업 전 대표 참여작의 기록을 포함합니다.</p>
         <ul class="awards">
-          {a.awards.map((w) => <li><span class="muted">{w.year}</span><strong>{w.title}</strong><span>{w.body}</span></li>)}
+          {events.slice(0, 8).map((w) => <li><span class="date muted">{w.year || '연도 미표기'}</span><div class="record">{w.work && <strong>「{w.work}」</strong>}<p>{w.source ? <a href={w.source} target="_blank" rel="noopener noreferrer">{w.text}</a> : w.text}</p></div></li>)}
         </ul>
+        {events.length > 8 && <details class="more-records"><summary>수상 · 상영 기록 더 보기</summary><ul class="awards">{events.slice(8).map((w) => <li><span class="date muted">{w.year || '연도 미표기'}</span><div class="record">{w.work && <strong>「{w.work}」</strong>}<p>{w.source ? <a href={w.source} target="_blank" rel="noopener noreferrer">{w.text}</a> : w.text}</p></div></li>)}</ul></details>}
+        {releases.length > 0 && <details class="release-records"><summary>배급 · 공개 정보</summary><ul class="release-list">{releases.map((w) => <li><strong>「{w.work}」</strong><span>{w.text}</span></li>)}</ul></details>}
       </div>
       <div>
         <h3>학력 · 자격</h3>
@@ -44,14 +50,23 @@ const toolLogos: Record<string, { file: string; url: string }> = {
   .intro { margin-top: 18px; max-width: 60ch; font-size: 17px; }
   .cols { display: grid; gap: 40px; grid-template-columns: 1.4fr 1fr; margin-top: 40px; }
   .awards, .plain { list-style: none; padding: 0; margin: 12px 0 0; }
-  .awards li { display: grid; grid-template-columns: 70px 1fr; gap: 2px 14px; padding: 10px 0; border-top: 1px solid var(--line); font-size: 14px; }
-  .awards strong { grid-column: 2; }
-  .awards li > span:last-child { grid-column: 2; color: var(--muted); }
+  .recognition-note { margin-top: 8px; font-size: 12px; }
+  .awards li { display: grid; grid-template-columns: 76px minmax(0,1fr); gap: 16px; padding: 16px 0; border-top: 1px solid var(--line); font-size: 14px; }
+  .date { font-variant-numeric: tabular-nums; font-size: 13px; }
+  .record { min-width: 0; word-break: keep-all; overflow-wrap: anywhere; }
+  .record strong { display: block; margin-bottom: 5px; }
+  .record p { color: var(--muted); }
+  .record a { text-decoration: underline; text-underline-offset: 3px; }
+  .release-records, .more-records { border-top: 1px solid var(--line); margin-top: 16px; padding-top: 16px; font-size: 14px; }
+  .release-records summary, .more-records summary { cursor: pointer; padding: 8px 0; }
+  .release-list { list-style: none; padding: 0; }
+  .release-list li { display: grid; gap: 4px; margin-top: 14px; }
+  .release-list span { color: var(--muted); }
   .plain li { font-size: 14px; color: var(--muted); }
   .tools { list-style: none; padding: 0; margin: 12px 0 0; font-size: 14px; color: var(--muted); }
   .tools li + li { margin-top: 4px; }
   .tools a { display: flex; align-items: center; gap: 12px; min-height: 40px; width: fit-content; color: inherit; text-decoration: none; }
   .tools a:hover { color: var(--paper); }
   .tools img { width: 28px; height: 28px; object-fit: contain; flex: none; }
-  @media (max-width: 700px) { .cols { grid-template-columns: 1fr; gap: 28px; } }
+  @media (max-width: 700px) { .cols { grid-template-columns: 1fr; gap: 28px; } .awards li { grid-template-columns: 66px minmax(0,1fr); gap: 12px; } }
 </style>
