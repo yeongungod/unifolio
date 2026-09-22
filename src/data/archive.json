@@ -1,1480 +1,1600 @@
 [
- {
-  "year": 2025,
-  "name": "The First Descendant - UI Sound Design",
-  "platform": [
-   "Game"
-  ],
-  "process": [
-   "Sound Design",
-   "UI"
-  ],
-  "client": "yeongungod"
- },
- {
-  "year": 2025,
-  "name": "Fire Emblem Engage - Skill Sound Design",
-  "platform": [
-   "Game"
-  ],
-  "process": [
-   "Sound Design",
-   "Skill"
-  ],
-  "client": "yeongungod"
- },
- {
-  "year": 2025,
-  "name": "The Witcher 3 Wild Hunt - Killing Monsters Cinematic Trailer",
-  "platform": [
-   "Game"
-  ],
-  "process": [
-   "Sound Design",
-   "Cinamatic"
-  ],
-  "client": "yeongungod"
- },
- {
-  "year": 2025,
-  "name": "퍼스트 버서커: 카잔 | 전설을 만들다",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Record",
-   "Sound Assistant"
-  ],
-  "client": "NEXON"
- },
- {
-  "year": 2025,
-  "name": "나의 소울메이트",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "ADR",
-   "Foley",
-   "Record",
-   "Mastering"
-  ],
-  "client": "이채범 감독"
- },
- {
-  "year": 2025,
-  "name": "건강한 취준",
-  "platform": [
-   "Edit"
-  ],
-  "process": [],
-  "client": "매치워크"
- },
- {
-  "year": 2025,
-  "name": "해보자시리즈 유튜브",
-  "platform": [
-   "Edit"
-  ],
-  "process": [],
-  "client": "해보자시리즈"
- },
- {
-  "year": 2025,
-  "name": "최솜이 팬미팅",
-  "platform": [
-   "Live"
-  ],
-  "process": [
-   "PA"
-  ],
-  "client": "ONSIDE COMPANY"
- },
- {
-  "year": 2025,
-  "name": "임마초 팬미팅",
-  "platform": [
-   "Live"
-  ],
-  "process": [
-   "PA"
-  ],
-  "client": "ONSIDE COMPANY"
- },
- {
-  "year": 2025,
-  "name": "김된모 팬미팅",
-  "platform": [
-   "Live"
-  ],
-  "process": [
-   "PA"
-  ],
-  "client": "ONSIDE COMPANY"
- },
- {
-  "year": 2025,
-  "name": "한국공학대학교 RISE 비전 선포식",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Mastering"
-  ],
-  "client": "한국공학대학교"
- },
- {
-  "year": 2025,
-  "name": "2025 공군 정신전력 교육 영상",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Mastering"
-  ],
-  "client": "대한민국 공군"
- },
- {
-  "year": 2025,
-  "name": "ONSIDE GAMING 팬미팅",
-  "platform": [
-   "Live"
-  ],
-  "process": [
-   "PA"
-  ],
-  "client": "ONSIDE COMPANY"
- },
- {
-  "year": 2025,
-  "name": "공파리파 팬미팅",
-  "platform": [
-   "Live"
-  ],
-  "process": [
-   "PA"
-  ],
-  "client": "ONSIDE COMPANY"
- },
- {
-  "year": 2024,
-  "name": "Love isn't a fantasy, either [L.I.F.E]",
-  "platform": [
-   "Music"
-  ],
-  "process": [
-   "Mixing",
-   "Mastering"
-  ],
-  "client": "Jain"
- },
- {
-  "year": 2024,
-  "name": "ROAD TO RAPBEAT SEASON 2",
-  "platform": [
-   "Music"
-  ],
-  "process": [
-   "Record",
-   "Mixing",
-   "Mastering"
-  ],
-  "client": "RAPBEAT"
- },
- {
-  "year": 2024,
-  "name": "수련수련의 여름정원 콘서트",
-  "platform": [
-   "Live"
-  ],
-  "process": [
-   "PA"
-  ],
-  "client": "ONSIDE COMPANY"
- },
- {
-  "year": 2024,
-  "name": "해나의 여름으로 팬미팅",
-  "platform": [
-   "Live"
-  ],
-  "process": [
-   "PA"
-  ],
-  "client": "ONSIDE COMPANY"
- },
- {
-  "year": 2024,
-  "name": "서울예술대학교 WAVE 동계 워크숍",
-  "platform": [
-   "Live"
-  ],
-  "process": [
-   "Record",
-   "PA"
-  ],
-  "client": "WAVE"
- },
- {
-  "year": 2024,
-  "name": "KTDS - 제1회 DS타운홀",
-  "platform": [
-   "Live"
-  ],
-  "process": [
-   "PA",
-   "Record"
-  ],
-  "client": "KTDS"
- },
- {
-  "year": 2024,
-  "name": "난장",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Mastering"
-  ],
-  "client": "한원석 감독"
- },
- {
-  "year": 2024,
-  "name": "교과서에는 없는, 나만 모르는 그날 이야기",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Mastering"
-  ],
-  "client": "대한민국 해군"
- },
- {
-  "year": 2024,
-  "name": "우리 바다를 지킨 영웅들",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Mastering"
-  ],
-  "client": "대한민국 해군"
- },
- {
-  "year": 2024,
-  "name": "촉법소년단",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "ADR",
-   "Foley",
-   "Mastering"
-  ],
-  "client": "김선연 감독"
- },
- {
-  "year": 2024,
-  "name": "위대한 항해 - 웹 예능",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Mastering"
-  ],
-  "client": "위대한 항해"
- },
- {
-  "year": 2024,
-  "name": "마젠타 x 주다사 커버곡 - Love Love Love / 백예린",
-  "platform": [
-   "Music"
-  ],
-  "process": [
-   "Record"
-  ],
-  "client": "ONSIDE COMPANY"
- },
- {
-  "year": 2024,
-  "name": "[LIVE CLIP] Deepshower, 펀치넬로 - 조금 돌아왔어 (Feat. Skinny Brown)",
-  "platform": [
-   "Music"
-  ],
-  "process": [
-   "Record"
-  ],
-  "client": "Deepshower · 펀치넬로"
- },
- {
-  "year": 2024,
-  "name": "GATSBY Styling Tips Content",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Record"
-  ],
-  "client": "갸스비 코리아"
- },
- {
-  "year": 2024,
-  "name": "픽쳐스로얄",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Record",
-   "Sound Assistant"
-  ],
-  "client": "최마태의 POST IT"
- },
- {
-  "year": 2024,
-  "name": "2024 임팩트 커리어 마스터",
-  "platform": [
-   "Edit"
-  ],
-  "process": [],
-  "client": "매치워크"
- },
- {
-  "year": 2024,
-  "name": "안녕한 우리",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "ADR",
-   "Foley",
-   "Mastering"
-  ],
-  "client": "장은영 감독"
- },
- {
-  "year": 2024,
-  "name": "율이의 겨울 팬미팅",
-  "platform": [
-   "Live"
-  ],
-  "process": [
-   "PA"
-  ],
-  "client": "ONSIDE COMPANY"
- },
- {
-  "year": 2024,
-  "name": "겟올라잇",
-  "platform": [
-   "Live"
-  ],
-  "process": [
-   "PA"
-  ],
-  "client": "겟올라잇"
- },
- {
-  "year": 2024,
-  "name": "서울아트비디오페스티벌 오프닝/클로징",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Mastering"
-  ],
-  "client": "서울아트비디오페스티벌"
- },
- {
-  "year": 2023,
-  "name": "살아지다",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "ADR",
-   "Foley",
-   "Record",
-   "Mastering"
-  ],
-  "client": "정도영 감독"
- },
- {
-  "year": 2023,
-  "name": "날치",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "ADR",
-   "Foley",
-   "Record",
-   "Mastering"
-  ],
-  "client": "정도영 감독"
- },
- {
-  "year": 2023,
-  "name": "마젠타 5주년 기념 구독자 팬미팅",
-  "platform": [
-   "Live"
-  ],
-  "process": [
-   "PA"
-  ],
-  "client": "ONSIDE COMPANY"
- },
- {
-  "year": 2023,
-  "name": "로드투자립",
-  "platform": [
-   "Live"
-  ],
-  "process": [
-   "Record",
-   "PA"
-  ],
-  "client": "매치워크"
- },
- {
-  "year": 2023,
-  "name": "서울예술대학교 이명세 감독 마스터 클래스",
-  "platform": [
-   "Live"
-  ],
-  "process": [
-   "PA",
-   "Record"
-  ],
-  "client": "서울예술대학교"
- },
- {
-  "year": 2023,
-  "name": "제3회 KTOA 벤처리움 데모데이",
-  "platform": [
-   "Live"
-  ],
-  "process": [
-   "PA",
-   "Record"
-  ],
-  "client": "한국통신사업자연합회"
- },
- {
-  "year": 2023,
-  "name": "서울예술대학교 개교 61주년 기념 체육대회 축구",
-  "platform": [
-   "Live"
-  ],
-  "process": [
-   "Record",
-   "PA"
-  ],
-  "client": "서울예술대학교"
- },
- {
-  "year": 2023,
-  "name": "붕대소년",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Record",
-   "Sound Assistant"
-  ],
-  "client": "양새한 감독"
- },
- {
-  "year": 2023,
-  "name": "海브리타",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Mastering"
-  ],
-  "client": "대한민국 해군"
- },
- {
-  "year": 2023,
-  "name": "우리는 대한민국 해군입니다 (해군 창설 78주년 기념 광고 영상)",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Mastering"
-  ],
-  "client": "대한민국 해군"
- },
- {
-  "year": 2023,
-  "name": "해군 훈련소의 모든 것 \"바다로 가는 첫걸음\"",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Mastering"
-  ],
-  "client": "대한민국 해군"
- },
- {
-  "year": 2023,
-  "name": "잊히지 않은 영웅에게 - 캐나다 보훈음악회 미니 다큐멘터리",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Mastering"
-  ],
-  "client": "대한민국 해군"
- },
- {
-  "year": 2023,
-  "name": "롤스로이스 코리아",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Mixing",
-   "Mastering"
-  ],
-  "client": "롤스로이스 코리아"
- },
- {
-  "year": 2023,
-  "name": "목요일",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "ADR",
-   "Foley",
-   "Record",
-   "Mastering",
-   "Sound Assistant"
-  ],
-  "client": "유범수 감독"
- },
- {
-  "year": 2023,
-  "name": "박찬엽 - 밤이 되었고 그림자를 보았습니다",
-  "platform": [
-   "Music"
-  ],
-  "process": [
-   "Sound Design"
-  ],
-  "client": "박찬엽"
- },
- {
-  "year": 2023,
-  "name": "비늘과 혈관사이",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Mastering"
-  ],
-  "client": "구본진 감독"
- },
- {
-  "year": 2023,
-  "name": "MIZ - Love Attack! (With. Seo Hyun) | Interview",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Mixing",
-   "Mastering"
-  ],
-  "client": "서울예술대학교 아프로프로젝트"
- },
- {
-  "year": 2023,
-  "name": "Haroo - Dream Message | Interview",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Mixing",
-   "Mastering"
-  ],
-  "client": "서울예술대학교 아프로프로젝트"
- },
- {
-  "year": 2023,
-  "name": "왓슨앤컴퍼니 POCUS 홍보 영상",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Mastering"
-  ],
-  "client": "왓슨앤컴퍼니"
- },
- {
-  "year": 2023,
-  "name": "Drag-Me",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Record"
-  ],
-  "client": "양승주 감독"
- },
- {
-  "year": 2023,
-  "name": "HY3D 하드웨어가이드",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "ADR"
-  ],
-  "client": "HY3D"
- },
- {
-  "year": 2023,
-  "name": "작자미상",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "ADR",
-   "Foley",
-   "Record",
-   "Mastering"
-  ],
-  "client": "편민우 감독"
- },
- {
-  "year": 2023,
-  "name": "IT 진로 콘서트 - 현장 스케치",
-  "platform": [
-   "Edit"
-  ],
-  "process": [],
-  "client": "매치워크"
- },
- {
-  "year": 2022,
-  "name": "침묵",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Foley",
-   "Mastering"
-  ],
-  "client": "배준원 감독"
- },
- {
-  "year": 2022,
-  "name": "PD님이 책임지세요",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Sound Assistant",
-   "Mixing",
-   "Sound Design",
-   "ADR",
-   "Foley",
-   "Mastering"
-  ],
-  "client": "김선연 감독"
- },
- {
-  "year": 2022,
-  "name": "AREA 1997",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Foley",
-   "Mastering"
-  ],
-  "client": "부천국제판타스틱영화제"
- },
- {
-  "year": 2022,
-  "name": "열반",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Foley",
-   "Mastering"
-  ],
-  "client": "김선연 감독"
- },
- {
-  "year": 2022,
-  "name": "원더랜드를 불러줘!",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Foley",
-   "Mastering"
-  ],
-  "client": "최경일 감독"
- },
- {
-  "year": 2022,
-  "name": "교회창립 15주년 기념 및 빅사이엔 개국 감사 예배",
-  "platform": [
-   "Live"
-  ],
-  "process": [
-   "Record",
-   "PA"
-  ],
-  "client": "송정큰교회"
- },
- {
-  "year": 2022,
-  "name": "쫌생이게임",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Record",
-   "Sound Assistant"
-  ],
-  "client": "낄낄상회"
- },
- {
-  "year": 2022,
-  "name": "[2022 선플캠페인] 대중문화예술인 악플 피해예방을 위한 건전한 댓글 문화 캠페인",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Record",
-   "Sound Assistant"
-  ],
-  "client": "한국연예제작자협회"
- },
- {
-  "year": 2022,
-  "name": "인생은V로그",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Foley",
-   "Record",
-   "Mastering"
-  ],
-  "client": "정호진 감독"
- },
- {
-  "year": 2022,
-  "name": "[웹드라마] 시한부 사랑",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Foley",
-   "Mastering"
-  ],
-  "client": "힙스토리"
- },
- {
-  "year": 2022,
-  "name": "곽태풍 - I can't do this all day ...",
-  "platform": [
-   "Music"
-  ],
-  "process": [
-   "Sound Design",
-   "Mastering"
-  ],
-  "client": "곽태풍"
- },
- {
-  "year": 2022,
-  "name": "곽태풍 - SUNFLOWER ! (remastered)",
-  "platform": [
-   "Music"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Mastering"
-  ],
-  "client": "곽태풍"
- },
- {
-  "year": 2022,
-  "name": "2021학년도 강남대학교 대학혁신지원사업 우수성과 사례",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Sound Design"
-  ],
-  "client": "강남대학교"
- },
- {
-  "year": 2022,
-  "name": "한양 스타트업 캠퍼스 - Boost Camp",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Record",
-   "Mastering"
-  ],
-  "client": "한양대학교 ERICA 창업교육센터"
- },
- {
-  "year": 2022,
-  "name": "[교보생명] 마이데이터 피치",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "ADR",
-   "Foley",
-   "Record",
-   "Mastering"
-  ],
-  "client": "교보생명"
- },
- {
-  "year": 2022,
-  "name": "[건강한취준] 라이프디자인 프로그램 후기 영상",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Mixing",
-   "Record",
-   "Mastering"
-  ],
-  "client": "매치워크"
- },
- {
-  "year": 2022,
-  "name": "SEMICS 강의 영상",
-  "platform": [
-   "Edit"
-  ],
-  "process": [],
-  "client": "SEMICS"
- },
- {
-  "year": 2021,
-  "name": "목화토금수",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Record"
-  ],
-  "client": "박소원 감독"
- },
- {
-  "year": 2021,
-  "name": "빅데이터로 바라보는 관광산업의 미래",
-  "platform": [
-   "Live"
-  ],
-  "process": [
-   "PA"
-  ],
-  "client": "서울시민관광아카데미"
- },
- {
-  "year": 2021,
-  "name": "공공스포츠클럽 홍보영상",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Record",
-   "Sound Assistant"
-  ],
-  "client": "공공스포츠클럽 Sports On"
- },
- {
-  "year": 2021,
-  "name": "한방에 세탁 끝! 국내산 캡슐세제! 캡슐쏙쏙!",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Record",
-   "Sound Assistant"
-  ],
-  "client": "캡슐쏙쏙"
- },
- {
-  "year": 2021,
-  "name": "환절기",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Mastering"
-  ],
-  "client": "박민하 감독"
- },
- {
-  "year": 2021,
-  "name": "무르펜 액티브밴드 X-2(엑스투)",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "ADR",
-   "Foley",
-   "Record",
-   "Mastering"
-  ],
-  "client": "무르펜"
- },
- {
-  "year": 2021,
-  "name": "아무도 모르는",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design"
-  ],
-  "client": "변한솔 감독"
- },
- {
-  "year": 2021,
-  "name": "내가 사랑하는 방법",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Mastering"
-  ],
-  "client": "변한솔 감독"
- },
- {
-  "year": 2021,
-  "name": "404",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Record"
-  ],
-  "client": "장수남 감독"
- },
- {
-  "year": 2021,
-  "name": "쇼미더머니 속풀이토크-REWIND",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Record"
-  ],
-  "client": "Mnet"
- },
- {
-  "year": 2021,
-  "name": "ITEASY를 소개하는 이 사람은 누구??!?",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Record"
-  ],
-  "client": "ITEASY"
- },
- {
-  "year": 2021,
-  "name": "완벽한 피아노 연주를 하는 방법",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Record"
-  ],
-  "client": "정승민 감독"
- },
- {
-  "year": 2021,
-  "name": "그것이 만들고 싶다 - YETI 아이스박스",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Record",
-   "Mastering"
-  ],
-  "client": "LS ELECTRIC"
- },
- {
-  "year": 2021,
-  "name": "메이저 출입금지",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Foley",
-   "Record",
-   "Mastering"
-  ],
-  "client": "정하은 감독"
- },
- {
-  "year": 2021,
-  "name": "수아",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "ADR",
-   "Foley",
-   "Record",
-   "Mastering"
-  ],
-  "client": "남혜리 감독"
- },
- {
-  "year": 2021,
-  "name": "내일은 예술가",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Foley",
-   "Mastering"
-  ],
-  "client": "김진아 감독"
- },
- {
-  "year": 2021,
-  "name": "전역",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Mastering"
-  ],
-  "client": "정도영 감독"
- },
- {
-  "year": 2021,
-  "name": "2021년 KIOST 칭찬 릴레이 시즌4",
-  "platform": [
-   "Edit"
-  ],
-  "process": [],
-  "client": "KIOST 한국해양과학기술원"
- },
- {
-  "year": 2020,
-  "name": "연옥",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Record",
-   "Sound Assistant"
-  ],
-  "client": "배준원 감독"
- },
- {
-  "year": 2020,
-  "name": "WONDERWALL - 장동원",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Record",
-   "Sound Assistant"
-  ],
-  "client": "WONDERWALL"
- },
- {
-  "year": 2020,
-  "name": "커피타는 집사 & 식빵굽는 고양이",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Record",
-   "Sound Assistant"
-  ],
-  "client": "컾채널"
- },
- {
-  "year": 2020,
-  "name": "안성마들육사발 ASMR",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Record",
-   "Sound Assistant"
-  ],
-  "client": "라면공작소"
- },
- {
-  "year": 2020,
-  "name": "서로",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Mastering"
-  ],
-  "client": "박신준 감독"
- },
- {
-  "year": 2020,
-  "name": "중동고등학교 입시 영상",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "ADR",
-   "Mastering"
-  ],
-  "client": "정도영 감독"
- },
- {
-  "year": 2020,
-  "name": "서울예술대학교 입학식 축하 영상",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Mixing",
-   "ADR",
-   "Mastering"
-  ],
-  "client": "서울예술대학교"
- },
- {
-  "year": 2020,
-  "name": "[Story MV] 예지(YEZI) - 'My Gravity'",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Sound Design",
-   "Foley",
-   "Mastering"
-  ],
-  "client": "예지"
- },
- {
-  "year": 2020,
-  "name": "BBQ 공모전",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Foley",
-   "Mastering"
-  ],
-  "client": "임광민 감독"
- },
- {
-  "year": 2020,
-  "name": "기억의 조각",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Foley",
-   "Record",
-   "Mastering"
-  ],
-  "client": "이유빈 감독"
- },
- {
-  "year": 2020,
-  "name": "제애",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "ADR",
-   "Foley",
-   "Record",
-   "Mastering"
-  ],
-  "client": "이병일 감독"
- },
- {
-  "year": 2020,
-  "name": "I's",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Record"
-  ],
-  "client": "정태빈 감독"
- },
- {
-  "year": 2020,
-  "name": "황혼",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Record",
-   "Mastering"
-  ],
-  "client": "조영상 감독"
- },
- {
-  "year": 2020,
-  "name": "작품을 위하여",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "ADR",
-   "Foley",
-   "Record",
-   "Mastering"
-  ],
-  "client": "정도영 감독"
- },
- {
-  "year": 2020,
-  "name": "윤스아카데미",
-  "platform": [
-   "Edit"
-  ],
-  "process": [],
-  "client": "윤스아카데미"
- },
- {
-  "year": 2019,
-  "name": "소문",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Foley",
-   "Mastering"
-  ],
-  "client": "김홍직 감독"
- },
- {
-  "year": 2019,
-  "name": "헤드셋뮤직 - 버스킹 라이브",
-  "platform": [
-   "Music"
-  ],
-  "process": [
-   "PA",
-   "Record"
-  ],
-  "client": "헤드셋뮤직"
- },
- {
-  "year": 2019,
-  "name": "부산",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "ADR",
-   "Foley",
-   "Record",
-   "Mastering"
-  ],
-  "client": "홍현지 감독"
- },
- {
-  "year": 2019,
-  "name": "극희간화",
-  "platform": [
-   "Music"
-  ],
-  "process": [
-   "Record"
-  ],
-  "client": "남상현 감독"
- },
- {
-  "year": 2019,
-  "name": "[웹드라마] C급 인생",
-  "platform": [
-   "Web"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "ADR",
-   "Foley",
-   "Record",
-   "Mastering"
-  ],
-  "client": ""
- },
- {
-  "year": 2019,
-  "name": "창작의 고통",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "ADR",
-   "Foley",
-   "Record",
-   "Mastering"
-  ],
-  "client": "정도영 감독"
- },
- {
-  "year": 2019,
-  "name": "비행소녀",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Foley",
-   "Mastering"
-  ],
-  "client": "배상준 감독"
- },
- {
-  "year": 2019,
-  "name": "인간을 위하여",
-  "platform": [
-   "Film"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "ADR",
-   "Foley",
-   "Record",
-   "Mastering"
-  ],
-  "client": "정도영 감독"
- },
- {
-  "year": 2019,
-  "name": "[TRIVIA] 방탄소년단 (BTS) - MIC Drop | Cover Dance",
-  "platform": [
-   "Music"
-  ],
-  "process": [
-   "Mixing",
-   "Sound Design",
-   "Mastering"
-  ],
-  "client": ""
- },
- {
-  "year": 2019,
-  "name": "우왁굳의 게임방송",
-  "platform": [
-   "Edit"
-  ],
-  "process": [],
-  "client": "우왁굳"
- }
+  {
+    "id": "17e50bd8-fe2d-8010-bbe5-d7a080f61a82",
+    "year": 2025,
+    "name": "The First Descendant — UI 사운드",
+    "platform": [
+      "Game"
+    ],
+    "process": [
+      "Sound Design",
+      "UI"
+    ],
+    "client": "개인 작업",
+    "url": "https://www.youtube.com/watch?v=WKvy_jR7frU"
+  },
+  {
+    "id": "18250bd8-fe2d-809f-84fd-e1ff9d3e7a47",
+    "year": 2025,
+    "name": "The Witcher 3 Wild Hunt - Killing Monsters Cinematic Trailer",
+    "platform": [
+      "Game"
+    ],
+    "process": [
+      "Sound Design",
+      "Cinamatic"
+    ],
+    "client": "yeongungod"
+  },
+  {
+    "id": "18250bd8-fe2d-80b9-909e-c707509d33c9",
+    "year": 2025,
+    "name": "Fire Emblem Engage - Skill Sound Design",
+    "platform": [
+      "Game"
+    ],
+    "process": [
+      "Sound Design",
+      "Skill"
+    ],
+    "client": "yeongungod"
+  },
+  {
+    "id": "22b50bd8-fe2d-801f-8785-fa3853fb1cb2",
+    "year": 2025,
+    "name": "나의 소울메이트",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "ADR",
+      "Foley",
+      "Record",
+      "Mastering"
+    ],
+    "client": "이채범 감독"
+  },
+  {
+    "id": "22b50bd8-fe2d-8036-a9c9-d67c9b7866a4",
+    "year": 2025,
+    "name": "건강한 취준",
+    "platform": [
+      "Edit"
+    ],
+    "process": [],
+    "client": "매치워크"
+  },
+  {
+    "id": "22b50bd8-fe2d-803e-940c-ea0a18759fe9",
+    "year": 2025,
+    "name": "2025 공군 정신전력 교육 영상",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Mastering"
+    ],
+    "client": "대한민국 공군"
+  },
+  {
+    "id": "22b50bd8-fe2d-8040-95e4-dbb0c9d6fdeb",
+    "year": 2025,
+    "name": "김된모 팬미팅",
+    "platform": [
+      "Live"
+    ],
+    "process": [
+      "PA"
+    ],
+    "client": "ONSIDE COMPANY"
+  },
+  {
+    "id": "22b50bd8-fe2d-8060-bd4b-fd70e0fae1ab",
+    "year": 2025,
+    "name": "해보자시리즈",
+    "platform": [
+      "Edit"
+    ],
+    "process": [],
+    "client": "해보자시리즈",
+    "url": "https://www.youtube.com/watch?v=G7P6u0izwsk"
+  },
+  {
+    "id": "22b50bd8-fe2d-8069-87b0-f725d2e3236f",
+    "year": 2025,
+    "name": "퍼스트 버서커: 카잔 | 전설을 만들다",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Record",
+      "Sound Assistant"
+    ],
+    "client": "NEXON",
+    "url": "https://www.youtube.com/watch?v=TbFCH78wKlc"
+  },
+  {
+    "id": "22b50bd8-fe2d-8085-a64d-dccec5ee38a6",
+    "year": 2025,
+    "name": "최솜이 팬미팅",
+    "platform": [
+      "Live"
+    ],
+    "process": [
+      "PA"
+    ],
+    "client": "ONSIDE COMPANY"
+  },
+  {
+    "id": "22b50bd8-fe2d-8094-be48-de3d30ac6ccb",
+    "year": 2025,
+    "name": "임마초 팬미팅",
+    "platform": [
+      "Live"
+    ],
+    "process": [
+      "PA"
+    ],
+    "client": "ONSIDE COMPANY"
+  },
+  {
+    "id": "22b50bd8-fe2d-80bd-8ab7-dfa9b8cd4a3a",
+    "year": 2025,
+    "name": "한국공학대학교 RISE 비전 선포식",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Mastering"
+    ],
+    "client": "한국공학대학교"
+  },
+  {
+    "id": "23150bd8-fe2d-80e4-b542-ca8164a8af6e",
+    "year": 2025,
+    "name": "ONSIDE GAMING 팬미팅",
+    "platform": [
+      "Live"
+    ],
+    "process": [
+      "PA"
+    ],
+    "client": "ONSIDE COMPANY"
+  },
+  {
+    "id": "23e50bd8-fe2d-8095-ae79-f98552691b84",
+    "year": 2025,
+    "name": "공파리파 팬미팅",
+    "platform": [
+      "Live"
+    ],
+    "process": [
+      "PA"
+    ],
+    "client": "ONSIDE COMPANY"
+  },
+  {
+    "id": "13c50bd8-fe2d-8035-8782-d6b9a6100dd0",
+    "year": 2024,
+    "name": "마젠타 x 주다사 커버곡 - Love Love Love / 백예린",
+    "platform": [
+      "Music"
+    ],
+    "process": [
+      "Record"
+    ],
+    "client": "ONSIDE COMPANY"
+  },
+  {
+    "id": "13c50bd8-fe2d-8047-85ec-fc670c3f5fa3",
+    "year": 2024,
+    "name": "GATSBY Styling Tips Content",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Record"
+    ],
+    "client": "갸스비 코리아"
+  },
+  {
+    "id": "13c50bd8-fe2d-804c-8df7-dffcfc7cc582",
+    "year": 2024,
+    "name": "픽쳐스로얄",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Record",
+      "Sound Assistant"
+    ],
+    "client": "최마태의 POST IT"
+  },
+  {
+    "id": "13c50bd8-fe2d-8055-a7d2-ff7057d297e5",
+    "year": 2024,
+    "name": "촉법소년단",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "ADR",
+      "Foley",
+      "Mastering"
+    ],
+    "client": "김선연 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-805c-82b5-f96b0700e346",
+    "year": 2024,
+    "name": "ROAD TO RAPBEAT SEASON 2",
+    "platform": [
+      "Music"
+    ],
+    "process": [
+      "Record",
+      "Mixing",
+      "Mastering"
+    ],
+    "client": "RAPBEAT"
+  },
+  {
+    "id": "13c50bd8-fe2d-805f-876e-ffdcff4a47ce",
+    "year": 2024,
+    "name": "[LIVE CLIP] Deepshower, 펀치넬로 - 조금 돌아왔어 (Feat. Skinny Brown)",
+    "platform": [
+      "Music"
+    ],
+    "process": [
+      "Record"
+    ],
+    "client": "Deepshower · 펀치넬로"
+  },
+  {
+    "id": "13c50bd8-fe2d-806c-817f-caf9b34174ed",
+    "year": 2024,
+    "name": "우리 바다를 지킨 영웅들",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Mastering"
+    ],
+    "client": "대한민국 해군"
+  },
+  {
+    "id": "13c50bd8-fe2d-80aa-a6c5-c8f7c88f8fb5",
+    "year": 2024,
+    "name": "Love isn't a fantasy, either [L.I.F.E]",
+    "platform": [
+      "Music"
+    ],
+    "process": [
+      "Mixing",
+      "Mastering"
+    ],
+    "client": "Jain"
+  },
+  {
+    "id": "13c50bd8-fe2d-80be-abf2-d341568e8dcf",
+    "year": 2024,
+    "name": "서울예술대학교 WAVE 동계 워크숍",
+    "platform": [
+      "Live"
+    ],
+    "process": [
+      "Record",
+      "PA"
+    ],
+    "client": "WAVE"
+  },
+  {
+    "id": "13c50bd8-fe2d-80d7-9760-f383c27958eb",
+    "year": 2024,
+    "name": "KTDS - 제1회 DS타운홀",
+    "platform": [
+      "Live"
+    ],
+    "process": [
+      "PA",
+      "Record"
+    ],
+    "client": "KTDS"
+  },
+  {
+    "id": "13c50bd8-fe2d-80e0-a181-cdbea090c71a",
+    "year": 2024,
+    "name": "난장",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Mastering"
+    ],
+    "client": "한원석 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-80e2-8683-ce6cc7449dbc",
+    "year": 2024,
+    "name": "교과서에는 없는, 나만 모르는 그날 이야기",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Mastering"
+    ],
+    "client": "대한민국 해군"
+  },
+  {
+    "id": "13c50bd8-fe2d-80e9-8ddf-d948dbaaab93",
+    "year": 2024,
+    "name": "해나의 여름으로 팬미팅",
+    "platform": [
+      "Live"
+    ],
+    "process": [
+      "PA"
+    ],
+    "client": "ONSIDE COMPANY"
+  },
+  {
+    "id": "13c50bd8-fe2d-80eb-948d-d0adffd7ffe0",
+    "year": 2024,
+    "name": "수련수련의 여름정원 콘서트",
+    "platform": [
+      "Live"
+    ],
+    "process": [
+      "PA"
+    ],
+    "client": "ONSIDE COMPANY"
+  },
+  {
+    "id": "13c50bd8-fe2d-80f4-883e-f4fdbed023e4",
+    "year": 2024,
+    "name": "위대한 항해 - 웹 예능",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Mastering"
+    ],
+    "client": "위대한 항해"
+  },
+  {
+    "id": "18350bd8-fe2d-801b-8a8f-dd60b5f07708",
+    "year": 2024,
+    "name": "겟올라잇",
+    "platform": [
+      "Live"
+    ],
+    "process": [
+      "PA"
+    ],
+    "client": "겟올라잇"
+  },
+  {
+    "id": "18350bd8-fe2d-803e-b3b8-f58fc6c7538f",
+    "year": 2024,
+    "name": "서울아트비디오페스티벌 오프닝/클로징",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Mastering"
+    ],
+    "client": "서울아트비디오페스티벌"
+  },
+  {
+    "id": "18350bd8-fe2d-80a1-ada0-f7be996e2107",
+    "year": 2024,
+    "name": "율이의 겨울 팬미팅",
+    "platform": [
+      "Live"
+    ],
+    "process": [
+      "PA"
+    ],
+    "client": "ONSIDE COMPANY"
+  },
+  {
+    "id": "18350bd8-fe2d-80ad-8629-cd48100b612d",
+    "year": 2024,
+    "name": "안녕한 우리",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "ADR",
+      "Foley",
+      "Mastering"
+    ],
+    "client": "장은영 감독"
+  },
+  {
+    "id": "18350bd8-fe2d-80f8-a646-cc43b1270d85",
+    "year": 2024,
+    "name": "2024 임팩트 커리어 마스터",
+    "platform": [
+      "Edit"
+    ],
+    "process": [],
+    "client": "매치워크"
+  },
+  {
+    "id": "13c50bd8-fe2d-8018-89db-f6d1e9dc6a61",
+    "year": 2023,
+    "name": "살아지다",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "ADR",
+      "Foley",
+      "Record",
+      "Mastering"
+    ],
+    "client": "정도영 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-8031-90fc-fbe4760dcd9f",
+    "year": 2023,
+    "name": "붕대소년",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Record",
+      "Sound Assistant"
+    ],
+    "client": "양새한 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-8040-9dac-f39489ba2263",
+    "year": 2023,
+    "name": "Haroo - Dream Message | Interview",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Mixing",
+      "Mastering"
+    ],
+    "client": "서울예술대학교 아프로프로젝트"
+  },
+  {
+    "id": "13c50bd8-fe2d-8044-9bc0-e5c2fa6caaff",
+    "year": 2023,
+    "name": "서울예술대학교 이명세 감독 마스터 클래스",
+    "platform": [
+      "Live"
+    ],
+    "process": [
+      "PA",
+      "Record"
+    ],
+    "client": "서울예술대학교"
+  },
+  {
+    "id": "13c50bd8-fe2d-8051-941e-e758691e4a7e",
+    "year": 2023,
+    "name": "롤스로이스 코리아",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Mixing",
+      "Mastering"
+    ],
+    "client": "롤스로이스 코리아"
+  },
+  {
+    "id": "13c50bd8-fe2d-8052-a289-e36530d0bb96",
+    "year": 2023,
+    "name": "목요일",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "ADR",
+      "Foley",
+      "Record",
+      "Mastering",
+      "Sound Assistant"
+    ],
+    "client": "유범수 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-8071-8537-fab1b98af1ef",
+    "year": 2023,
+    "name": "박찬엽 - 밤이 되었고 그림자를 보았습니다",
+    "platform": [
+      "Music"
+    ],
+    "process": [
+      "Sound Design"
+    ],
+    "client": "박찬엽"
+  },
+  {
+    "id": "13c50bd8-fe2d-807a-b374-de06b6f23f39",
+    "year": 2023,
+    "name": "해군 훈련소의 모든 것 \"바다로 가는 첫걸음\"",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Mastering"
+    ],
+    "client": "대한민국 해군"
+  },
+  {
+    "id": "13c50bd8-fe2d-807d-8e5c-e63356db3773",
+    "year": 2023,
+    "name": "작자미상",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "ADR",
+      "Foley",
+      "Record",
+      "Mastering"
+    ],
+    "client": "편민우 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-8084-8909-ea68b2d68d3d",
+    "year": 2023,
+    "name": "Drag-Me",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Record"
+    ],
+    "client": "양승주 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-8086-a9b9-d5a127d5e5e0",
+    "year": 2023,
+    "name": "로드투자립",
+    "platform": [
+      "Live"
+    ],
+    "process": [
+      "Record",
+      "PA"
+    ],
+    "client": "매치워크"
+  },
+  {
+    "id": "13c50bd8-fe2d-8088-a6c3-d5c4005aa5f1",
+    "year": 2023,
+    "name": "날치",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "ADR",
+      "Foley",
+      "Record",
+      "Mastering"
+    ],
+    "client": "정도영 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-8098-a273-e0fef2e27bf1",
+    "year": 2023,
+    "name": "잊히지 않은 영웅에게 - 캐나다 보훈음악회 미니 다큐멘터리",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Mastering"
+    ],
+    "client": "대한민국 해군"
+  },
+  {
+    "id": "13c50bd8-fe2d-8099-97be-c3f2519a00e2",
+    "year": 2023,
+    "name": "海브리타",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Mastering"
+    ],
+    "client": "대한민국 해군"
+  },
+  {
+    "id": "13c50bd8-fe2d-80b8-8a35-f53b11469ed6",
+    "year": 2023,
+    "name": "우리는 대한민국 해군입니다 (해군 창설 78주년 기념 광고 영상)",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Mastering"
+    ],
+    "client": "대한민국 해군"
+  },
+  {
+    "id": "13c50bd8-fe2d-80b9-b1d1-d240a980d680",
+    "year": 2023,
+    "name": "비늘과 혈관사이",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Mastering"
+    ],
+    "client": "구본진 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-80d2-a6d9-f40fdc511d53",
+    "year": 2023,
+    "name": "HY3D 하드웨어가이드",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "ADR"
+    ],
+    "client": "HY3D"
+  },
+  {
+    "id": "13c50bd8-fe2d-80d7-964c-e9c93c74e174",
+    "year": 2023,
+    "name": "마젠타 5주년 기념 구독자 팬미팅",
+    "platform": [
+      "Live"
+    ],
+    "process": [
+      "PA"
+    ],
+    "client": "ONSIDE COMPANY"
+  },
+  {
+    "id": "13c50bd8-fe2d-80de-97c6-d8599fc06267",
+    "year": 2023,
+    "name": "왓슨앤컴퍼니 POCUS 홍보 영상",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Mastering"
+    ],
+    "client": "왓슨앤컴퍼니"
+  },
+  {
+    "id": "13c50bd8-fe2d-80e4-b628-d1b02351cf0b",
+    "year": 2023,
+    "name": "제3회 KTOA 벤처리움 데모데이",
+    "platform": [
+      "Live"
+    ],
+    "process": [
+      "PA",
+      "Record"
+    ],
+    "client": "한국통신사업자연합회"
+  },
+  {
+    "id": "13c50bd8-fe2d-80ef-a833-f3a370315eed",
+    "year": 2023,
+    "name": "MIZ - Love Attack! (With. Seo Hyun) | Interview",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Mixing",
+      "Mastering"
+    ],
+    "client": "서울예술대학교 아프로프로젝트"
+  },
+  {
+    "id": "13c50bd8-fe2d-80fb-9aa9-fb6b84d14e81",
+    "year": 2023,
+    "name": "서울예술대학교 개교 61주년 기념 체육대회 축구",
+    "platform": [
+      "Live"
+    ],
+    "process": [
+      "Record",
+      "PA"
+    ],
+    "client": "서울예술대학교"
+  },
+  {
+    "id": "18350bd8-fe2d-803e-a2d4-f570d8df2bb6",
+    "year": 2023,
+    "name": "IT 진로 콘서트 - 현장 스케치",
+    "platform": [
+      "Edit"
+    ],
+    "process": [],
+    "client": "매치워크"
+  },
+  {
+    "id": "13c50bd8-fe2d-800a-9e58-c34c376fa66c",
+    "year": 2022,
+    "name": "곽태풍 - I can't do this all day ...",
+    "platform": [
+      "Music"
+    ],
+    "process": [
+      "Sound Design",
+      "Mastering"
+    ],
+    "client": "곽태풍"
+  },
+  {
+    "id": "13c50bd8-fe2d-800c-882f-f67576c85887",
+    "year": 2022,
+    "name": "열반",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Foley",
+      "Mastering"
+    ],
+    "client": "김선연 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-8029-9f1b-df94b375d51e",
+    "year": 2022,
+    "name": "쫌생이게임",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Record",
+      "Sound Assistant"
+    ],
+    "client": "낄낄상회"
+  },
+  {
+    "id": "13c50bd8-fe2d-8029-bc11-c15c9b618025",
+    "year": 2022,
+    "name": "[건강한취준] 라이프디자인 프로그램 후기 영상",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Mixing",
+      "Record",
+      "Mastering"
+    ],
+    "client": "매치워크"
+  },
+  {
+    "id": "13c50bd8-fe2d-803a-8f7f-d05978df137d",
+    "year": 2022,
+    "name": "2021학년도 강남대학교 대학혁신지원사업 우수성과 사례",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Sound Design"
+    ],
+    "client": "강남대학교"
+  },
+  {
+    "id": "13c50bd8-fe2d-803e-b044-dc4018d720dc",
+    "year": 2022,
+    "name": "PD님이 책임지세요",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Sound Assistant",
+      "Mixing",
+      "Sound Design",
+      "ADR",
+      "Foley",
+      "Mastering"
+    ],
+    "client": "김선연 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-804d-9f7a-d50a4a6ee9a0",
+    "year": 2022,
+    "name": "교회창립 15주년 기념 및 빅사이엔 개국 감사 예배",
+    "platform": [
+      "Live"
+    ],
+    "process": [
+      "Record",
+      "PA"
+    ],
+    "client": "송정큰교회"
+  },
+  {
+    "id": "13c50bd8-fe2d-8051-bc48-cf0f28f42e1c",
+    "year": 2022,
+    "name": "침묵",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Foley",
+      "Mastering"
+    ],
+    "client": "배준원 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-8069-99f5-c04aa6cdacf6",
+    "year": 2022,
+    "name": "[2022 선플캠페인] 대중문화예술인 악플 피해예방을 위한 건전한 댓글 문화 캠페인",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Record",
+      "Sound Assistant"
+    ],
+    "client": "한국연예제작자협회"
+  },
+  {
+    "id": "13c50bd8-fe2d-807b-9a68-c5932ddccb6b",
+    "year": 2022,
+    "name": "AREA 1997",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Foley",
+      "Mastering"
+    ],
+    "client": "부천국제판타스틱영화제"
+  },
+  {
+    "id": "13c50bd8-fe2d-807c-949c-f78b521123bc",
+    "year": 2022,
+    "name": "곽태풍 - SUNFLOWER ! (remastered)",
+    "platform": [
+      "Music"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Mastering"
+    ],
+    "client": "곽태풍"
+  },
+  {
+    "id": "13c50bd8-fe2d-809e-b182-c054b7198be7",
+    "year": 2022,
+    "name": "인생은V로그",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Foley",
+      "Record",
+      "Mastering"
+    ],
+    "client": "정호진 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-80af-a7f4-c71f1cfc3793",
+    "year": 2022,
+    "name": "[웹드라마] 시한부 사랑",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Foley",
+      "Mastering"
+    ],
+    "client": "힙스토리"
+  },
+  {
+    "id": "13c50bd8-fe2d-80b6-8dcf-cde62b16365b",
+    "year": 2022,
+    "name": "원더랜드를 불러줘!",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Foley",
+      "Mastering"
+    ],
+    "client": "최경일 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-80c8-a56b-f9366c9ee646",
+    "year": 2022,
+    "name": "[교보생명] 마이데이터 피치",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "ADR",
+      "Foley",
+      "Record",
+      "Mastering"
+    ],
+    "client": "교보생명"
+  },
+  {
+    "id": "13c50bd8-fe2d-80f6-b16a-eb104870f681",
+    "year": 2022,
+    "name": "한양 스타트업 캠퍼스 - Boost Camp",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Record",
+      "Mastering"
+    ],
+    "client": "한양대학교 ERICA 창업교육센터"
+  },
+  {
+    "id": "18350bd8-fe2d-80d1-aea8-da1bacbd09cf",
+    "year": 2022,
+    "name": "SEMICS 강의 영상",
+    "platform": [
+      "Edit"
+    ],
+    "process": [],
+    "client": "SEMICS"
+  },
+  {
+    "id": "13c50bd8-fe2d-800e-be2c-f1388ea922c0",
+    "year": 2021,
+    "name": "완벽한 피아노 연주를 하는 방법",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Record"
+    ],
+    "client": "정승민 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-8012-88f1-d679732834b0",
+    "year": 2021,
+    "name": "쇼미더머니 속풀이토크-REWIND",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Record"
+    ],
+    "client": "Mnet"
+  },
+  {
+    "id": "13c50bd8-fe2d-8016-a2af-cd29cfb47fd5",
+    "year": 2021,
+    "name": "공공스포츠클럽 홍보영상",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Record",
+      "Sound Assistant"
+    ],
+    "client": "공공스포츠클럽 Sports On"
+  },
+  {
+    "id": "13c50bd8-fe2d-802d-997c-e5dede40561a",
+    "year": 2021,
+    "name": "환절기",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Mastering"
+    ],
+    "client": "박민하 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-802f-a785-c54af55fc4dd",
+    "year": 2021,
+    "name": "목화토금수",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Record"
+    ],
+    "client": "박소원 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-8031-a414-ef1c8c67ca39",
+    "year": 2021,
+    "name": "그것이 만들고 싶다 - YETI 아이스박스",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Record",
+      "Mastering"
+    ],
+    "client": "LS ELECTRIC"
+  },
+  {
+    "id": "13c50bd8-fe2d-8045-9497-f9833bc73c3b",
+    "year": 2021,
+    "name": "내가 사랑하는 방법",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Mastering"
+    ],
+    "client": "변한솔 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-805f-b51c-def70ee099b4",
+    "year": 2021,
+    "name": "한방에 세탁 끝! 국내산 캡슐세제! 캡슐쏙쏙!",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Record",
+      "Sound Assistant"
+    ],
+    "client": "캡슐쏙쏙"
+  },
+  {
+    "id": "13c50bd8-fe2d-8084-ad4a-e5b58ac7a26b",
+    "year": 2021,
+    "name": "수아",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "ADR",
+      "Foley",
+      "Record",
+      "Mastering"
+    ],
+    "client": "남혜리 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-8088-9606-f26a7c82e888",
+    "year": 2021,
+    "name": "ITEASY를 소개하는 이 사람은 누구??!?",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Record"
+    ],
+    "client": "ITEASY"
+  },
+  {
+    "id": "13c50bd8-fe2d-80bd-b90a-e7a8fe1ddaea",
+    "year": 2021,
+    "name": "메이저 출입금지",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Foley",
+      "Record",
+      "Mastering"
+    ],
+    "client": "정하은 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-80c0-8505-cb179dd0bd18",
+    "year": 2021,
+    "name": "전역",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Mastering"
+    ],
+    "client": "정도영 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-80c1-9ff3-c202e78b781f",
+    "year": 2021,
+    "name": "내일은 예술가",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Foley",
+      "Mastering"
+    ],
+    "client": "김진아 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-80cb-b6a5-c6a909f416c1",
+    "year": 2021,
+    "name": "빅데이터로 바라보는 관광산업의 미래",
+    "platform": [
+      "Live"
+    ],
+    "process": [
+      "PA"
+    ],
+    "client": "서울시민관광아카데미"
+  },
+  {
+    "id": "13c50bd8-fe2d-80d9-ac84-c9cea34ecfae",
+    "year": 2021,
+    "name": "무르펜 액티브밴드 X-2(엑스투)",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "ADR",
+      "Foley",
+      "Record",
+      "Mastering"
+    ],
+    "client": "무르펜"
+  },
+  {
+    "id": "13c50bd8-fe2d-80de-b060-d20a7d37b9c1",
+    "year": 2021,
+    "name": "404",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Record"
+    ],
+    "client": "장수남 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-80e5-a94c-ce18cf012a98",
+    "year": 2021,
+    "name": "아무도 모르는",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design"
+    ],
+    "client": "변한솔 감독"
+  },
+  {
+    "id": "18350bd8-fe2d-8003-9e2e-dce2963e0658",
+    "year": 2021,
+    "name": "2021년 KIOST 칭찬 릴레이 시즌4",
+    "platform": [
+      "Edit"
+    ],
+    "process": [],
+    "client": "KIOST 한국해양과학기술원"
+  },
+  {
+    "id": "13c50bd8-fe2d-8021-b472-ca9ddfda9f34",
+    "year": 2020,
+    "name": "서울예술대학교 입학식 축하 영상",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Mixing",
+      "ADR",
+      "Mastering"
+    ],
+    "client": "서울예술대학교"
+  },
+  {
+    "id": "13c50bd8-fe2d-802c-81d1-e6ef71ee843a",
+    "year": 2020,
+    "name": "WONDERWALL - 장동원",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Record",
+      "Sound Assistant"
+    ],
+    "client": "WONDERWALL"
+  },
+  {
+    "id": "13c50bd8-fe2d-8037-a4dc-d38aedcaedf7",
+    "year": 2020,
+    "name": "서로",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Mastering"
+    ],
+    "client": "박신준 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-8058-8d71-cc0415458c6f",
+    "year": 2020,
+    "name": "커피타는 집사 & 식빵굽는 고양이",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Record",
+      "Sound Assistant"
+    ],
+    "client": "컾채널"
+  },
+  {
+    "id": "13c50bd8-fe2d-8075-8a4f-c90d014dea3c",
+    "year": 2020,
+    "name": "중동고등학교 입시 영상",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "ADR",
+      "Mastering"
+    ],
+    "client": "정도영 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-807c-bf25-df3aba2a7dc0",
+    "year": 2020,
+    "name": "BBQ 공모전",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Foley",
+      "Mastering"
+    ],
+    "client": "임광민 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-8083-908d-d51c442b0ebb",
+    "year": 2020,
+    "name": "기억의 조각",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Foley",
+      "Record",
+      "Mastering"
+    ],
+    "client": "이유빈 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-8084-b8aa-dd5da951d0ed",
+    "year": 2020,
+    "name": "제애",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "ADR",
+      "Foley",
+      "Record",
+      "Mastering"
+    ],
+    "client": "이병일 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-8091-bc3b-cf2878f86c68",
+    "year": 2020,
+    "name": "I's",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Record"
+    ],
+    "client": "정태빈 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-80ad-bed9-e174f1669ffd",
+    "year": 2020,
+    "name": "안성마들육사발 ASMR",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Record",
+      "Sound Assistant"
+    ],
+    "client": "라면공작소"
+  },
+  {
+    "id": "13c50bd8-fe2d-80b7-936b-ccee071c338e",
+    "year": 2020,
+    "name": "황혼",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Record",
+      "Mastering"
+    ],
+    "client": "조영상 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-80bd-9ea8-da547840fe0d",
+    "year": 2020,
+    "name": "[Story MV] 예지(YEZI) - 'My Gravity'",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Sound Design",
+      "Foley",
+      "Mastering"
+    ],
+    "client": "예지"
+  },
+  {
+    "id": "13c50bd8-fe2d-80ce-a4c4-f7f7a8d301b8",
+    "year": 2020,
+    "name": "작품을 위하여",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "ADR",
+      "Foley",
+      "Record",
+      "Mastering"
+    ],
+    "client": "정도영 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-80ef-9166-d006bd6a291f",
+    "year": 2020,
+    "name": "연옥",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Record",
+      "Sound Assistant"
+    ],
+    "client": "배준원 감독"
+  },
+  {
+    "id": "18350bd8-fe2d-8026-b988-c6488ebe7334",
+    "year": 2020,
+    "name": "윤스아카데미",
+    "platform": [
+      "Edit"
+    ],
+    "process": [],
+    "client": "윤스아카데미"
+  },
+  {
+    "id": "13c50bd8-fe2d-8012-aed5-c349cef8b059",
+    "year": 2019,
+    "name": "소문",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Foley",
+      "Mastering"
+    ],
+    "client": "김홍직 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-802e-9c4d-d257db807a5d",
+    "year": 2019,
+    "name": "헤드셋뮤직 - 버스킹 라이브",
+    "platform": [
+      "Music"
+    ],
+    "process": [
+      "PA",
+      "Record"
+    ],
+    "client": "헤드셋뮤직"
+  },
+  {
+    "id": "13c50bd8-fe2d-803d-9022-dd4cf0f949ac",
+    "year": 2019,
+    "name": "부산",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "ADR",
+      "Foley",
+      "Record",
+      "Mastering"
+    ],
+    "client": "홍현지 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-803d-989f-ee166deb2b23",
+    "year": 2019,
+    "name": "극희간화",
+    "platform": [
+      "Music"
+    ],
+    "process": [
+      "Record"
+    ],
+    "client": "남상현 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-8072-ad5b-fb3d4f72744c",
+    "year": 2019,
+    "name": "[웹드라마] C급 인생",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "ADR",
+      "Foley",
+      "Record",
+      "Mastering"
+    ],
+    "client": ""
+  },
+  {
+    "id": "13c50bd8-fe2d-8074-9701-cba16b99f903",
+    "year": 2019,
+    "name": "창작의 고통",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "ADR",
+      "Foley",
+      "Record",
+      "Mastering"
+    ],
+    "client": "정도영 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-807a-9ee7-e5dc7e5531c5",
+    "year": 2019,
+    "name": "비행소녀",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Foley",
+      "Mastering"
+    ],
+    "client": "배상준 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-807f-ae30-e85f75539ab3",
+    "year": 2019,
+    "name": "인간을 위하여",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "ADR",
+      "Foley",
+      "Record",
+      "Mastering"
+    ],
+    "client": "정도영 감독"
+  },
+  {
+    "id": "13c50bd8-fe2d-808f-ac57-fb736860a946",
+    "year": 2019,
+    "name": "[TRIVIA] 방탄소년단 (BTS) - MIC Drop | Cover Dance",
+    "platform": [
+      "Music"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Mastering"
+    ],
+    "client": ""
+  },
+  {
+    "id": "18350bd8-fe2d-8064-bd52-ea761a9ff871",
+    "year": 2019,
+    "name": "우왁굳의 게임방송",
+    "platform": [
+      "Edit"
+    ],
+    "process": [],
+    "client": "우왁굳"
+  }
 ]

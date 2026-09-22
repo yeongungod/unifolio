@@ -4,25 +4,16 @@ import { site } from '../data/site';
 <section id="services">
   <div class="wrap">
     <p class="label">Services</p>
-    <h2>하는 일</h2>
+    <h2>편집부터 사운드까지</h2>
     <ul class="services">
       {site.services.map((s) => (
         <li><h3>{s.title}</h3><p class="muted">{s.desc}</p></li>
       ))}
     </ul>
-    <p class="label" style="margin-top:56px">Process</p>
-    <ol class="process">
-      {site.process.map((p, i) => <li><span class="n">{i + 1}</span>{p}</li>)}
-    </ol>
-    <p class="muted" style="margin-top:14px;font-size:14px">{site.processNote}</p>
   </div>
 </section>
 <style>
   .services { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
   .services li { border-top: 1px solid var(--line); padding-top: 14px; }
   .services p { margin-top: 6px; font-size: 14px; }
-  .process { list-style: none; padding: 0; margin: 16px 0 0; display: flex; gap: 12px; flex-wrap: wrap; font-weight: 600; }
-  .process li { display: flex; align-items: center; gap: 8px; }
-  .process li + li::before { content: '→'; color: var(--muted); margin-right: 4px; }
-  .n { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--ink); font-size: 12px; }
 </style>

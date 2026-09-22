@@ -3,14 +3,15 @@ import rows from '../data/archive.json';
 const PLATFORM: Record<string, string> = { Film: '영화', Live: '라이브', Music: '음악', Web: '웹콘텐츠', Edit: '편집', Game: '게임사운드' };
 const PROCESS: Record<string, string> = { Mixing: '믹싱', 'Sound Design': '사운드디자인', ADR: 'ADR', Foley: '폴리', Record: '녹음', Mastering: '마스터링', 'Sound Assistant': '사운드 어시스트', PA: 'PA', Cinamatic: '시네마틱', Skill: '스킬', UI: 'UI' };
 const filters = ['전체', ...Object.values(PLATFORM)];
-const sorted = [...rows].sort((a, b) => b.year - a.year);
+const sorted: Array<(typeof rows)[number] & { url?: string }> = [...rows].sort((a, b) => b.year - a.year);
+const hasLinks = sorted.some((row) => row.url);
 ---
 <div class="filters" role="group" aria-label="분야 필터">
   {filters.map((f, i) => <button class:list={['chip', { on: i === 0 }]} data-f={f} aria-pressed={i === 0 ? 'true' : 'false'}>{f}</button>)}
 </div>
 <p class="muted count" aria-live="polite"><span id="count">{sorted.length}</span>건</p>
 <table class="archive">
-  <thead><tr><th>연도</th><th>작업</th><th>분야</th><th>역할</th><th>클라이언트</th></tr></thead>
+  <thead><tr><th scope="col">연도</th><th scope="col">작업</th><th scope="col">분야</th><th scope="col">역할</th><th scope="col">클라이언트</th>{hasLinks && <th scope="col">링크</th>}</tr></thead>
   <tbody>
     {sorted.map((r) => (
       <tr data-p={r.platform.map((p) => PLATFORM[p]).join(' ')}>
@@ -19,6 +20,7 @@ const sorted = [...rows].sort((a, b) => b.year - a.year);
         <td>{r.platform.map((p) => PLATFORM[p]).join(', ')}</td>
         <td class="muted">{r.process.map((p) => PROCESS[p] ?? p).join(' · ')}</td>
         <td class="muted">{r.client}</td>
+        {hasLinks && <td>{r.url ? <a class="work-link" href={r.url} target="_blank" rel="noopener noreferrer" aria-label={`${r.name} 영상 보기`}>영상 ↗</a> : null}</td>}
       </tr>
     ))}
   </tbody>
@@ -31,8 +33,12 @@ const sorted = [...rows].sort((a, b) => b.year - a.year);
   .count { margin: 16px 0 8px; font-size: 14px; }
   .archive { width: 100%; border-collapse: collapse; font-size: 14px; }
   .archive th { text-align: left; font-weight: 600; color: var(--muted); padding: 8px 10px 8px 0; border-bottom: 1px solid var(--line); font-size: 12px; letter-spacing: .06em; }
-  .archive td { padding: 10px 10px 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .archive td { padding: 10px 10px 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; word-break: keep-all; overflow-wrap: anywhere; }
+  .archive td:first-child { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .archive td:nth-child(3) { min-width: 7em; }
+  .chip:hover { border-color: var(--accent); }
   .name { font-weight: 600; }
+  .work-link { white-space: nowrap; text-decoration: underline; text-underline-offset: 3px; }
   .archive tr[hidden] { display: none; }
   @media (max-width: 700px) {
     .archive thead { display: none; }

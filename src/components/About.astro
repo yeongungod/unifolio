@@ -1,11 +1,22 @@
 ---
 import { site } from '../data/site';
 const a = site.about;
+const toolLogos: Record<string, { file: string; url: string; mono?: boolean }> = {
+  'Premiere Pro': { file: 'premiere-pro.svg', url: 'https://www.adobe.com/products/premiere.html' },
+  'Pro Tools': { file: 'pro-tools.svg', url: 'https://www.avid.com/pro-tools', mono: true },
+  'After Effects': { file: 'after-effects.svg', url: 'https://www.adobe.com/products/aftereffects.html' },
+  'Photoshop': { file: 'photoshop.svg', url: 'https://www.adobe.com/products/photoshop.html' },
+  'Cubase': { file: 'cubase.svg', url: 'https://www.steinberg.net/cubase/', mono: true },
+  'Ableton Live': { file: 'ableton-live.png', url: 'https://www.ableton.com/live/' },
+  'iZotope': { file: 'izotope.svg', url: 'https://www.izotope.com/' },
+  'Waves': { file: 'waves.png', url: 'https://www.waves.com/plugins' },
+  'UAD': { file: 'uad.png', url: 'https://www.uaudio.com/' },
+};
 ---
 <section id="studio">
   <div class="wrap">
     <p class="label">Studio</p>
-    <h2>{site.name} · 대표 {site.owner}</h2>
+    <h2>{site.name}</h2>
     <p class="intro">{a.intro}</p>
     <div class="cols">
       <div>
@@ -19,7 +30,12 @@ const a = site.about;
         <p>{a.edu}</p>
         <ul class="plain">{a.certs.map((c) => <li>{c}</li>)}</ul>
         <h3 style="margin-top:24px">사용 툴</h3>
-        <p class="tools">{a.tools.join(' · ')}</p>
+        <ul class="tools">{a.tools.map((tool) => (
+          <li><a href={toolLogos[tool].url} target="_blank" rel="noopener noreferrer">
+            <img src={`/images/tools/${toolLogos[tool].file}`} class:list={{ mono: toolLogos[tool].mono }} alt="" width="28" height="28" loading="lazy" />
+            <span>{tool}</span>
+          </a></li>
+        ))}</ul>
       </div>
     </div>
   </div>
@@ -32,6 +48,11 @@ const a = site.about;
   .awards strong { grid-column: 2; }
   .awards li > span:last-child { grid-column: 2; color: var(--muted); }
   .plain li { font-size: 14px; color: var(--muted); }
-  .tools { font-size: 14px; color: var(--muted); }
+  .tools { list-style: none; padding: 0; margin: 12px 0 0; font-size: 14px; color: var(--muted); }
+  .tools li + li { margin-top: 4px; }
+  .tools a { display: flex; align-items: center; gap: 12px; min-height: 40px; width: fit-content; color: inherit; text-decoration: none; }
+  .tools a:hover { color: var(--paper); }
+  .tools img { width: 28px; height: 28px; object-fit: contain; flex: none; }
+  .tools img.mono { filter: invert(1); }
   @media (max-width: 700px) { .cols { grid-template-columns: 1fr; gap: 28px; } }
 </style>

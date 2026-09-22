@@ -7,6 +7,7 @@ const a = site.about;
 ---
 <Base title={`${site.name} 소개서`} description="우니스튜디오 소개서 — 영상 편집 · 사운드. 인쇄용 한 장." bodyClass="intro-body">
   <div class="toolbar no-print wrap">
+    <a class="back" href="/">← 사이트로 돌아가기</a>
     <p class="muted">이 페이지가 소개서입니다. 브라우저 인쇄에서 「PDF로 저장」하면 A4 한 장이 됩니다.</p>
     <button class="btn accent" onclick="window.print()">PDF로 저장</button>
   </div>
@@ -39,14 +40,14 @@ const a = site.about;
     <div class="works">
       {six.map((w) => (
         <div class="w">
-          <img src={w.youtube ? `https://i.ytimg.com/vi/${w.youtube}/mqdefault.jpg` : w.image} alt="" />
+          <img src={w.image ?? (w.youtube ? `https://i.ytimg.com/vi/${w.youtube}/mqdefault.jpg` : undefined)} alt="" width="320" height="140" />
           <p><strong>{w.title}</strong><br /><span>{w.role} · {w.year}</span></p>
         </div>
       ))}
     </div>
 
     <footer class="foot">
-      <p><strong>{site.email}</strong> · {site.phone} · yeongungod.com</p>
+      <p><a href={`mailto:${site.email}`}><strong>{site.email}</strong></a> · <a href={site.phoneHref}>{site.phone}</a> · <a href="https://yeongungod.com">yeongungod.com</a></p>
       <p class="small">{site.name} · 대표 {site.owner} · 사업자등록번호 {site.bizNo} · {site.address}</p>
     </footer>
   </article>
@@ -54,25 +55,31 @@ const a = site.about;
 
 <style>
   .toolbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 24px 16px; flex-wrap: wrap; }
+  .toolbar p { flex: 1 1 360px; color: var(--paper); }
+  .back { padding: 10px 0; }
+  .back:hover { color: var(--accent); }
   .sheet {
+    --muted: var(--muted-on-paper);
     background: var(--paper); color: var(--ink); width: 210mm; min-height: 297mm; margin: 0 auto 48px;
     padding: 8mm 16mm 3mm; box-sizing: border-box; font-size: 10pt; line-height: 1.35;
   }
-  .head { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent); padding-bottom: 4px; }
+  .head { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent); padding-bottom: 4px; gap: 8px 16px; flex-wrap: wrap; }
   .tag { font-size: 9pt; color: var(--muted); letter-spacing: .08em; }
   .sheet h1 { font-size: 22pt; margin-top: 8px; }
   .sub { color: var(--muted); margin-top: 3px; }
-  .sheet h2 { font-size: 10pt; color: var(--accent-on-paper); letter-spacing: .1em; text-transform: uppercase; margin-top: 9px; border-bottom: 1px solid var(--paper-line); padding-bottom: 2px; } /* 종이 위 대비용 — 아쿠아마린은 면적에만, 글자는 진하게 */
+  .sheet h2 { font-size: 10pt; color: var(--ink); letter-spacing: .1em; text-transform: uppercase; margin-top: 9px; border-bottom: 1px solid var(--paper-line); padding-bottom: 2px; } /* 아쿠아마린은 구분선에, 작은 제목은 브랜드 먹색으로 */
   .two { display: grid; grid-template-columns: 1.15fr 1fr; gap: 14px; }
   .sheet ul { padding-left: 14px; margin: 4px 0 0; }
   .sheet li { margin: 1px 0; }
   .tight li { font-size: 9.5pt; line-height: 1.25; }
   .small { font-size: 9pt; color: var(--muted); margin-top: 3px; }
   .works { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 2px; }
-  .w img { width: 100%; aspect-ratio: 16/7; object-fit: cover; border-radius: 3px; }
+  .w img { width: 100%; height: auto; aspect-ratio: 16/7; object-fit: cover; border-radius: 3px; }
   .w p { font-size: 9pt; margin-top: 2px; line-height: 1.25; }
   .w span { color: var(--muted); }
   .foot { margin-top: auto; border-top: 1px solid var(--paper-line); padding-top: 2px; }
   .foot p:first-child { font-size: 11pt; }
-  @media (max-width: 800px) { .sheet { width: 100%; min-height: 0; padding: 20px 16px; } .two, .works { grid-template-columns: 1fr; } .works { grid-template-columns: 1fr 1fr; } }
+  .foot a { white-space: nowrap; }
+  .foot a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  @media screen and (max-width: 800px) { .sheet { width: 100%; min-height: 0; padding: 20px 16px; } .two, .works { grid-template-columns: 1fr; } .works { grid-template-columns: 1fr 1fr; } }
 </style>

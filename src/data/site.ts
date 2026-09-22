@@ -8,8 +8,8 @@ export const site = {
   phoneHref: 'tel:+821059256367',
   address: '경기도 양평군 용문면 용문로371번길 6, 202호',
   hero: {
-    title: '영상 편집과 사운드를 한 곳에서.',
-    sub: '유튜브 롱폼·쇼츠 편집, 영화·웹콘텐츠 믹싱. 2019년부터 100건 이상.',
+    title: '장면의 흐름부터, 소리의 디테일까지.',
+    sub: '유튜브 편집부터 영화·웹콘텐츠 사운드까지. 보고 듣는 경험을 다듬습니다.',
   },
   services: [
     { title: '유튜브 롱폼·쇼츠 편집', desc: '라이브 원본에서 본편과 쇼츠까지. 풀자막·밈·썸네일 문구 포함.' },
@@ -20,7 +20,7 @@ export const site = {
   process: ['문의', '견적', '작업', '납품'],
   processNote: '일반과세 사업자라 세금계산서 발행이 됩니다. 견적은 작업 범위를 듣고 드립니다.',
   about: {
-    intro: '서울예술대학교 방송영상과에서 음향을 전공했고, 2019년부터 영화·웹콘텐츠·라이브·음악 사운드를 해왔습니다. 2025년부터 유튜브 편집을 함께 하고, 2026년 9월 우니스튜디오를 열었습니다.',
+    intro: '컷의 흐름을 잇고, 소리의 결을 다듬습니다. 영화·음악·라이브에서 쌓아온 사운드 경험을 바탕으로, 유튜브와 웹콘텐츠의 편집까지 함께합니다.',
     edu: '서울예술대학교 방송영상과 음향 전공 (2019–2024)',
     awards: [
       { year: '2024.12', title: '제24회 대한민국국제청소년영화제', body: '「날치」 작품상 대학부 은상' },
@@ -31,7 +31,7 @@ export const site = {
       { year: '2021.05', title: '대한민국 육군 아미로그 공모전', body: '최우수상' },
       { year: '2020.01', title: '주식회사 아론 이어폰 광고 공모전', body: '동상' },
     ],
-    tools: ['Premiere Pro', 'Pro Tools', 'Vrew', 'After Effects', 'Photoshop', 'Cubase', 'iZotope', 'Waves', 'UAD'],
+    tools: ['Premiere Pro', 'Pro Tools', 'After Effects', 'Photoshop', 'Cubase', 'Ableton Live', 'iZotope', 'Waves', 'UAD'],
     certs: ['Pro Tools 101 · 110 (Avid)', 'ACA Premiere · Illustrator (Adobe)'],
   },
 };

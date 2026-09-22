@@ -2,7 +2,7 @@
 import type { Featured } from '../data/featured';
 interface Props { item: Featured; compact?: boolean }
 const { item, compact = false } = Astro.props;
-const thumb = item.youtube ? `https://i.ytimg.com/vi/${item.youtube}/hqdefault.jpg` : item.image;
+const thumb = item.image ?? (item.youtube ? `https://i.ytimg.com/vi/${item.youtube}/hqdefault.jpg` : undefined);
 ---
 <article class:list={['card', { compact }]}>
   {item.youtube ? (
@@ -10,6 +10,8 @@ const thumb = item.youtube ? `https://i.ytimg.com/vi/${item.youtube}/hqdefault.j
       <img src={thumb} alt="" loading="lazy" width="480" height="360" />
       <span class="play" aria-hidden="true">▶</span>
     </button>
+  ) : item.url ? (
+    <a class="media" href={item.url} target="_blank" rel="noopener noreferrer" aria-label={`${item.title} 영상 보기`}><img src={thumb} alt="" loading="lazy" width="1280" height="720" /></a>
   ) : (
     <div class="media"><img src={thumb} alt="" loading="lazy" width="1280" height="720" /></div>
   )}
@@ -23,10 +25,10 @@ const thumb = item.youtube ? `https://i.ytimg.com/vi/${item.youtube}/hqdefault.j
 
 <style>
   .card { display: flex; flex-direction: column; gap: 12px; }
-  .media { position: relative; aspect-ratio: 16/9; overflow: hidden; border-radius: 6px; background: var(--ink-2); padding: 0; border: 0; width: 100%; cursor: pointer; }
+  .media { position: relative; aspect-ratio: 16/9; overflow: hidden; border-radius: 6px; background: var(--ink-2); padding: 0; border: 0; width: 100%; }
   .media img { width: 100%; height: 100%; object-fit: cover; }
-  .play { position: absolute; inset: 0; display: grid; place-items: center; color: var(--paper); font-size: 28px; background: rgba(20,18,16,0.25); transition: background .15s; }
-  .yt:hover .play { background: rgba(156,195,213,0.35); }
+  .play { position: absolute; inset: 0; display: grid; place-items: center; color: var(--paper); font-size: 28px; background: var(--video-shade); transition: background .15s; }
+  .yt:hover .play { background: var(--video-hover); }
   .media :global(iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .role { font-size: 14px; color: var(--accent); margin-top: 4px; }
   .note { font-size: 14px; margin-top: 6px; }
@@ -48,6 +50,7 @@ const thumb = item.youtube ? `https://i.ytimg.com/vi/${item.youtube}/hqdefault.j
       for (const a of b.attributes) if (a.name.startsWith('data-astro-cid')) div.setAttribute(a.name, '');
       div.appendChild(f);
       b.replaceWith(div);
+      f.focus();
     }, { once: true });
   });
 </script>

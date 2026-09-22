@@ -26,6 +26,9 @@ for (const h of htmls) {
   const html = readFileSync(h, 'utf8');
   for (const b of banned) if (html.includes(b)) err(`${h}: 금지 문자열 "${b}"`);
   if (!/<meta name="description" content="[^"]{10,}"/.test(html)) err(`${h}: description 없음`);
+  for (const property of ['og:type', 'og:title', 'og:description', 'og:url', 'og:image']) {
+    if (!new RegExp(`<meta property="${property}" content="[^"]+"`).test(html)) err(`${h}: ${property} 없음`);
+  }
   // 내부 링크·자산 존재 확인
   for (const m of html.matchAll(/(?:href|src|content)="(\/[^"#?]*)/g)) {
     const path = m[1] === '/' ? '/index.html' : m[1];

@@ -4,3 +4,6 @@ dist/
 .superpowers/
 .vercel/
 .DS_Store
+tmp/
+.env*
+!.env.notion.example
