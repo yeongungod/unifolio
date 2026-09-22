@@ -82,7 +82,7 @@ export const featured: Featured[] = [
     "year": "2024",
     "client": "Deepshower · 펀치넬로",
     "note": "라이브 클립 녹음.",
-    "youtube": "9DyECX8JTNg",
-    "url": "https://youtu.be/9DyECX8JTNg"
+    "url": "https://youtu.be/9DyECX8JTNg",
+    "youtube": "9DyECX8JTNg"
   }
 ];
