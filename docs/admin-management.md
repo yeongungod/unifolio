@@ -2,7 +2,7 @@
 
 ## 현재 상태
 
-2026-09-22~23: 로컬 코드와 화면 구현. `/admin`에서 Google 로그인, 비공개 초안 저장, 이미지 업로드, 게시 전 미리보기, 직접 게시를 제공하는 구성이다. **사용자가 Supabase 무료 프로젝트 `uniStudio_WEB`을 만들었고 SQL 설정 실행은 성공했다. Google OAuth·Vercel 환경변수 연결과 실제 권한 검증은 아직 진행 중이다. 공개 배포하지 않았다.** 연결 전에는 로그인·저장·게시가 차단된다. 로컬 주소에서만 기존 공개 자료를 사용한 화면 체험 버튼이 보인다. 체험은 저장·업로드·게시하지 않는다.
+**2026-09-23 공개 배포 완료.** 사용자가 운영 도메인에서 Google 로그인·비공개 초안 저장·미리보기·게시·Vercel 후속 배포·다른 Google 계정 로그인 거부를 직접 확인했다(사용자 확인: 「정상 작동해 다」). `/admin`에서 비공개 초안과 이미지를 관리하고, 미리보기 확인 후 직접 게시한다. 테스트 redirect는 09-23 사용자가 Supabase에서 제거했다.
 
 대표작은 사용자 확정 순서: 해보자시리즈 → 살아지다 → 날치 → 침묵 → PD님이 책임지세요 → 대한민국 해군·공군 웹콘텐츠(사용자가 레이븐어스로 지칭한 기존 카드) → 넥슨 카잔 → 온사이드 팬미팅 → Deepshower·펀치넬로 라이브 클립. PD 포스터와 마지막 영상 `https://youtu.be/9DyECX8JTNg`는 해당 노션 작업 기록에서 확인했다. 전체 작업 117개는 유지한다.
 
@@ -63,7 +63,8 @@ Git 변경 뒤의 Vercel 배포 실패는 자동 롤백하지 않는다. 실패�
 - **09-23 실제 연결 확인:** Google 로그인·등록한 관리자 화면 진입·비공개 초안 revision 1 저장 성공. Google만 활성화하고 Email·익명 로그인은 비활성화했다. Vercel의 Production 환경변수 네 항목 등록 확인. GitHub 토큰은 인증된 저장소/main 조회 HTTP 200 확인(쓰기 동작은 실행하지 않음).
 - **실제 Supabase 검사 12개 통과:** 저장 초안 재조회·소유자 RPC·오래된 revision 저장 거부·revision 유지·익명 초안 거부·본인 비공개 이미지 업로드와 동일 바이트 읽기·공개 이미지 URL 거부·익명 이미지 읽기와 업로드 거부·다른 소유자 폴더 업로드 거부·기존 이미지 덮어쓰기 거부. 기존 공개 포스터 사본으로만 시험했고 초안은 바꾸지 않았다. 테스트 파일 위치는 Git 제외 `tmp/admin-live-result.json`에 기록했다.
 - **09-23 공개 배포 확인:** 사용자 push 승인으로 `a02962e` 배포, Vercel 성공 상태와 실제 사이트 확인. 운영 함수 설정·보안 헤더·미인증 401·외부 Origin 403 확인. 실제 인증 세션으로 운영 API `load`/`prepare` HTTP 200, revision 1·대표작 9개·아카이브 117개·삭제 0개 확인. 초기 데이터와 Git 소스 해시 일치.
-- **남은 실서비스 검증:** 다른 실제 Google 계정 로그인 거부, 업로드한 이미지의 화면 미리보기, 운영 도메인에서의 사용자 직접 Google 로그인, 관리자 게시 클릭에 따른 Git 쓰기와 후속 배포. 공개 게시 시험은 사용자 요청 시에만 한다. 운영 로그인 확인 후 테스트용 loopback redirect를 제거한다.
-- Supabase 프로젝트는 `gzbedcgtmdtctejllkta`(Tokyo). `npm run dev`/`preview`는 정적 화면만 제공한다. 실제 API 테스트는 Git 제외 `tmp/admin-local.mjs`로 4422 정적 미리보기를 127.0.0.1:4423에 연결했다. 이 임시 서버는 게시를 강제 차단한다. 로컬 초안은 변경된 소스를 기준으로 시작했으므로 최초 코드 배포 전에는 GitHub main과 원본 해시가 다르다.
+- **09-23 사용자 운영 검증 완료:** 운영 도메인의 Google 로그인·초안 저장·미리보기·게시·Vercel 후속 배포·다른 Google 계정 로그인 거부를 사용자가 직접 확인했다. 업로드한 이미지의 개별 화면 검증 여부는 별도로 확인하지 않았다.
+- **09-23 설정 정리:** 사용자가 Supabase에서 `http://127.0.0.1:4423/admin` 테스트 redirect를 직접 삭제하고 새로고침 후 목록에 없음을 확인했다. 에이전트는 대시보드 최종 목록을 열람하지 못했다. 운영 redirect와 Site URL 유지 원칙은 그대로다.
+- Supabase 프로젝트는 `gzbedcgtmdtctejllkta`(Tokyo). `npm run dev`/`preview`는 정적 화면만 제공한다. 실제 API 테스트는 Git 제외 `tmp/admin-local.mjs`로 4422 정적 미리보기를 127.0.0.1:4423에 연결했다. **(당시 기록. 테스트 redirect는 09-23 사용자가 Supabase에서 제거.)** 이 임시 서버는 게시를 강제 차단한다. 로컬 초안은 변경된 소스를 기준으로 시작했으므로 최초 코드 배포 전에는 GitHub main과 원본 해시가 다르다.
 
 공식 근거: [Google OAuth](https://supabase.com/docs/guides/auth/social-login/auth-google), [PKCE](https://supabase.com/docs/guides/auth/sessions/pkce-flow), [Auth REST API](https://github.com/supabase/auth/blob/master/openapi.yaml), [RLS](https://supabase.com/docs/guides/database/postgres/row-level-security), [Storage 권한](https://supabase.com/docs/guides/storage/security/access-control), [Vercel Node Functions](https://vercel.com/docs/functions/runtimes/node-js), [Git trees](https://docs.github.com/en/rest/git/trees).
