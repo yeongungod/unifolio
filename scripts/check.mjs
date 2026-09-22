@@ -3,7 +3,7 @@ import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 const DIST = 'dist';
-const pages = ['index.html', 'work/index.html', 'intro/index.html'];
+const pages = ['index.html', 'work/index.html', 'intro/index.html', 'admin/index.html'];
 const banned = ['pyu0205', 'Selene', 'once-ui', 'TODO', 'TBD'];
 let fail = 0;
 const err = (m) => { console.error('✗', m); fail++; };
@@ -21,6 +21,10 @@ const files = walk(DIST);
 const htmls = files.filter((f) => f.endsWith('.html'));
 
 for (const p of pages) if (!existsSync(join(DIST, p))) err(`페이지 없음: ${p}`);
+if (existsSync(join(DIST, 'admin/index.html')) && !readFileSync(join(DIST, 'admin/index.html'), 'utf8').includes('content="noindex, nofollow"')) err('관리자 페이지 noindex 없음');
+for (const f of files.filter((f) => /\.(html|js|json|css)$/.test(f))) {
+  if (/sb_secret_|SUPABASE_SERVICE_ROLE_KEY|PORTFOLIO_GITHUB_TOKEN|CONFIDENTIAL_BROWSER_SENTINEL/.test(readFileSync(f, 'utf8'))) err(`${f}: 비밀 키 또는 비공개 테스트 표식이 공개 빌드에 포함됨`);
+}
 
 for (const h of htmls) {
   const html = readFileSync(h, 'utf8');

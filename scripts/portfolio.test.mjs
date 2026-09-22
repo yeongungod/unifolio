@@ -41,6 +41,23 @@ test('대표작 중복 순서, 위험 URL, 중복 페이지, 잘못된 연도를
   assert.throws(() => convertPages([bad]), /연도/);
 });
 
+test('수상·상영은 공개 작품의 전용 텍스트만 옮기고 공란은 기존 기록을 유지한다', () => {
+  const award = page(1, { rank: 1, image: true });
+  award.properties['수상·상영'] = rich('2024 영화제 관객상\n2025 영화제 공식 상영');
+  const empty = page(2); empty.properties['수상·상영'] = rich('');
+  const privatePage = page(4, { published: false });
+  privatePage.properties['수상·상영'] = rich('PRIVATE_SCREENING');
+  const result = convertPages([award, empty, page(3), privatePage]);
+  assert.equal(result.archive[0].recognition, '2024 영화제 관객상\n2025 영화제 공식 상영');
+  assert.equal(Object.hasOwn(result.archive[1], 'recognition'), false);
+  assert.equal(Object.hasOwn(result.archive[2], 'recognition'), false);
+  assert.doesNotMatch(JSON.stringify(result), /PRIVATE_SCREENING|PRIVATE_MEMO/);
+  award.properties['수상·상영'] = rich('x'.repeat(2001));
+  assert.throws(() => convertPages([award]), /수상·상영/);
+  award.properties['수상·상영'] = { type: 'number', number: 2024 };
+  assert.throws(() => convertPages([award]), /텍스트/);
+});
+
 test('썸네일 임시 URL은 데이터에서 제거하고 다운로드 목록으로만 분리한다', () => {
   const result = convertPages([page(1, { rank: 1, image: true })]);
   assert.equal(result.downloads.length, 1);

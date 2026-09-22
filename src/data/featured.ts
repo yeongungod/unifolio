@@ -11,13 +11,22 @@ export const featured: Featured[] = [
     "youtube": "G7P6u0izwsk"
   },
   {
-    "slug": "22b50bd8-fe2d-801f-8785-fa3853fb1cb2",
-    "title": "나의 소울메이트",
-    "role": "믹싱 · 사운드디자인 · ADR · 폴리 · 마스터링",
-    "year": "2025",
-    "client": "이채범 감독",
-    "note": "단편영화 사운드 전 공정.",
-    "image": "/images/work/soulmate.jpg"
+    "slug": "13c50bd8-fe2d-8018-89db-f6d1e9dc6a61",
+    "title": "살아지다",
+    "role": "믹싱 · 사운드디자인 · ADR · 폴리 · 녹음 · 마스터링",
+    "year": "2023",
+    "client": "정도영 감독",
+    "note": "서울아트비디오페스티벌 음향상.",
+    "image": "/images/work/saraji.jpg"
+  },
+  {
+    "slug": "13c50bd8-fe2d-8088-a6c3-d5c4005aa5f1",
+    "title": "날치",
+    "role": "믹싱 · 사운드디자인 · ADR · 폴리 · 녹음 · 마스터링",
+    "year": "2023",
+    "client": "정도영 감독",
+    "note": "제24회 대한민국국제청소년영화제 작품상 대학부 은상. 필름베리 배급.",
+    "image": "/images/work/nalchi.jpg"
   },
   {
     "slug": "13c50bd8-fe2d-8051-bc48-cf0f28f42e1c",
@@ -29,13 +38,13 @@ export const featured: Featured[] = [
     "image": "/images/work/chimmuk.jpg"
   },
   {
-    "slug": "13c50bd8-fe2d-8018-89db-f6d1e9dc6a61",
-    "title": "살아지다",
-    "role": "믹싱 · 사운드디자인 · ADR · 폴리 · 녹음 · 마스터링",
-    "year": "2023",
-    "client": "정도영 감독",
-    "note": "서울아트비디오페스티벌 음향상.",
-    "image": "/images/work/saraji.jpg"
+    "slug": "13c50bd8-fe2d-803e-b044-dc4018d720dc",
+    "title": "PD님이 책임지세요",
+    "role": "믹싱 · 사운드디자인 · ADR · 폴리 · 마스터링 · 사운드 어시스트",
+    "year": "2022",
+    "client": "김선연 감독",
+    "note": "제1회 싸이파이안페스타 관객상.",
+    "image": "/images/work/pd.jpg"
   },
   {
     "slug": "3e150bd8-fe2d-81b7-8a63-f5c9b20e4443",
@@ -67,22 +76,13 @@ export const featured: Featured[] = [
     "image": "/images/work/onside.jpg"
   },
   {
-    "slug": "17e50bd8-fe2d-8010-bbe5-d7a080f61a82",
-    "title": "The First Descendant — UI 사운드",
-    "role": "사운드디자인 데모",
-    "year": "2025",
-    "client": "개인 작업",
-    "note": "Sci-Fi UI 효과음 재해석. 개인 포트폴리오 영상.",
-    "url": "https://www.youtube.com/watch?v=WKvy_jR7frU",
-    "youtube": "WKvy_jR7frU"
-  },
-  {
-    "slug": "13c50bd8-fe2d-8088-a6c3-d5c4005aa5f1",
-    "title": "날치",
-    "role": "믹싱 · 사운드디자인 · ADR · 폴리 · 녹음 · 마스터링",
-    "year": "2023",
-    "client": "정도영 감독",
-    "note": "제24회 대한민국국제청소년영화제 작품상 대학부 은상. 필름베리 배급.",
-    "image": "/images/work/nalchi.jpg"
+    "slug": "13c50bd8-fe2d-805f-876e-ffdcff4a47ce",
+    "title": "[LIVE CLIP] Deepshower, 펀치넬로 - 조금 돌아왔어 (Feat. Skinny Brown)",
+    "role": "녹음",
+    "year": "2024",
+    "client": "Deepshower · 펀치넬로",
+    "note": "라이브 클립 녹음.",
+    "youtube": "9DyECX8JTNg",
+    "url": "https://youtu.be/9DyECX8JTNg"
   }
 ];

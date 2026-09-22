@@ -37,7 +37,10 @@ export function convertPages(pages, existingFeatured = []) {
     const process = (p.Process?.multi_select ?? []).map((x) => x.name);
     if (!platform.length || platform.some((x) => !x) || process.some((x) => typeof x !== 'string' || !x.trim())) throw new Error('분야 또는 작업 역할에 지원하지 않는 값이 있습니다.');
     const link = video(p['영상 URL']?.url);
-    if (p['전체 작업 표시']?.checkbox === true) archive.push({ id: page.id, year, name, platform, process, client, ...(link.url ? { url: link.url } : {}) });
+    if (p['수상·상영'] && p['수상·상영'].type !== 'rich_text') throw new Error('노션 수상·상영 속성은 텍스트여야 합니다.');
+    const recognitionText = fieldText(p, '수상·상영');
+    const recognition = recognitionText ? { recognition: recognitionText } : {};
+    if (p['전체 작업 표시']?.checkbox === true) archive.push({ id: page.id, year, name, platform, process, client, ...recognition, ...(link.url ? { url: link.url } : {}) });
     const rank = p['대표작 순서']?.number;
     if (rank == null) continue;
     if (!Number.isInteger(rank) || rank < 1 || rank > 9 || ranks.has(rank)) throw new Error('대표작 순서는 중복 없는 1~9 정수여야 합니다.');

@@ -1,17 +1,26 @@
 ---
 import rows from '../data/archive.json';
+import { site } from '../data/site';
 const PLATFORM: Record<string, string> = { Film: '영화', Live: '라이브', Music: '음악', Web: '웹콘텐츠', Edit: '편집', Game: '게임사운드' };
 const PROCESS: Record<string, string> = { Mixing: '믹싱', 'Sound Design': '사운드디자인', ADR: 'ADR', Foley: '폴리', Record: '녹음', Mastering: '마스터링', 'Sound Assistant': '사운드 어시스트', PA: 'PA', Cinamatic: '시네마틱', Skill: '스킬', UI: 'UI' };
 const filters = ['전체', ...Object.values(PLATFORM)];
-const sorted: Array<(typeof rows)[number] & { url?: string }> = [...rows].sort((a, b) => b.year - a.year);
+const sorted: Array<(typeof rows)[number] & { url?: string; recognition?: string }> = [...rows].sort((a, b) => b.year - a.year);
 const hasLinks = sorted.some((row) => row.url);
+const recognition = (row: (typeof sorted)[number]) => row.recognition
+  ? [{ text: row.recognition, source: '' }]
+  : [
+    ...site.about.awards.filter((award) => award.workId === row.id)
+      .map((award) => ({ text: `${award.year} ${award.title}\n${award.body.replace(/^「[^」]+」\s*/, '')}`, source: '' })),
+    ...site.screenings.filter((screening) => screening.workId === row.id)
+      .map((screening) => ({ text: `${screening.year} ${screening.title}\n${screening.detail}`, source: screening.source })),
+  ];
 ---
 <div class="filters" role="group" aria-label="분야 필터">
   {filters.map((f, i) => <button class:list={['chip', { on: i === 0 }]} data-f={f} aria-pressed={i === 0 ? 'true' : 'false'}>{f}</button>)}
 </div>
 <p class="muted count" aria-live="polite"><span id="count">{sorted.length}</span>건</p>
 <table class="archive">
-  <thead><tr><th scope="col">연도</th><th scope="col">작업</th><th scope="col">분야</th><th scope="col">역할</th><th scope="col">클라이언트</th>{hasLinks && <th scope="col">링크</th>}</tr></thead>
+  <thead><tr><th scope="col">연도</th><th scope="col">작업</th><th scope="col">분야</th><th scope="col">역할</th><th scope="col">클라이언트</th><th scope="col" class="recognition-heading">수상·상영</th>{hasLinks && <th scope="col">링크</th>}</tr></thead>
   <tbody>
     {sorted.map((r) => (
       <tr data-p={r.platform.map((p) => PLATFORM[p]).join(' ')}>
@@ -20,6 +29,7 @@ const hasLinks = sorted.some((row) => row.url);
         <td>{r.platform.map((p) => PLATFORM[p]).join(', ')}</td>
         <td class="muted">{r.process.map((p) => PROCESS[p] ?? p).join(' · ')}</td>
         <td class="muted">{r.client}</td>
+        <td class="recognition">{recognition(r).length > 0 && <><span class="recognition-label">수상·상영</span><ul>{recognition(r).map((item) => <li>{item.source ? <a href={item.source} target="_blank" rel="noopener noreferrer">{item.text}</a> : item.text}</li>)}</ul></>}</td>
         {hasLinks && <td>{r.url ? <a class="work-link" href={r.url} target="_blank" rel="noopener noreferrer" aria-label={`${r.name} 영상 보기`}>영상 ↗</a> : null}</td>}
       </tr>
     ))}
@@ -39,12 +49,21 @@ const hasLinks = sorted.some((row) => row.url);
   .chip:hover { border-color: var(--accent); }
   .name { font-weight: 600; }
   .work-link { white-space: nowrap; text-decoration: underline; text-underline-offset: 3px; }
+  .recognition-heading { width: 26%; }
+  .recognition { white-space: pre-line; font-size: 13px; }
+  .recognition ul { list-style: none; margin: 0; padding: 0; }
+  .recognition li + li { margin-top: 12px; }
+  .recognition a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+  .recognition-label { display: none; }
   .archive tr[hidden] { display: none; }
   @media (max-width: 700px) {
     .archive thead { display: none; }
     .archive tr { display: grid; grid-template-columns: 56px 1fr; gap: 2px 10px; padding: 10px 0; border-bottom: 1px solid var(--line); }
     .archive td { border: 0; padding: 0; }
     .archive td:nth-child(n+3) { grid-column: 2; font-size: 13px; }
+    .archive .recognition:not(:empty) { margin-top: 8px; }
+    .archive .recognition:empty { display: none; }
+    .recognition-label { display: block; color: var(--accent); font-size: 12px; font-weight: 600; }
   }
 </style>
 

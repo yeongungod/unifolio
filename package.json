@@ -10,7 +10,7 @@
     "pdf": "node scripts/make-pdf.mjs",
     "portfolio:preview": "node scripts/portfolio.mjs preview",
     "portfolio:apply": "node scripts/portfolio.mjs apply",
-    "test": "node --test scripts/portfolio.test.mjs"
+    "test": "node --test scripts/portfolio.test.mjs scripts/admin.test.mjs"
   },
   "dependencies": {
     "astro": "^5.13.0"

@@ -7,3 +7,4 @@ dist/
 tmp/
 .env*
 !.env.notion.example
+!.env.admin.example
