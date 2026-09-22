@@ -16,7 +16,9 @@ export const featured: Featured[] = [
     "role": "믹싱 · 사운드디자인 · ADR · 폴리 · 녹음 · 마스터링",
     "year": "2023",
     "client": "정도영 감독",
-    "note": "서울아트비디오페스티벌 음향상.",
+    "note": "서울아트비디오페스티벌 음향상. ㈜씨엠닉스 배급.",
+    "url": "https://youtu.be/jCAnh8ssnn8",
+    "youtube": "jCAnh8ssnn8",
     "image": "/images/work/saraji.jpg"
   },
   {
@@ -34,7 +36,7 @@ export const featured: Featured[] = [
     "role": "믹싱 · 사운드디자인 · 폴리 · 마스터링",
     "year": "2022",
     "client": "배준원 감독",
-    "note": "제18회 대한민국대학영화제 최우수작품상 · 여자연기상. 인디스토리 배급.",
+    "note": "제18회 대한민국대학영화제 최우수작품상 · 여자배우상. ㈜인디스토리 배급.",
     "image": "/images/work/chimmuk.jpg"
   },
   {
@@ -43,7 +45,7 @@ export const featured: Featured[] = [
     "role": "믹싱 · 사운드디자인 · ADR · 폴리 · 마스터링 · 사운드 어시스트",
     "year": "2022",
     "client": "김선연 감독",
-    "note": "제1회 싸이파이안페스타 관객상.",
+    "note": "제1회 싸이파이안페스타 관객상. ㈜인디스토리 배급.",
     "image": "/images/work/pd.jpg"
   },
   {

@@ -1,5 +1,131 @@
 [
   {
+    "id": "7a9d465c-13e8-4f52-b601-e73622f49a00",
+    "year": 2026,
+    "name": "세상에 혼자가 된 기분",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Foley",
+      "Mastering"
+    ],
+    "client": "이채범 감독"
+  },
+  {
+    "id": "7a9d465c-13e8-4f52-b601-e73622f49a01",
+    "year": 2026,
+    "name": "SSYNC 랜딩페이지 영상",
+    "platform": [
+      "Edit"
+    ],
+    "process": [],
+    "client": "매치워크"
+  },
+  {
+    "id": "7a9d465c-13e8-4f52-b601-e73622f49a02",
+    "year": 2025,
+    "name": "아나운서가 말아주는 유니폼 룩북⚽️",
+    "platform": [
+      "Filming"
+    ],
+    "process": [],
+    "client": "꽉수빈",
+    "url": "https://youtu.be/cn2SGSG69KA"
+  },
+  {
+    "id": "7a9d465c-13e8-4f52-b601-e73622f49a03",
+    "year": 2025,
+    "name": "리버풀? 맨시티? 누가 더 잘하나요? LCK 아나운서의 해외 축구 입문기⚽️",
+    "platform": [
+      "Filming"
+    ],
+    "process": [],
+    "client": "꽉수빈",
+    "url": "https://youtu.be/Unk2C7NxJ2Y"
+  },
+  {
+    "id": "7a9d465c-13e8-4f52-b601-e73622f49a04",
+    "year": 2025,
+    "name": "Stephen Sanchez - Until I Found You (cover)",
+    "platform": [
+      "Music"
+    ],
+    "process": [
+      "Record"
+    ],
+    "client": "Project Gooroom",
+    "url": "https://youtu.be/muJJETODrX8"
+  },
+  {
+    "id": "7a9d465c-13e8-4f52-b601-e73622f49a05",
+    "year": 2025,
+    "name": "너에게 가는 493페이지",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Foley",
+      "Mastering"
+    ],
+    "client": "이채범 감독"
+  },
+  {
+    "id": "7a9d465c-13e8-4f52-b601-e73622f49a06",
+    "year": 2025,
+    "name": "전자두뇌 정과장",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "데이터매니저"
+    ],
+    "client": "정헌수 감독"
+  },
+  {
+    "id": "7a9d465c-13e8-4f52-b601-e73622f49a07",
+    "year": 2025,
+    "name": "레이디 보스 리턴",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "데이터매니저"
+    ],
+    "client": "정헌수 감독"
+  },
+  {
+    "id": "7a9d465c-13e8-4f52-b601-e73622f49a08",
+    "year": 2025,
+    "name": "아주르 스프링",
+    "platform": [
+      "Web"
+    ],
+    "process": [
+      "데이터매니저"
+    ],
+    "client": "정헌수 감독"
+  },
+  {
+    "id": "7a9d465c-13e8-4f52-b601-e73622f49a09",
+    "year": 2025,
+    "name": "오추자",
+    "platform": [
+      "Film"
+    ],
+    "process": [
+      "Mixing",
+      "Sound Design",
+      "Foley",
+      "Mastering"
+    ],
+    "client": "뮤지 감독"
+  },
+  {
     "id": "17e50bd8-fe2d-8010-bbe5-d7a080f61a82",
     "year": 2025,
     "name": "The First Descendant — UI 사운드",
@@ -420,6 +546,7 @@
     "id": "18350bd8-fe2d-80ad-8629-cd48100b612d",
     "year": 2024,
     "name": "안녕한 우리",
+    "recognition": "제20회 대한민국 대학영화제 서울경제진흥원상",
     "platform": [
       "Film"
     ],
@@ -446,6 +573,8 @@
     "id": "13c50bd8-fe2d-8018-89db-f6d1e9dc6a61",
     "year": 2023,
     "name": "살아지다",
+    "recognition": "서울아트비디오페스티벌 음향상\nGoogle Play 영화, 무비, 왓챠, 티빙, 쿠팡플레이, Apple TV\n㈜씨엠닉스 배급",
+    "url": "https://youtu.be/jCAnh8ssnn8",
     "platform": [
       "Film"
     ],
@@ -515,6 +644,7 @@
     "id": "13c50bd8-fe2d-8052-a289-e36530d0bb96",
     "year": 2023,
     "name": "목요일",
+    "recognition": "티빙 상영 중\n㈜퍼니콘 배급",
     "platform": [
       "Film"
     ],
@@ -601,6 +731,7 @@
     "id": "13c50bd8-fe2d-8088-a6c3-d5c4005aa5f1",
     "year": 2023,
     "name": "날치",
+    "recognition": "제1회 서울한강국제영화제 본선경쟁작\n2024 조치원 필름 로맨스 상영작\n제26회 도시영화제 경쟁부문 일반공모 섹션 5 본선경쟁작\n제23회 전북독립영화제 국내경쟁 단편부문 섹션 3 본선경쟁작\n제24회 대한민국국제청소년영화제 대학부 작품상 은상",
     "platform": [
       "Film"
     ],
@@ -774,6 +905,7 @@
     "id": "13c50bd8-fe2d-800c-882f-f67576c85887",
     "year": 2022,
     "name": "열반",
+    "recognition": "성남문화재단 제작지원 선정작",
     "platform": [
       "Film"
     ],
@@ -828,6 +960,7 @@
     "id": "13c50bd8-fe2d-803e-b044-dc4018d720dc",
     "year": 2022,
     "name": "PD님이 책임지세요",
+    "recognition": "제41회 브뤼셀국제판타스틱영화제, They're the future (2023, 벨기에)\n제22회 뉴욕아시안영화제 (2023, 미국)\n제1회 싸이파이안페스타 관객상 (2023, 대한민국)\nApple TV, 왓챠 상영 중\n㈜인디스토리 배급",
     "platform": [
       "Film"
     ],
@@ -858,6 +991,7 @@
     "id": "13c50bd8-fe2d-8051-bc48-cf0f28f42e1c",
     "year": 2022,
     "name": "침묵",
+    "recognition": "제18회 대한민국 대학영화제(2023) 최우수작품상, 여자배우상\n제13회 서울국제프라이드영화제, 코리아 프라이드\n제27회 부천국제판타스틱영화제 초청작 엑스라지\n제14회 광주여성영화제, 귄 단편공모\n제11회 목포국도1호선독립영화제\n제6회 김포국제청소년영화제\n㈜인디스토리 배급",
     "platform": [
       "Film"
     ],

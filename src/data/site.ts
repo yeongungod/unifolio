@@ -33,8 +33,9 @@ export const site = {
     awards: [
       { workId: '13c50bd8-fe2d-8088-a6c3-d5c4005aa5f1', year: '2024.12', title: '제24회 대한민국국제청소년영화제', body: '「날치」 작품상 대학부 은상' },
       { workId: '13c50bd8-fe2d-8018-89db-f6d1e9dc6a61', year: '2023.12', title: '서울아트비디오페스티벌', body: '「살아지다」 음향상' },
-      { workId: '13c50bd8-fe2d-8051-bc48-cf0f28f42e1c', year: '2023.11', title: '제18회 대한민국대학영화제', body: '「침묵」 최우수작품상 · 여자연기상' },
+      { workId: '13c50bd8-fe2d-8051-bc48-cf0f28f42e1c', year: '2023.11', title: '제18회 대한민국대학영화제', body: '「침묵」 최우수작품상 · 여자배우상' },
       { workId: '13c50bd8-fe2d-803e-b044-dc4018d720dc', year: '2023.08', title: '제1회 싸이파이안페스타', body: '「PD님이 책임지세요」 관객상' },
+      { workId: '18350bd8-fe2d-80ad-8629-cd48100b612d', year: '', title: '제20회 대한민국 대학영화제', body: '「안녕한 우리」 서울경제진흥원상' },
       { workId: '13c50bd8-fe2d-802f-a785-c54af55fc4dd', year: '2021.10', title: '제6회 충무로영화제', body: '「목화토금수」 올해의 각본상' },
       { year: '2021.05', title: '대한민국 육군 아미로그 공모전', body: '최우수상' },
       { year: '2020.01', title: '주식회사 아론 이어폰 광고 공모전', body: '동상' },

@@ -44,7 +44,7 @@ export function publicPortfolio(items, owner = '') {
     if (typeof item.archive !== 'boolean' || !Number.isInteger(item.rank) || item.rank < 0 || item.rank > 9) fail('전체 작업 표시와 대표작 순서를 확인하세요.');
     const name = text(item.name, 300, true), client = text(item.client, 200);
     if (!Number.isInteger(item.year) || item.year < 1900 || item.year > 2100) fail('작업 연도를 확인하세요.');
-    if (!Array.isArray(item.platform) || !item.platform.length || item.platform.some((p) => !['Film', 'Live', 'Music', 'Web', 'Edit', 'Game'].includes(p))) fail('작업 분야를 선택하세요.');
+    if (!Array.isArray(item.platform) || !item.platform.length || item.platform.some((p) => !['Film', 'Live', 'Music', 'Web', 'Edit', 'Game', 'Filming'].includes(p))) fail('작업 분야를 선택하세요.');
     if (!Array.isArray(item.process) || item.process.length > 20) fail('작업 역할을 확인하세요.');
     const process = item.process.map((p) => text(p, 80, true));
     const url = link(item.url), recognition = text(item.recognition, 2000);

@@ -1,6 +1,6 @@
 const $ = (id) => document.getElementById(id);
 const form = $('editor');
-const labels = { Film: '영화', Live: '라이브', Music: '음악', Web: '웹콘텐츠', Edit: '편집', Game: '게임사운드' };
+const labels = { Film: '영화', Live: '라이브', Music: '음악', Web: '웹콘텐츠', Edit: '편집', Game: '게임사운드', Filming: '촬영' };
 const processLabels = { Mixing: '믹싱', 'Sound Design': '사운드디자인', ADR: 'ADR', Foley: '폴리', Record: '녹음', Mastering: '마스터링', 'Sound Assistant': '사운드 어시스트', PA: 'PA', Cinamatic: '시네마틱', Skill: '스킬', UI: 'UI' };
 let config, owner, draft, revision = 0, selected, review, fallback = {}, dirty = false, busy = false, demo = false;
 const blobs = new Map();

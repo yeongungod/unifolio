@@ -1,7 +1,7 @@
 ---
 import rows from '../data/archive.json';
 import { site } from '../data/site';
-const PLATFORM: Record<string, string> = { Film: '영화', Live: '라이브', Music: '음악', Web: '웹콘텐츠', Edit: '편집', Game: '게임사운드' };
+const PLATFORM: Record<string, string> = { Film: '영화', Live: '라이브', Music: '음악', Web: '웹콘텐츠', Edit: '편집', Game: '게임사운드', Filming: '촬영' };
 const PROCESS: Record<string, string> = { Mixing: '믹싱', 'Sound Design': '사운드디자인', ADR: 'ADR', Foley: '폴리', Record: '녹음', Mastering: '마스터링', 'Sound Assistant': '사운드 어시스트', PA: 'PA', Cinamatic: '시네마틱', Skill: '스킬', UI: 'UI' };
 const filters = ['전체', ...Object.values(PLATFORM)];
 const sorted: Array<(typeof rows)[number] & { url?: string; recognition?: string }> = [...rows].sort((a, b) => b.year - a.year);

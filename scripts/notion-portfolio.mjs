@@ -1,5 +1,5 @@
 // Notion 응답 중 사이트에 필요한 속성만 사용한다. 원본 응답은 저장하지 않는다.
-const PLATFORM = { Flim: 'Film', Film: 'Film', 'Live Sound': 'Live', Live: 'Live', Music: 'Music', 'Web Content': 'Web', Web: 'Web', Edit: 'Edit', 'Game Sound': 'Game', Game: 'Game' };
+const PLATFORM = { Flim: 'Film', Film: 'Film', 'Live Sound': 'Live', Live: 'Live', Music: 'Music', 'Web Content': 'Web', Web: 'Web', Edit: 'Edit', 'Game Sound': 'Game', Game: 'Game', Filming: 'Filming', '촬영': 'Filming' };
 const PROCESS = { Mixing: '믹싱', 'Sound Design': '사운드디자인', ADR: 'ADR', Foley: '폴리', Record: '녹음', Mastering: '마스터링', 'Sound Assistant': '사운드 어시스트', PA: 'PA', Cinamatic: '시네마틱', Skill: '스킬', UI: 'UI' };
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
 const text = (p) => (p?.title ?? p?.rich_text ?? []).map((r) => r.plain_text ?? r.text?.content ?? '').join('').trim();

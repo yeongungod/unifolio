@@ -7,6 +7,13 @@ import handler from '../api/portfolio.js';
 const owner = '11111111-1111-4111-8111-111111111111';
 const item = (extra = {}) => ({ id: owner, name: 'Public film', year: 2023, platform: ['Film'], process: ['Mixing'], client: 'Director', public: true, archive: true, rank: 1, title: 'Public film', role: 'Mixing', displayYear: '2023', note: '', image: '/images/work/pd.jpg', ...extra });
 
+test('filming entries can be published without an unspecified role', () => {
+  const out = publicPortfolio([item({ platform: ['Filming'], process: [], rank: 0 })]);
+  assert.deepEqual(out.archive[0].platform, ['Filming']);
+  assert.deepEqual(out.archive[0].process, []);
+  assert.throws(() => publicPortfolio([item({ platform: ['Unknown'] })]));
+});
+
 test('private items and unrecognized internal fields never enter public output', () => {
   const out = publicPortfolio([item({ internalNotes: 'INTERNAL' }), item({ id: '22222222-2222-4222-8222-222222222222', public: false, name: 'CONFIDENTIAL' })]);
   assert.equal(out.archive.length, 1);
