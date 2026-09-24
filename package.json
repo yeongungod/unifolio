@@ -7,10 +7,12 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "node scripts/check.mjs",
+    "preflight:publish": "node scripts/preflight-publish.mjs",
+    "preflight:check": "node scripts/preflight-publish.mjs --check-only",
     "pdf": "node scripts/make-pdf.mjs",
     "portfolio:preview": "node scripts/portfolio.mjs preview",
     "portfolio:apply": "node scripts/portfolio.mjs apply",
-    "test": "node --test scripts/portfolio.test.mjs scripts/admin.test.mjs"
+    "test": "node --test scripts/portfolio.test.mjs scripts/admin.test.mjs scripts/recognition.test.mjs scripts/preflight-publish.test.mjs"
   },
   "dependencies": {
     "astro": "^5.13.0"

@@ -4,51 +4,56 @@ import { site } from '../data/site';
 import { featured } from '../data/featured';
 const six = featured.slice(0, 6);
 const a = site.about;
+const awards = [...a.awards].sort((x, y) => y.year.localeCompare(x.year)).slice(0, 4);
 ---
-<Base title={`${site.name} 소개서`} description="우니스튜디오 소개서 — 영상 편집 · 사운드. 인쇄용 한 장." bodyClass="intro-body">
+<Base title={`${site.name} 소개서`} description="우니스튜디오 소개서 — 사운드 디자인 · 포스트 프로덕션. 인쇄용 한 장." bodyClass="intro-body">
   <div class="toolbar no-print wrap">
     <a class="back" href="/">← 사이트로 돌아가기</a>
-    <p class="muted">이 페이지가 소개서입니다. 브라우저 인쇄에서 「PDF로 저장」하면 A4 한 장이 됩니다.</p>
+    <p class="muted">우니스튜디오 소개서 · A4 한 장</p>
     <button class="btn accent" onclick="window.print()">PDF로 저장</button>
   </div>
 
   <article class="sheet">
     <header class="head">
       <img src="/lockup.svg" alt="uniStudio" width="220" height="43" />
-      <p class="tag">영상 편집 · 사운드</p>
+      <p class="tag">사운드 디자인 · 포스트 프로덕션</p>
     </header>
 
     <h1>{site.hero.title}</h1>
-    <p class="sub">{site.hero.sub}</p>
+    <p class="sub">사운드디자인·믹싱을 중심으로 영상과 음악의 후반 작업을 함께합니다.</p>
 
     <div class="two">
       <div>
-        <h2>하는 일</h2>
-        <ul>{site.services.map((s) => <li><strong>{s.title}</strong> — {s.desc}</li>)}</ul>
-        <h2>진행</h2>
-        <p>{site.process.join(' → ')}. {site.processNote}</p>
+        <h2><span>Services</span> 작업 분야</h2>
+        <ul class="services">{site.services.map((s) => <li><strong>{s.title}</strong><p>{s.desc}</p></li>)}</ul>
       </div>
       <div>
-        <h2>대표</h2>
-        <p><strong>{site.owner}</strong> · {a.edu}</p>
-        <ul class="tight">{a.awards.slice(0, 4).map((w) => <li>{w.year} {w.title} — {w.body}</li>)}</ul>
-        <p class="small">{a.tools.join(' · ')}</p>
+        <h2><span>Studio</span> 우니스튜디오</h2>
+        <p class="owner"><strong>{site.owner}</strong> <span>대표 · 사운드 디자이너</span></p>
+        <p class="small">{a.edu.replace('–', '-')}</p>
+        <p class="small">{a.certs.join(' / ')}</p>
+        <h3>참여작 주요 이력</h3>
+        <ul class="awards">{awards.map((w) => <li><strong>{w.body.match(/^「([^」]+)」/)?.[1] || w.title}</strong><p>{w.title} · {w.body.replace(/^「[^」]+」\s*/, '')}</p></li>)}</ul>
+        <p class="tools"><strong>사용 툴</strong> {a.tools.join(' · ')}</p>
       </div>
     </div>
 
-    <h2>대표작</h2>
+    <h2 class="work-title"><span>Work</span> 대표작</h2>
     <div class="works">
       {six.map((w) => (
         <div class="w">
           <img src={w.image ?? (w.youtube ? `https://i.ytimg.com/vi/${w.youtube}/mqdefault.jpg` : undefined)} alt="" width="320" height="140" />
-          <p><strong>{w.title}</strong><br /><span>{w.role} · {w.year}</span></p>
+          <p><strong>{w.title}</strong><br /><span>{w.role}</span></p>
         </div>
       ))}
     </div>
 
+    <div class="process"><strong>진행 안내</strong><span>{site.process.join(' → ')}</span><p>작업 범위와 일정에 맞춰 견적을 안내합니다. 세금계산서 발행 가능.</p></div>
+
     <footer class="foot">
+      <h2><span>Contact</span> 문의</h2>
       <p><a href={`mailto:${site.email}`}><strong>{site.email}</strong></a> · <a href={site.phoneHref}>{site.phone}</a> · <a href="https://yeongungod.com">yeongungod.com</a></p>
-      <p class="small">{site.name} · 대표 {site.owner} · 사업자등록번호 {site.bizNo} · {site.address}</p>
+      <p class="small">{site.name} · 대표 {site.owner} · 사업자등록번호 {site.bizNo}</p>
     </footer>
   </article>
 </Base>
@@ -61,25 +66,39 @@ const a = site.about;
   .sheet {
     --muted: var(--muted-on-paper);
     background: var(--paper); color: var(--ink); width: 210mm; min-height: 297mm; margin: 0 auto 48px;
-    padding: 8mm 16mm 3mm; box-sizing: border-box; font-size: 10pt; line-height: 1.35;
+    padding: 10mm 14mm 8mm; box-sizing: border-box; font-size: 9.5pt; line-height: 1.4;
+    word-break: keep-all; overflow-wrap: anywhere;
   }
-  .head { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent); padding-bottom: 4px; gap: 8px 16px; flex-wrap: wrap; }
+  .head { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent); padding-bottom: 12px; gap: 8px 16px; flex-wrap: wrap; }
   .tag { font-size: 9pt; color: var(--muted); letter-spacing: .08em; }
-  .sheet h1 { font-size: 22pt; margin-top: 8px; }
-  .sub { color: var(--muted); margin-top: 3px; }
-  .sheet h2 { font-size: 10pt; color: var(--ink); letter-spacing: .1em; text-transform: uppercase; margin-top: 9px; border-bottom: 1px solid var(--paper-line); padding-bottom: 2px; } /* 아쿠아마린은 구분선에, 작은 제목은 브랜드 먹색으로 */
-  .two { display: grid; grid-template-columns: 1.15fr 1fr; gap: 14px; }
-  .sheet ul { padding-left: 14px; margin: 4px 0 0; }
-  .sheet li { margin: 1px 0; }
-  .tight li { font-size: 9.5pt; line-height: 1.25; }
-  .small { font-size: 9pt; color: var(--muted); margin-top: 3px; }
-  .works { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 2px; }
-  .w img { width: 100%; height: auto; aspect-ratio: 16/7; object-fit: cover; border-radius: 3px; }
-  .w p { font-size: 9pt; margin-top: 2px; line-height: 1.25; }
+  .sheet h1 { font-size: 22pt; margin-top: 16px; text-wrap: initial; }
+  .sub { color: var(--muted); margin-top: 8px; }
+  .sheet h2 { display: flex; align-items: baseline; gap: 8px; font-size: 12pt; color: var(--ink); border-bottom: 1px solid var(--paper-line); padding-bottom: 6px; margin-bottom: 8px; }
+  .sheet h2 span { font-size: 8pt; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .sheet h3 { font-size: 10pt; margin: 12px 0 8px; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px; }
+  .sheet ul { list-style: none; padding: 0; margin: 0; }
+  .services li + li { margin-top: 15px; }
+  .services p { margin-top: 3px; color: var(--muted); }
+  .owner span { color: var(--muted); margin-left: 6px; }
+  .awards li + li { margin-top: 5px; }
+  .awards p { color: var(--muted); font-size: 9pt; }
+  .small { font-size: 9pt; color: var(--muted); margin-top: 4px; }
+  .tools { font-size: 8.5pt; color: var(--muted); margin-top: 12px; }
+  .tools strong { color: var(--ink); margin-right: 4px; }
+  .sheet .work-title { margin-top: 18px; }
+  .works { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .w img { width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; border-radius: 3px; }
+  .w p { font-size: 9pt; margin-top: 6px; line-height: 1.35; }
   .w span { color: var(--muted); }
-  .foot { margin-top: auto; border-top: 1px solid var(--paper-line); padding-top: 2px; }
-  .foot p:first-child { font-size: 11pt; }
+  .process { margin-top: 16px; font-size: 9pt; border-top: 1px solid var(--paper-line); padding-top: 8px; }
+  .process span { margin-left: 12px; }
+  .process p { color: var(--muted); margin-top: 3px; }
+  .foot { margin-top: auto; padding-top: 12px; }
+  .sheet .foot h2 { border: 0; margin-bottom: 6px; padding-bottom: 0; }
+  .foot p { font-size: 10pt; }
+  .foot .small { font-size: 8.5pt; }
   .foot a { white-space: nowrap; }
   .foot a:hover { text-decoration: underline; text-underline-offset: 3px; }
-  @media screen and (max-width: 800px) { .sheet { width: 100%; min-height: 0; padding: 20px 16px; } .two, .works { grid-template-columns: 1fr; } .works { grid-template-columns: 1fr 1fr; } }
+  @media screen and (max-width: 800px) { .sheet { width: 100%; min-height: 0; padding: 24px 16px; } .two { grid-template-columns: 1fr; } .works { grid-template-columns: 1fr 1fr; } }
 </style>

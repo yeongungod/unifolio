@@ -3,15 +3,14 @@ import { site } from '../data/site';
 ---
 <section class="hero" id="top">
   <div class="wrap">
-    <p class="label">{site.nameEn}</p>
     <h1>{site.hero.title}</h1>
     <p class="sub">{site.hero.sub}</p>
     <div class="accent-bar"></div>
   </div>
 </section>
 <style>
-  .hero { border-top: 0; padding: 96px 0 72px; }
+  .hero { border-top: 0; padding: 64px 0 48px; }
   h1 { max-width: 18ch; }
   .sub { margin-top: 18px; font-size: 18px; color: var(--muted); max-width: 40ch; }
-  @media (max-width: 600px) { .hero { padding: 64px 0 48px; } .sub { font-size: 16px; } }
+  @media (max-width: 600px) { .hero { padding: 44px 0 32px; } .sub { font-size: 16px; } }
 </style>

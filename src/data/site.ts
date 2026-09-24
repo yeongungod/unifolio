@@ -12,10 +12,10 @@ export const site = {
     sub: '유튜브 편집부터 영화·웹콘텐츠 사운드까지. 보고 듣는 경험을 다듬습니다.',
   },
   services: [
-    { title: '유튜브 롱폼·쇼츠 편집', desc: '라이브 원본에서 본편과 쇼츠까지. 풀자막·밈·썸네일 문구 포함.' },
     { title: '영화·웹콘텐츠 믹싱·사운드디자인', desc: 'ADR·폴리·사운드디자인·마스터링. 영화제 출품 규격 대응.' },
     { title: '음악 녹음·믹싱·마스터링', desc: '라이브 클립, 커버곡, 싱글.' },
-    { title: '라이브 PA', desc: '팬미팅·콘서트·행사 현장 음향.' },
+    { title: '영상 편집', desc: '콘텐츠 구성에 맞춘 컷 편집·자막 작업. 롱폼부터 숏폼까지.' },
+    { title: '라이브 PA', desc: '팬미팅·콘서트·행사 현장 오퍼레이팅.' },
   ],
   process: ['문의', '견적', '작업', '납품'],
   processNote: '일반과세 사업자라 세금계산서 발행이 됩니다. 견적은 작업 범위를 듣고 드립니다.',
@@ -28,7 +28,7 @@ export const site = {
     { workId: '13c50bd8-fe2d-8051-bc48-cf0f28f42e1c', year: '2023', title: '제27회 부천국제판타스틱영화제', detail: '엑스라지 부문 상영 · 월드 프리미어', source: 'https://www.bifan.kr/bifan/history_program_view.asp?pk_seq=6677&sc_category1=&sc_year=2023' },
   ],
   about: {
-    intro: '컷의 흐름을 잇고, 소리의 결을 다듬습니다. 영화·음악·라이브에서 쌓아온 사운드 경험을 바탕으로, 유튜브와 웹콘텐츠의 편집까지 함께합니다.',
+    intro: '영화·음악·라이브에서 쌓아온 사운드 경험을 바탕으로, 유튜브와 웹콘텐츠의 편집까지 함께합니다.',
     edu: '서울예술대학교 방송영상과 음향 전공 (2019–2024)',
     awards: [
       { workId: '13c50bd8-fe2d-8088-a6c3-d5c4005aa5f1', year: '2024.12', title: '제24회 대한민국국제청소년영화제', body: '「날치」 작품상 대학부 은상' },
@@ -40,7 +40,7 @@ export const site = {
       { year: '2021.05', title: '대한민국 육군 아미로그 공모전', body: '최우수상' },
       { year: '2020.01', title: '주식회사 아론 이어폰 광고 공모전', body: '동상' },
     ],
-    tools: ['Premiere Pro', 'Pro Tools', 'After Effects', 'Photoshop', 'Cubase', 'Ableton Live', 'iZotope', 'Waves', 'UAD'],
+    tools: ['Pro Tools', 'Cubase', 'Ableton Live', 'Premiere Pro', 'After Effects', 'Photoshop', 'iZotope', 'Waves', 'UAD'],
     certs: ['Pro Tools 101 · 110 (Avid)', 'ACA Premiere · Illustrator (Adobe)'],
   },
 };

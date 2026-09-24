@@ -3,14 +3,22 @@ import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import WorkGrid from '../components/WorkGrid.astro';
 import Services from '../components/Services.astro';
+import Clients from '../components/Clients.astro';
 import About from '../components/About.astro';
 import Contact from '../components/Contact.astro';
 import { site } from '../data/site';
 ---
-<Base title={`${site.name} — 영상 편집 · 사운드`} description={site.hero.sub}>
+<Base title={`${site.name} — 사운드 디자인 · 포스트 프로덕션`} description={site.hero.sub}>
   <Hero />
   <WorkGrid />
   <Services />
+  <Clients />
   <About />
   <Contact />
 </Base>
+<style>
+  :global(main > section:not(.hero)) { padding-block: 48px; }
+  @media (max-width: 600px) {
+    :global(main > section:not(.hero)) { padding-block: 32px; }
+  }
+</style>

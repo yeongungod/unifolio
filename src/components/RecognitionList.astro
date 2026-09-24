@@ -1,0 +1,21 @@
+---
+interface Props { groups: Array<{ work: string; year: string; records: Array<{ text: string; source: string }> }> }
+const { groups } = Astro.props;
+---
+<ul class="records">
+  {groups.map(group => <li>
+    <span class="year muted" title="작업 연도">{group.year}</span>
+    <div>{group.work && <strong>{group.work}</strong>}
+      {group.records.map(record => <p>{record.source ? <a href={record.source} target="_blank" rel="noopener noreferrer">{record.text}</a> : record.text}</p>)}
+    </div>
+  </li>)}
+</ul>
+<style>
+  .records { list-style: none; padding: 0; margin: 12px 0 0; }
+  li { display: grid; grid-template-columns: 48px minmax(0,1fr); gap: 16px; padding: 16px 0; border-top: 1px solid var(--line); font-size: 14px; }
+  .year { font-variant-numeric: tabular-nums; font-size: 13px; }
+  strong { display: block; margin-bottom: 6px; }
+  p { color: var(--muted); word-break: keep-all; overflow-wrap: anywhere; }
+  p + p { margin-top: 4px; }
+  a { text-decoration: underline; text-underline-offset: 3px; }
+</style>

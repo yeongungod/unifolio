@@ -1,0 +1,75 @@
+---
+import { clients } from '../data/clients';
+---
+<section id="clients" class="animated two-rows" aria-labelledby="clients-title">
+  <div class="wrap">
+    <p class="label">Client</p>
+    <h2 id="clients-title">주요 클라이언트</h2>
+  </div>
+  <div class="clients-window" tabindex="0" aria-label="참여 브랜드 로고. 마우스를 올리거나 키보드로 선택하면 이동이 멈춥니다.">
+    <div id="clients-track" style={`--duration: ${clients.length * 5}s`}>
+      {[false, true].map((duplicate) => (
+        <ul class="clients-list" aria-label={duplicate ? undefined : '참여 브랜드·기관'} aria-hidden={duplicate ? 'true' : undefined}>
+          {clients.map((client, index) => (
+            <li>
+              <span class="client-logo">
+              <img src={`/images/clients/${client.file}`} alt={duplicate ? '' : client.name} class:list={{ compact: client.compact, cover: client.cover, small: client.small }} width="180" height="80" decoding="async" />
+              {client.lightText && (
+                <svg class="light-text" viewBox={`0 0 ${client.lightText.width} ${client.lightText.height}`} aria-hidden="true">
+                  <defs>
+                    <mask id={`client-text-${duplicate}-${index}`} style="mask-type: alpha" maskUnits="userSpaceOnUse" x="0" y="0" width={client.lightText.width} height={client.lightText.height}>
+                      <image href={`/images/clients/${client.file}`} width={client.lightText.width} height={client.lightText.height} />
+                    </mask>
+                  </defs>
+                  <rect x={client.lightText.x} y={client.lightText.y} width={client.lightText.width - client.lightText.x} height={client.lightText.height - client.lightText.y} fill="currentColor" mask={`url(#client-text-${duplicate}-${index})`} />
+                </svg>
+              )}
+              </span>
+            </li>
+          ))}
+        </ul>
+      ))}
+    </div>
+  </div>
+</section>
+<style>
+  #clients { background: var(--ink); color: var(--paper); overflow: hidden; }
+  .clients-window { margin: 30px auto 0; max-width: 1600px; }
+  .clients-window:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .clients-list { display: flex; flex-wrap: wrap; justify-content: center; padding: 0; margin: 0; list-style: none; }
+  .clients-list[aria-hidden] { display: none; }
+  .clients-list li { flex: 0 0 228px; height: 104px; display: flex; align-items: center; justify-content: center; padding: 12px 24px; background: var(--ink); }
+  .client-logo { position: relative; width: 180px; height: 80px; display: flex; align-items: center; justify-content: center; }
+  .clients-list img { width: 180px; height: 80px; object-fit: contain; }
+  .light-text { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .clients-list img.compact { width: 100px; }
+  .clients-list img.small { width: 140px; }
+  .clients-list img.cover { object-fit: cover; height: 64px; mix-blend-mode: screen; }
+  .animated .clients-window { overflow: hidden; mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent); }
+  .animated #clients-track { display: flex; width: max-content; animation: clients-flow var(--duration) linear infinite; }
+  .animated .clients-list { display: flex; flex-wrap: nowrap; flex-shrink: 0; }
+  .clients-window:focus-visible #clients-track { animation-play-state: paused; }
+  @media (hover: hover) and (pointer: fine) {
+    .clients-window:hover #clients-track { animation-play-state: paused; }
+  }
+  .two-rows .clients-window { max-width: 1600px; }
+  .two-rows #clients-track { animation-duration: calc(var(--duration) / 2); }
+  .two-rows .clients-list { display: grid; grid-template-rows: repeat(2, 120px); grid-auto-flow: column; grid-auto-columns: 280px; }
+  @keyframes clients-flow { to { transform: translateX(-50%); } }
+  @media (max-width: 600px) {
+    .clients-list li { flex-basis: 180px; padding-inline: 16px; }
+    .clients-list img { width: 148px; height: 64px; }
+    .client-logo { width: 148px; height: 64px; }
+    .two-rows .clients-list { grid-auto-columns: 180px; }
+  }
+  @media (prefers-reduced-motion: reduce), print {
+    .animated .clients-window { mask-image: none; }
+    .animated #clients-track { display: block; width: auto; animation: none; transform: none; }
+    .animated .clients-list { display: flex; flex-wrap: wrap; }
+    .animated .clients-list[aria-hidden] { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) and (max-width: 600px) {
+    .clients-list li { flex-basis: 50%; }
+    .clients-list img { max-width: 100%; }
+  }
+</style>

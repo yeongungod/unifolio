@@ -6,7 +6,7 @@ export const featured: Featured[] = [
     "role": "유튜브 롱폼·쇼츠 편집",
     "year": "2025 –",
     "client": "해보자시리즈",
-    "note": "구독자 15만 게임 채널. 롱폼·쇼츠 편집, 썸네일 문구까지.",
+    "note": "",
     "url": "https://www.youtube.com/watch?v=G7P6u0izwsk",
     "youtube": "G7P6u0izwsk"
   },
@@ -54,7 +54,7 @@ export const featured: Featured[] = [
     "role": "믹싱 · 사운드디자인 · 마스터링",
     "year": "2023 – 25",
     "client": "대한민국 해군 · 공군",
-    "note": "창설 기념 광고, 훈련소 다큐, 정신전력 교육 영상 등 7건.",
+    "note": "창설 기념 광고·훈련소 다큐·정신전력 교육 영상 등.",
     "url": "https://www.youtube.com/watch?v=4j_y34frjNU",
     "youtube": "4j_y34frjNU"
   },
@@ -70,11 +70,11 @@ export const featured: Featured[] = [
   },
   {
     "slug": "3e150bd8-fe2d-8187-8c50-de7e2eab3936",
-    "title": "온사이드 팬미팅 시리즈",
+    "title": "온사이드 팬미팅",
     "role": "라이브 PA",
     "year": "2023 – 25",
     "client": "ONSIDE COMPANY",
-    "note": "마젠타·수련수련·임마초·최솜이 등 팬미팅·콘서트 9회 현장 음향.",
+    "note": "마젠타·수련수련·임마초·최솜이 등 팬미팅·콘서트 현장 오퍼레이팅.",
     "image": "/images/work/onside.jpg"
   },
   {

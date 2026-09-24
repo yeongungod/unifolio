@@ -68,3 +68,6 @@ Git 변경 뒤의 Vercel 배포 실패는 자동 롤백하지 않는다. 실패�
 - Supabase 프로젝트는 `gzbedcgtmdtctejllkta`(Tokyo). `npm run dev`/`preview`는 정적 화면만 제공한다. 실제 API 테스트는 Git 제외 `tmp/admin-local.mjs`로 4422 정적 미리보기를 127.0.0.1:4423에 연결했다. **(당시 기록. 테스트 redirect는 09-23 사용자가 Supabase에서 제거.)** 이 임시 서버는 게시를 강제 차단한다. 로컬 초안은 변경된 소스를 기준으로 시작했으므로 최초 코드 배포 전에는 GitHub main과 원본 해시가 다르다.
 
 공식 근거: [Google OAuth](https://supabase.com/docs/guides/auth/social-login/auth-google), [PKCE](https://supabase.com/docs/guides/auth/sessions/pkce-flow), [Auth REST API](https://github.com/supabase/auth/blob/master/openapi.yaml), [RLS](https://supabase.com/docs/guides/database/postgres/row-level-security), [Storage 권한](https://supabase.com/docs/guides/storage/security/access-control), [Vercel Node Functions](https://vercel.com/docs/functions/runtimes/node-js), [Git trees](https://docs.github.com/en/rest/git/trees).
+# 개발 작업의 커밋·푸시 전 확인
+
+관리자 게시 변경을 덮어쓰지 않도록 [원격 동기화 루틴](publish-preflight.md)을 따른다. `npm run preflight:publish`로 확인·동기화하고, 커밋·푸시 직전 Git 훅이 다시 확인한다. 비공개 저장 초안은 공개 동기화 대상이 아니다.
