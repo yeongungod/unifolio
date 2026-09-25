@@ -3,7 +3,7 @@ import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 const DIST = 'dist';
-const pages = ['index.html', 'work/index.html', 'intro/index.html', 'admin/index.html'];
+const pages = ['index.html', 'work/index.html', 'admin/index.html'];
 const banned = ['pyu0205', 'Selene', 'once-ui', 'TODO', 'TBD'];
 let fail = 0;
 const err = (m) => { console.error('✗', m); fail++; };

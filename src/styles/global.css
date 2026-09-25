@@ -34,7 +34,6 @@ a { color: inherit; text-decoration: none; }
 button { font: inherit; cursor: pointer; }
 a, button { touch-action: manipulation; }
 :where(a, button, iframe):focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
-.sheet :where(a, button):focus-visible { outline-color: var(--ink); }
 [id] { scroll-margin-top: 76px; }
 .skip-link { position: fixed; top: 8px; left: 16px; z-index: 20; padding: 10px 16px; background: var(--paper); color: var(--ink); transform: translateY(-200%); }
 .skip-link:focus { transform: translateY(0); }
@@ -62,15 +61,6 @@ section { padding: 72px 0; border-top: 1px solid var(--line); scroll-margin-top:
   section { padding: 48px 0; }
 }
 
-/* /intro 인쇄 */
-.intro-body .site-header, .intro-body .site-footer { display: none; }
-.intro-body { background: var(--ink-3); }
 @media print {
-  @page { size: A4; margin: 0; }
-  body, .intro-body { background: #fff; }
   .no-print { display: none !important; }
-  .sheet { margin: 0; width: 210mm; height: 297mm; min-height: 0; box-shadow: none; display: flex; flex-direction: column; }
-  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
-.sheet { display: flex; flex-direction: column; color-scheme: light; }
-@media screen { .sheet { max-width: 100%; } }
