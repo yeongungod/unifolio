@@ -36,7 +36,7 @@ export const featured: Featured[] = [
     "role": "믹싱 · 사운드디자인 · 폴리 · 마스터링",
     "year": "2022",
     "client": "배준원 감독",
-    "note": "제18회 대한민국대학영화제 최우수작품상 · 여자배우상. ㈜인디스토리 배급.",
+    "note": "제18회 대한민국대학영화제 최우수작품상 · 여자연기상. ㈜인디스토리 배급.",
     "image": "/images/work/chimmuk.jpg"
   },
   {
