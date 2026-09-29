@@ -21,6 +21,16 @@ export const site = {
   processNote: '일반과세 사업자라 세금계산서 발행이 됩니다. 견적은 작업 범위를 듣고 드립니다.',
   // 웹 확인 기록: docs/festival-sources.md. 제작 연도와 행사 연도는 구분한다.
   screenings: [
+    // 2026-09-29 추가분의 year는 archive.json 작업 연도. 행사 연도는 detail과 출처에 기록.
+    { workId: '13c50bd8-fe2d-8051-bc48-cf0f28f42e1c', year: '2022', title: '서울국제프라이드영화제', detail: '제13회 코리아 프라이드 상영 (2023)', source: 'https://sipff.kr/1427' },
+    { workId: '13c50bd8-fe2d-8051-bc48-cf0f28f42e1c', year: '2022', title: '광주여성영화제', detail: '제14회 귄 단편공모 상영 (2023)', source: 'https://www.tinyticket.net/event-group/EGZtSW2Hc3mJ' },
+    { workId: '13c50bd8-fe2d-803e-b044-dc4018d720dc', year: '2022', title: '브뤼셀국제판타스틱영화제', detail: '제41회 상영 (2023)', source: 'https://www.bifff.net/wp-content/uploads/2023/03/Pers-Dossier-BIFFF-2023.pdf#page=33' },
+    { workId: '13c50bd8-fe2d-803e-b044-dc4018d720dc', year: '2022', title: '뉴욕아시안영화제', detail: '제22회 상영 · 북미 프리미어 (2023)', source: 'https://www.nyaff.org/nyaff23/films/all-your-fault-pd' },
+    { workId: '13c50bd8-fe2d-803e-b044-dc4018d720dc', year: '2022', title: 'Apple TV', detail: 'Apple TV · 왓챠 공개', source: 'https://tv.apple.com/kr/movie/피디님이-책임지세요/umc.cmc.5h6bfl1moiv4ztvvnkxjjbn91' },
+    { workId: '13c50bd8-fe2d-8018-89db-f6d1e9dc6a61', year: '2023', title: 'Google Play', detail: 'Google Play · 왓챠 · 티빙 · 쿠팡플레이 · Apple TV 공개', source: 'https://tv.apple.com/kr/movie/살아지다/umc.cmc.5o5fo9wmf28eybfqjhtjo8uuw' },
+    { workId: '13c50bd8-fe2d-8052-a289-e36530d0bb96', year: '2023', title: '티빙', detail: 'Apple TV · 티빙 공개', source: 'https://tv.apple.com/kr/movie/목요일/umc.cmc.5r71364w2azjhv9xiymv5ydcs' },
+    { workId: '13c50bd8-fe2d-8052-a289-e36530d0bb96', year: '2023', title: '퍼니콘', detail: '㈜퍼니콘 배급', source: 'https://koreafilm.net/movies/dispKobisView?movieCd=20259602' },
+    { workId: '13c50bd8-fe2d-800c-882f-f67576c85887', year: '2022', title: '성남문화재단', detail: '성남독립영화제작지원 선정 (2021)', source: 'https://m.news.nate.com/view/20210503n13511' },
     { workId: '13c50bd8-fe2d-8088-a6c3-d5c4005aa5f1', year: '2024', title: '제1회 서울한강국제영화제', detail: '본선경쟁 선정', source: 'https://www.seoularts.ac.kr/web/content.do?proFn=9323250' },
     { workId: '13c50bd8-fe2d-8088-a6c3-d5c4005aa5f1', year: '2024', title: '조치원 필름 로맨스', detail: '상영', source: 'https://www.seoularts.ac.kr/web/content.do?proFn=9323250' },
     { workId: '13c50bd8-fe2d-8088-a6c3-d5c4005aa5f1', year: '2023', title: '제26회 도시영화제', detail: '경쟁부문 상영', source: 'https://uff-mo.imweb.me/5jqjgg07/?bmode=view&idx=165051567' },
