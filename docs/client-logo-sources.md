@@ -1,5 +1,25 @@
 # 클라이언트 로고 출처
 
+## 09-29 회사소개서 로고 7곳 추가
+
+회사소개서 `260926_회사소개서_v2/v3_assets/logos/README.md`의 수집 기록과 지정 자산을 사용했다. 아래 출처는 해당 README의 기록을 옮긴 것이며 이번 작업에서 다시 다운로드하지 않았다. 회사소개서 원본은 수정하지 않았다.
+
+| 파일 | 기관 | 출처 | 웹 표시 처리 |
+|---|---|---|---|
+| snu_signature.png | 서울대학교 | [logofinder 재게시 PNG](https://logo.vision1098.com/entry/서울대학교-로고-CI-파일ai-png). 공식 UI 다운로드는 교직원 로그인 전용이라 재게시본 사용 | 원본 파랑 교표 유지, 국영문 글자만 lightText |
+| sia.png | 서울예술대학교 | [공식 UI](https://www.seoularts.ac.kr/web/content.do?proFn=9131000)의 첨부 ZIP 내 `서울예대_로고타입.pdf`를 300dpi 렌더·크롭한 회사소개서 PNG | 빨강 심벌 유지, 국영문 글자만 lightText |
+| hanyang_signature.png | 한양대학교 | [공식 로고 응용](https://www.hanyang.ac.kr/web/www/logo-application)의 `Signature_lr_basic_kor` | PNG 투명 여백 트림, 파랑 교표 유지, 국문 글자만 lightText |
+| seoul.png | 서울특별시 | [공식 상징물](https://www.seoul.go.kr/seoul/emblem.do)의 `ci_png.zip`(2023-05), `좌우조합_서울특별시` | 투명 여백 트림, 컬러 심벌 유지, 국문 글자만 lightText |
+| rollsroyce_combo.svg | 롤스로이스 | [Commons: Rolls royce northamerica logo](https://commons.wikimedia.org/wiki/File:Rolls_royce_northamerica_logo.svg) | 지정 plc 계열 가로 조합 그대로, 파랑 RR 배지 유지, 오른쪽 워드마크만 lightText |
+| ktds.svg | kt ds | [Commons: KTDS Logo](https://commons.wikimedia.org/wiki/File:KTDS_Logo.svg) | 사본의 검정 `#242424` 경로만 `#FBF9F6`로 변환, 빨강 `#EC1C24`와 형상 유지 |
+| kiost.png | 한국해양과학기술원(KIOST) | [공식 CI](https://www.kiost.ac.kr/kor/sub04_08_01.do)의 `KIOST_Signature_png.zip`, `국문좌우조합` | 투명 여백 트림, KIOST 영문·컬러 심벌 유지, 오른쪽 국문만 lightText |
+
+lightText는 기존 Clients 컴포넌트의 알파 마스크 방식이며 공식 흰색 CI 파일이라는 뜻은 아니다. 마스크 좌표는 저장된 웹 자산 기준이다. 서울대학교·한양대학교·롤스로이스의 파랑 심벌은 원본색을 유지한다.
+
+롤스로이스는 사용자 지정 `rollsroyce_combo.svg`만 사용했다. 출처상 plc 계열 북미 법인 브랜딩이며 Motor Cars 로고로 해석하지 않는다. 서울관광재단(sto)·대한체육회·BIFAN·서울대 교표 단독·다른 롤스로이스 자산은 추가하지 않았다.
+
+해보자시리즈를 맨 앞에 두고 회사소개서 순서로 19곳을 배치했다. 기존 두 줄 이동 레이아웃과 다른 섹션은 변경하지 않았다.
+
 ## 09-25 다크 배경 컬러 시안
 
 사용자가 참고 이미지의 여백과 밝은 글자 표현을 승인했다. 두 줄 흐름 유지, 최대 폭 1600px 및 열 간격 280px로 조정. RAVNUS 보라·초록 등 심벌 색은 그대로 유지한다.
