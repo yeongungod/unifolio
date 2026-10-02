@@ -35,7 +35,7 @@ const releases = records.filter(record => record.kind !== 'event');
 
 <style>
   .card { display: flex; flex-direction: column; gap: 12px; }
-  .media { position: relative; aspect-ratio: 16/9; overflow: hidden; border-radius: 6px; background: var(--ink-2); padding: 0; border: 0; width: 100%; }
+  .media { position: relative; aspect-ratio: 16/9; overflow: hidden; border-radius: var(--radius-sm); background: var(--ink-2); padding: 0; border: 0; width: 100%; }
   .media img { width: 100%; height: 100%; object-fit: cover; }
   .play { position: absolute; inset: 0; display: grid; place-items: center; color: var(--paper); font-size: 28px; background: var(--video-shade); transition: background .15s; }
   .yt:hover .play { background: var(--video-hover); }

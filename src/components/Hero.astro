@@ -3,7 +3,7 @@ import { site } from '../data/site';
 ---
 <section class="hero" id="top">
   <div class="wrap">
-    <h1>{site.hero.title}</h1>
+    <h1>{site.hero.title.split(', ').map((line, i, all) => <>{line}{i < all.length - 1 && <>,<br /></>}</>)}</h1>
     <p class="sub">{site.hero.sub}</p>
     <div class="accent-bar"></div>
   </div>

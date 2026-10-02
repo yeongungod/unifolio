@@ -108,12 +108,30 @@ typography:
     fontWeight: 600
     lineHeight: 1.4
     letterSpacing: "-0.01em"
+  web-lead:
+    fontFamily: "SUITE, Pretendard, Malgun Gothic, sans-serif"
+    fontSize: "18px"
+    fontWeight: 500
+    lineHeight: 1.6
+    letterSpacing: "-0.01em"
   web-body:
     fontFamily: "SUITE, Pretendard, Malgun Gothic, sans-serif"
     fontSize: "16px"
     fontWeight: 500
     lineHeight: 1.6
     letterSpacing: "-0.01em"
+  web-small:
+    fontFamily: "SUITE, Pretendard, Malgun Gothic, sans-serif"
+    fontSize: "14px"
+    fontWeight: 500
+    lineHeight: 1.5
+    letterSpacing: "-0.01em"
+  web-caption:
+    fontFamily: "SUITE, Pretendard, Malgun Gothic, sans-serif"
+    fontSize: "13px"
+    fontWeight: 500
+    lineHeight: 1.5
+    letterSpacing: "0"
   web-label:
     fontFamily: "SUITE, Pretendard, Malgun Gothic, sans-serif"
     fontSize: "12px"
@@ -248,14 +266,18 @@ components:
 - **Stat** (700, 120px, 1.0): 큰 숫자.
 - **Title** (700, 36px, 1.35): 카드 제목.
 - **Body** (400, 30px, 1.55): 본문.
-- **Meta** (400, 24px, 1.4): 섹션 탭·칩·바닥글·쪽번호.
+- **Meta** (400, 24px, 1.4): 칩·바닥글·쪽번호. **섹션 탭(「01 · 요약」)만 같은 크기에 Bold**로 둔다(Regular면 탭이 약해진다, 2026-10-03).
 - PPTX에서는 굵기를 400·700 두 개만 쓴다(Regular/Bold로 매핑). px → pt 변환은 ×0.5(1920px = 13.333in = 960pt).
+- 자간은 `tokens.py`의 `tracking_em` × 글자 px × 0.5 × 100 = PPTX `spc`(1/100pt) 값으로 넣는다.
 
 ### Hierarchy — 웹 (표현, 어두운 테마)
 - **Display** (700, clamp(32px, 6vw, 56px), 1.15): h1.
 - **Headline** (700, clamp(22px, 3.5vw, 30px), 1.3): h2.
 - **Title** (600, 17px, 1.4): h3, 버튼.
+- **Lead** (500, 18px, 1.6, Stone): 첫 화면 부제목.
 - **Body** (500, 16px, 1.6): 본문. 어두운 바탕이라 한 단계 굵게.
+- **Small** (500, 14px, 1.5): 메뉴·목록·필터 칩·버튼.
+- **Caption** (500, 13px, 1.5): 바닥글·캡션.
 - **Label** (600, 12px, +0.12em, 대문자): 섹션 라벨, 아쿠아마린 글자.
 
 ### Named Rules
@@ -290,7 +312,7 @@ components:
 
 ### Buttons (웹)
 - **Shape:** 각진 듯 부드럽게 (4px)
-- **Primary:** paper 면 + ink 글자, 600 15~17px, 안쪽 12px 20px
+- **Primary:** paper 면 + ink 글자, 600 14px(Small), 안쪽 12px 20px
 - **Ghost:** 투명 면 + Hairline on Ink 1px 테두리 + paper 글자
 - **Hover / Focus:** 면 색만 바뀐다. 포커스는 2px 아쿠아 외곽선(먹색 바탕이라 허용)
 
@@ -312,6 +334,12 @@ components:
 
 ### Callout (A4)
 paper 면 + 왼쪽 아쿠아 막대 1mm, 모서리 0.
+
+### Filter Chip (웹)
+- 투명 면 + Hairline on Ink 1px 테두리, 모서리 4px, Small 14px. 알약 모양(999px) 쓰지 않는다.
+
+### Client Logo Strip (웹, 의도된 예외)
+메인 「주요 클라이언트」 로고 띠는 계속 흐르는 애니메이션이다(2026-09-29 사용자 결정: 마우스를 올려도 멈추지 않고 키보드 포커스만 멈춤). impeccable `marquee` 경고는 알고 둔 예외로 본다. 로고 크기는 `clients.ts`의 `scale`로 잉크 면적 약 5,600px²에 맞춘다.
 
 ### Navigation (웹)
 머리글 높이 60px, 흰색 락업 폭 142px(600px 이하는 마크만). 메뉴 14px 500, 현재 위치는 아쿠아 막대.

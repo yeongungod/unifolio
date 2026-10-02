@@ -45,7 +45,7 @@ section { padding: 72px 0; border-top: 1px solid var(--line); scroll-margin-top:
 .accent-bar { width: 56px; height: 4px; background: var(--accent); margin: 20px 0; }
 .btn {
   display: inline-block; padding: 12px 20px; border: 1px solid var(--paper);
-  border-radius: 4px; font-weight: 600; font-size: 15px;
+  border-radius: var(--radius-sm); font-weight: 600; font-size: 14px;
 }
 .btn:hover { background: var(--paper); color: var(--ink); }
 .btn.accent { background: var(--accent); border-color: var(--accent); color: var(--ink); }
