@@ -1,20 +1,14 @@
+@import './tokens.css';
 @font-face { font-family: 'SUITE'; src: url('/fonts/SUITE-Medium.ttf') format('truetype'); font-weight: 500; font-display: swap; }
 @font-face { font-family: 'SUITE'; src: url('/fonts/SUITE-SemiBold.ttf') format('truetype'); font-weight: 600; font-display: swap; }
 @font-face { font-family: 'SUITE'; src: url('/fonts/SUITE-Bold.ttf') format('truetype'); font-weight: 700; font-display: swap; }
 
+/* 브랜드 색·간격·서체 값은 tokens.css(디자인시스템 DESIGN.md에서 생성). 여기엔 사이트 전용 값만. */
 :root {
-  --ink: #141210;
-  --accent: #9CC3D5;
-  --paper: #FBF9F6;
-  --muted: #8A837C;
-  --line: rgba(251, 249, 246, 0.12);
-  --muted-on-paper: #665f58;
+  --line: var(--rule-on-ink);
   --header-bg: rgba(20, 18, 16, 0.9);
   --video-shade: rgba(20, 18, 16, 0.25);
   --video-hover: rgba(156, 195, 213, 0.35);
-  --paper-line: #e6e2dc;
-  --ink-2: #26231f;
-  --ink-3: #2a2724;
 }
 
 * { box-sizing: border-box; }
@@ -48,7 +42,7 @@ p { margin: 0; }
 section { padding: 72px 0; border-top: 1px solid var(--line); scroll-margin-top: 72px; }
 .label { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
 .muted { color: var(--muted); }
-.accent-bar { width: 56px; height: 3px; background: var(--accent); margin: 20px 0; }
+.accent-bar { width: 56px; height: 4px; background: var(--accent); margin: 20px 0; }
 .btn {
   display: inline-block; padding: 12px 20px; border: 1px solid var(--paper);
   border-radius: 4px; font-weight: 600; font-size: 15px;
