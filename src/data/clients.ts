@@ -16,7 +16,7 @@ export const clients = [
   { name: '교보생명', scale: 0.77, file: 'kyobo.png', lightText: { width: 240, height: 70, x: 0, y: 40 } },
   { name: '한국해양과학기술원(KIOST)', scale: 0.98, file: 'kiost.png', lightText: { width: 2641, height: 429, x: 1055, y: 0 } },
   { name: '한국연예제작자협회', scale: 1.14, file: 'kepa.png', lightText: { width: 295, height: 39, x: 45, y: 0 } },
-  { name: '부천국제판타스틱영화제(BIFAN)', scale: 0.73, file: 'bifan-white.svg' },
+  { name: '부천국제판타스틱영화제(BIFAN)', scale: 0.92, file: 'bifan-mark-white.svg' },
   { name: '매치워크', scale: 1.04, file: 'matchwork.png', lightText: { width: 543, height: 147, x: 0, y: 52 } },
   { name: '왓슨앤컴퍼니', scale: 0.88, file: 'watson.png', lightText: { width: 205, height: 46, x: 70, y: 0 } },
   { name: 'ITEASY', scale: 1.05, file: 'iteasy-white.png' },

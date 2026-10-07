@@ -9,7 +9,7 @@
 | 한국연예제작자협회 / kepa.png | [홈페이지](https://kepa.net/), [헤더 CSS](https://kepa.net/css/global.css), [원본 JPG](https://kepa.net/images/main/logo.jpg) | kepa-original.jpg 보존. 흰 매트 제거·투명 여백 트림. 컬러 심벌 유지, x=45 이후 글자만 lightText. KIOST 다음 | 1.14 |
 | RAPBEAT / rapbeat.png | [홈페이지](https://www.rapbeatfestival.com/), [원본 PNG](https://www.rapbeatfestival.com/images/common/logo.png) | rapbeat-original.png 보존. 투명 여백만 트림. 원래 검정 단색 워드마크를 lightText로 밝게 표시. Mnet 다음 | 0.67 |
 | 왓슨앤컴퍼니 / watson.png | [홈페이지](https://watsonxi.com/), [원본 PNG](https://watsonxi.com/images/common/logo-on.png) | 원본 그대로. 청록 파형 유지, x=70 이후 글자만 lightText. 매치워크 다음 | 0.88 |
-| BIFAN / bifan-white.svg | [홈페이지](https://www.bifan.kr/), [공식 흰색 SVG](https://www.bifan.kr/web/images/main/main2026_ff_bi_logo_w.svg) | 에디션 없는 BIFAN 워드마크 원본 그대로. KIOST·협회 근처 | 0.73 |
+| BIFAN / bifan-mark-white.svg | [홈페이지](https://www.bifan.kr/), [공식 흰색 SVG](https://www.bifan.kr/web/images/main/f2026_logo_w.svg) | 10-07 사용자 지정: 「BIFAN」 글자 + 파란 심벌 세로 조합(공식 2024 조합 `https://www.bifan.kr/web/images/common/2024_logo.jpg`과 같은 심벌). 흰색(.st0 fill #fff) 원본 그대로. 처음 넣은 가로 워드마크 `main2026_ff_bi_logo_w.svg`는 교체·삭제. 정사각형이라 높이 80 기준 약 83×80 → 5,600px² 맞춤 | 0.92 |
 | ITEASY / iteasy-white.png | [공식 기업 사이트](https://company.iteasy.co.kr/), [공식 흰색 PNG](https://company.iteasy.co.kr/images/white_logo.png) | 푸터의 공식 흰색판 원본 그대로. 왓슨앤컴퍼니와 LS ELECTRIC 사이 | 1.05 |
 
 BIFAN 참여 근거는 2022 「AREA 1997」 웹 영상 믹싱·사운드디자인·폴리·마스터링의 실제 의뢰처다. 상영처라는 이전 설명은 폐기한다. 기존 17곳의 자산·배율·Clients 컴포넌트·작업 및 수상 데이터는 변경하지 않았다.
