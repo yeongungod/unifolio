@@ -3,9 +3,8 @@ import { site } from '../data/site';
 ---
 <section class="hero" id="top">
   <div class="wrap">
-    <h1>{site.hero.title.split(', ').map((line, i, all) => <>{line}{i < all.length - 1 && <>,<br /></>}</>)}</h1>
+    <h1>{site.hero.title.split('\n').map((line, i) => <>{i > 0 && <br />}{line}</>)}</h1>
     <p class="sub">{site.hero.sub}</p>
-    <div class="accent-bar"></div>
   </div>
 </section>
 <style>

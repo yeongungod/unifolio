@@ -2,7 +2,6 @@
 // 수집 출처: docs/client-logo-sources.md
 // scale: 화면에 실제로 보이는 면적이 비슷해지도록 맞춘 배율(2026-09-29, 1440px에서 로고별 잉크 영역을 재서 약 5,600px²로 통일). 로고를 바꾸면 다시 잴 것
 export const clients = [
-  { name: '해보자시리즈', scale: 1.02, file: 'haeboja-transparent.png', compact: true },
   { name: '서울대학교', scale: 0.87, file: 'snu_signature.png', lightText: { width: 1377, height: 314, x: 340, y: 0 } },
   { name: '서울예술대학교', scale: 0.86, file: 'sia.png', lightText: { width: 3234, height: 754, x: 765, y: 0 } },
   { name: '한양대학교', scale: 0.81, file: 'hanyang_signature.png', lightText: { width: 591, height: 159, x: 170, y: 0 } },
