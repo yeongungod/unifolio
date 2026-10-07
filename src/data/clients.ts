@@ -5,7 +5,6 @@ export const clients = [
   { name: '서울대학교', scale: 0.87, file: 'snu_signature.png', lightText: { width: 1377, height: 314, x: 340, y: 0 } },
   { name: '서울예술대학교', scale: 0.86, file: 'sia.png', lightText: { width: 3234, height: 754, x: 765, y: 0 } },
   { name: '한양대학교', scale: 0.81, file: 'hanyang_signature.png', lightText: { width: 591, height: 159, x: 170, y: 0 } },
-  { name: '서울특별시', scale: 0.82, file: 'seoul.png', lightText: { width: 772, height: 198, x: 190, y: 0 } },
   { name: '대한민국 해군', scale: 0.97, file: 'navy.svg', lightText: { width: 1210.86, height: 283.46, x: 290, y: 0 } },
   { name: '대한민국 공군', scale: 0.92, file: 'airforce.svg', lightText: { width: 265.79, height: 58.74, x: 110, y: 0 } },
   { name: 'RAVNUS', scale: 0.96, file: 'ravnus.webp' },
