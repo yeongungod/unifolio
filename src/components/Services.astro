@@ -7,13 +7,15 @@ import { site } from '../data/site';
     <h2>{site.servicesTitle}</h2>
     <ul class="services">
       {site.services.map((s) => (
-        <li><h3>{s.title}</h3><p class="muted">{s.desc}</p></li>
+        <li><h3>{s.title}</h3><p class="muted">{s.desc.split('\n').map((l, i) => <>{i > 0 && <br />}{l}</>)}</p></li>
       ))}
     </ul>
   </div>
 </section>
 <style>
-  .services { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+  /* 10-07: 2×2(회사소개서와 같은 배치). 4열은 칸이 247px이라 설명이 3줄로 접혔다 */
+  .services { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 20px 40px; grid-template-columns: repeat(2, 1fr); }
   .services li { border-top: 1px solid var(--line); padding-top: 14px; }
-  .services p { margin-top: 6px; font-size: 14px; white-space: pre-line; }
+  .services p { margin-top: 6px; font-size: 14px; }
+  @media (max-width: 600px) { .services { grid-template-columns: 1fr; } }
 </style>

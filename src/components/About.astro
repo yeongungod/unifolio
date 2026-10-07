@@ -22,7 +22,7 @@ const toolLogos: Record<string, { file: string; url: string }> = {
   <div class="wrap">
     <p class="label">Studio</p>
     <h2>{site.name}</h2>
-    <p class="intro">{a.intro}</p>
+    <p class="intro">{a.intro.split('\n').map((l, i) => <>{i > 0 && <br />}{l}</>)}</p>
     <div class="cols">
       <div>
         <h3>이력</h3>
@@ -45,7 +45,7 @@ const toolLogos: Record<string, { file: string; url: string }> = {
   </div>
 </section>
 <style>
-  .intro { margin-top: 18px; max-width: 60ch; font-size: 17px; white-space: pre-line; }
+  .intro { margin-top: 18px; max-width: 60ch; font-size: 17px; }
   .cols { display: grid; gap: 40px; grid-template-columns: 1.4fr 1fr; margin-top: 40px; }
   .plain { list-style: none; padding: 0; margin: 12px 0 0; }
   .more-records { border-top: 1px solid var(--line); margin-top: 16px; padding-top: 16px; font-size: 14px; }
