@@ -1,5 +1,45 @@
 # 클라이언트 로고 출처
 
+## 10-07 추가 (최종 ORDER_261007c 기준)
+
+기존 17곳에 한국연예제작자협회·RAPBEAT·왓슨앤컴퍼니·BIFAN·ITEASY를 추가하여 총 22곳, 두 줄 11/11로 확정했다. 일반 이용약관·회원약관의 콘텐츠 복제 조항은 제외 사유가 아니며 로고·CI 전용 제한을 확인한다. GATSBY는 최종 지시의 별도 제외 결정을 따른다.
+
+| 대상·파일 | 공식 출처 | 처리·배치 | scale |
+|---|---|---|---:|
+| 한국연예제작자협회 / kepa.png | [홈페이지](https://kepa.net/), [헤더 CSS](https://kepa.net/css/global.css), [원본 JPG](https://kepa.net/images/main/logo.jpg) | kepa-original.jpg 보존. 흰 매트 제거·투명 여백 트림. 컬러 심벌 유지, x=45 이후 글자만 lightText. KIOST 다음 | 1.14 |
+| RAPBEAT / rapbeat.png | [홈페이지](https://www.rapbeatfestival.com/), [원본 PNG](https://www.rapbeatfestival.com/images/common/logo.png) | rapbeat-original.png 보존. 투명 여백만 트림. 원래 검정 단색 워드마크를 lightText로 밝게 표시. Mnet 다음 | 0.67 |
+| 왓슨앤컴퍼니 / watson.png | [홈페이지](https://watsonxi.com/), [원본 PNG](https://watsonxi.com/images/common/logo-on.png) | 원본 그대로. 청록 파형 유지, x=70 이후 글자만 lightText. 매치워크 다음 | 0.88 |
+| BIFAN / bifan-white.svg | [홈페이지](https://www.bifan.kr/), [공식 흰색 SVG](https://www.bifan.kr/web/images/main/main2026_ff_bi_logo_w.svg) | 에디션 없는 BIFAN 워드마크 원본 그대로. KIOST·협회 근처 | 0.73 |
+| ITEASY / iteasy-white.png | [공식 기업 사이트](https://company.iteasy.co.kr/), [공식 흰색 PNG](https://company.iteasy.co.kr/images/white_logo.png) | 푸터의 공식 흰색판 원본 그대로. 왓슨앤컴퍼니와 LS ELECTRIC 사이 | 1.05 |
+
+BIFAN 참여 근거는 2022 「AREA 1997」 웹 영상 믹싱·사운드디자인·폴리·마스터링의 실제 의뢰처다. 상영처라는 이전 설명은 폐기한다. 기존 17곳의 자산·배율·Clients 컴포넌트·작업 및 수상 데이터는 변경하지 않았다.
+
+### 최종 제외 3곳
+
+| 대상 | 사유 |
+|---|---|
+| 강남대학교 | [공식 로고·UI 페이지](https://web.kangnam.ac.kr/menu/0a4747b9674cfaf5d070b3786db9c51a.do)에 복제·배포·상업적 사용 금지 명시 |
+| GATSBY | [공식 브랜드 사이트](https://www.gatsby.jp/)가 연결한 [맨담 이용조건](https://www.mandom.co.jp/siteinfo/)의 상표 무단 사용 금지 조항으로 사용자 보수적 제외 확정 |
+| 서울아트비디오페스티벌 | 사용자 제외 결정. 사이트 로고 추가 없음, 「살아지다」 음향상 등 수상 이력 보존 |
+
+BIFAN·ITEASY의 일반 약관을 근거로 한 앞선 보류는 최종 지시에 따라 해제했다. 출처·제외 판단 기록이며 명시적 이용허락을 취득했다는 뜻은 아니다. 법률 자문 아님.
+
+### 1440px 표시 크기 검증
+
+Canvas alpha > 16 픽셀의 외곽 사각형을 측정하고 실제 contain 배율과 scale을 반영했다. 약 5,600px² 기준은 잉크 외곽 사각형 면적으로 해석하며, 칠해진 픽셀 면적과 구분한다. SVG는 브라우저 기본 래스터 크기에서 측정한 근삿값이다.
+
+| 로고 | 원본 / 웹 자산 | scale | 화면 외곽(px) | 외곽 면적(px²) | 칠해진 픽셀 면적(px²) |
+|---|---|---:|---|---:|---:|
+| 한국연예제작자협회 | 295×76 / 295×39 | 1.14 | 205.20×27.13 | 5,566.69 | 1,778.15 |
+| RAPBEAT | 278×79 / 148×75 | 0.67 | 105.77×53.60 | 5,669.33 | 3,754.53 |
+| 왓슨앤컴퍼니 | 205×46 / 동일 | 0.88 | 158.40×34.77 | 5,507.68 | 2,452.04 |
+| BIFAN | viewBox 79×26 / 동일 | 0.73 | 131.40×43.36 | 5,697.75 | 2,583.36 |
+| ITEASY | 166×27 / 동일 | 1.05 | 189.00×29.60 | 5,594.86 | 2,746.87 |
+
+협회 흰 매트 제거는 alpha = 255 - min(R,G,B), alpha < 12 제거 후 역매트 계산. 트림 (0,17)-(295,56). RAPBEAT 트림 (65,2)-(213,77). 재그리기·AI 생성 없음. 협회 JPG 압축 가장자리에는 미세 오차가 있을 수 있다. lightText는 공식 흰색판이 아닌 기존 사이트 표시 방식이다. BIFAN·ITEASY는 공식 흰색 자산 자체다.
+
+검증: npm run build, npm run check(3페이지), npm test(36개) 통과. 재빌드 후 preview 서버를 재시작하여 1440/375px에서 22개 로드, 11/11 두 줄, 페이지 가로 넘침·JS 오류 없음 확인. 보고서와 스크린샷은 G:/91_uniStudio/261007_사이트_로고추가/에 있다. 로컬 커밋만, push·배포 없음.
+
 ## 09-29 회사소개서 로고 7곳 추가
 
 회사소개서 `260926_회사소개서_v2/v3_assets/logos/README.md`의 수집 기록과 지정 자산을 사용했다. 아래 출처는 해당 README의 기록을 옮긴 것이며 이번 작업에서 다시 다운로드하지 않았다. 회사소개서 원본은 수정하지 않았다.
