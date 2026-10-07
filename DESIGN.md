@@ -1,6 +1,6 @@
 ---
 name: uniStudio
-description: 소리의 호흡까지 — 소리까지 책임지는 편집
+description: 소리의 호흡까지 — 소리까지 책임지는 프로덕션
 colors:
   ink: "#141210"
   ink-2: "#26231F"
