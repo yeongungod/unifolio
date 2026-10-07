@@ -47,7 +47,7 @@ web
 
 - 대표작 9건, 아카이브 127건, 수상·상영·선정 목록 — `unifolio\src\data\featured.ts`, `archive.json`, `site.ts`.
 - 클라이언트 19곳 로고 — `unifolio\src\data\clients.ts`.
-- 회사소개서 16:9 11장 — `G:\91_uniStudio\소개서\260926_우니스튜디오_회사소개서.pptx`.
+- 회사소개서 16:9 11장 — `G:\91_uniStudio\소개서\261007_우니스튜디오_회사소개서.pptx`.
 - 없음: 고객 추천사, 매출 규모 수치(공개용), 팀 사진. 만들어내지 않는다.
 
 ## Product Principles
