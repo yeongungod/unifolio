@@ -33,8 +33,8 @@ const image = { src, alt: '', width: size?.width ?? 1280, height: size?.height ?
   .media :global(img) { width: 100%; height: auto; }
   .media.wide :global(img) { height: 100%; object-fit: cover; }
   .media :global(iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  /* 재생 표시는 왼쪽 아래 작은 칩: 제목·화면을 가리지 않는다 */
-  .chip { position: absolute; left: var(--space-2); bottom: var(--space-2); display: inline-flex; align-items: center; gap: var(--space-1); padding: var(--space-1) var(--space-2); border-radius: var(--radius-sm); background: var(--ink); color: var(--paper); font-size: var(--type-web-caption-size); font-weight: 600; line-height: 1; transition: background-color var(--hover), color var(--hover); }
+  /* 재생 표시는 오른쪽 위 작은 칩: 썸네일 아래쪽에 박힌 제목 글자를 가리지 않는다 */
+  .chip { position: absolute; top: var(--space-2); right: var(--space-2); display: inline-flex; align-items: center; gap: var(--space-1); padding: var(--space-1) var(--space-2); border-radius: var(--radius-sm); background: var(--ink); color: var(--paper); font-size: var(--type-web-caption-size); font-weight: 600; line-height: 1; transition: background-color var(--hover), color var(--hover); }
   .media:hover .chip, .media:focus-visible .chip { background: var(--paper); color: var(--ink); }
 </style>
 

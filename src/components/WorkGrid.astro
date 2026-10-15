@@ -43,6 +43,7 @@ const sizes = {
             <h3 class="t-work">{item.title}</h3>
             <p class="t-credit">{item.client} · {year(item.year)}</p>
             <p class="t-small muted">{item.role}</p>
+            {item.note && <p class="t-small muted">{item.note}</p>}
           </article>
         ))}
       </div>
