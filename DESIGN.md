@@ -92,16 +92,40 @@ typography:
     letterSpacing: "0"
   web-display:
     fontFamily: "SUITE, Pretendard, Malgun Gothic, sans-serif"
-    fontSize: "clamp(32px, 6vw, 56px)"
+    fontSize: "clamp(2.75rem, calc(1.1714rem + 6.4762vw), 7rem)"
     fontWeight: 700
-    lineHeight: 1.15
+    lineHeight: 1.16
     letterSpacing: "-0.03em"
+  web-statement:
+    fontFamily: "SUITE, Pretendard, Malgun Gothic, sans-serif"
+    fontSize: "clamp(36px, calc(25.6px + 2.667vw), 64px)"
+    fontWeight: 700
+    lineHeight: 1.18
+    letterSpacing: "-0.025em"
+  web-work-lead:
+    fontFamily: "SUITE, Pretendard, Malgun Gothic, sans-serif"
+    fontSize: "clamp(28px, calc(23.5px + 1.143vw), 40px)"
+    fontWeight: 700
+    lineHeight: 1.28
+    letterSpacing: "-0.025em"
+  web-work:
+    fontFamily: "SUITE, Pretendard, Malgun Gothic, sans-serif"
+    fontSize: "clamp(22px, calc(19.8px + 0.571vw), 28px)"
+    fontWeight: 700
+    lineHeight: 1.35
+    letterSpacing: "-0.02em"
   web-headline:
     fontFamily: "SUITE, Pretendard, Malgun Gothic, sans-serif"
-    fontSize: "clamp(22px, 3.5vw, 30px)"
+    fontSize: "clamp(24px, calc(21px + 0.762vw), 32px)"
     fontWeight: 700
     lineHeight: 1.3
     letterSpacing: "-0.02em"
+  web-credit-value:
+    fontFamily: "SUITE, Pretendard, Malgun Gothic, sans-serif"
+    fontSize: "clamp(16px, calc(15.3px + 0.19vw), 18px)"
+    fontWeight: 600
+    lineHeight: 1.5
+    letterSpacing: "-0.01em"
   web-title:
     fontFamily: "SUITE, Pretendard, Malgun Gothic, sans-serif"
     fontSize: "17px"
@@ -152,7 +176,11 @@ spacing:
   "6": "24px"
   "8": "32px"
   "12": "48px"
+  "14": "56px"
   "18": "72px"
+  "22": "88px"
+  "24": "96px"
+  "36": "144px"
   a4-margin-top: "15mm"
   a4-margin-x: "18mm"
   a4-margin-bottom: "20mm"
@@ -161,8 +189,10 @@ spacing:
   slide-margin-x: "96px"
   slide-band: "15px"
   slide-gutter: "36px"
-  web-max: "1080px"
-  web-gutter: "20px"
+  web-max: "1240px"
+  web-gutter: "48px"
+  web-gutter-sm: "20px"
+  web-read: "640px"
 components:
   button-web:
     backgroundColor: "{colors.paper}"
@@ -270,15 +300,20 @@ components:
 - PPTX에서는 굵기를 400·700 두 개만 쓴다(Regular/Bold로 매핑). px → pt 변환은 ×0.5(1920px = 13.333in = 960pt).
 - 자간은 `tokens.py`의 `tracking_em` × 글자 px × 0.5 × 100 = PPTX `spc`(1/100pt) 값으로 넣는다.
 
-### Hierarchy — 웹 (표현, 어두운 테마)
-- **Display** (700, clamp(32px, 6vw, 56px), 1.15): h1.
-- **Headline** (700, clamp(22px, 3.5vw, 30px), 1.3): h2.
+### Hierarchy — 웹 (표현, 어두운 테마) — 2026-10-16 「엔드 크레딧」 리디자인으로 개정(사용자 승인)
+- **Display** (700, 44 → 112px, 1.16, -0.03em): 표어 h1 하나. `keep-all` + `text-wrap: balance`, 줄마다 블록(`<br>` 금지). 근거: SUITE 실측 7자/7자 두 줄·넘침 0(`261016_디자인개선\웹사이트\06_레퍼런스_실측_Codex.md`).
+- **Statement** (700, 36 → 64px, 1.18): 문의 마지막 블록의 상호처럼 페이지에 두 번 이하.
+- **Work Lead** (700, 28 → 40px, 1.28): 대표작 큰 1건 제목. **Work** (700, 22 → 28px, 1.35): 중간 2건·목록 작품명.
+- **Headline** (700, 24 → 32px, 1.3): h2 섹션 제목. 영문 대문자 라벨을 제목 위에 얹지 않는다.
+- **Credit Value** (600, 16 → 18px, 1.5): 크레딧 축의 값(이름·번호·연락처).
 - **Title** (600, 17px, 1.4): h3, 버튼.
 - **Lead** (500, 18px, 1.6, Stone): 첫 화면 부제목.
 - **Body** (500, 16px, 1.6): 본문. 어두운 바탕이라 한 단계 굵게.
 - **Small** (500, 14px, 1.5): 메뉴·목록·필터 칩·버튼.
 - **Caption** (500, 13px, 1.5): 바닥글·캡션.
-- **Label** (600, 12px, +0.12em, 대문자): 섹션 라벨, 아쿠아마린 글자.
+- **Label** (600, 12px, +0.12em): 표 머리·필터 같은 기능 라벨에만. 섹션마다 영문 대문자 라벨을 붙이는 용도로는 쓰지 않는다(2026-10-16, 「AI티」 패턴).
+
+**웹 모션.** 표어 줄 단위로 한 번 8~12px 떠오르기, 크레딧 줄 12px 떠오르기(`animation-timeline: view()`가 될 때만)까지. 글자 쪼개 등장·관성 스크롤·스크롤 고정 빈 구간·캐러셀 없음. `prefers-reduced-motion`이면 전부 끈다.
 
 ### Named Rules
 **The One Family Rule.** SUITE 외 서체 금지. `브랜드\_fonts\su-*.ttf`는 SUIT Variable이라 SUITE가 아니다. SUITE ttf는 `unifolio\public\fonts\` 또는 `260923_사업계획서\fonts\`.
@@ -291,9 +326,11 @@ components:
 
 **16:9 슬라이드 (표현).** 1920×1080 기준. 좌우 여백 96px, 오른쪽 끝 아쿠아 세로 띠 15px. 카드는 3단 또는 2단, 간격 36px. 로고는 2장부터 오른쪽 위 폭 204px.
 
-**웹 (표현).** 최대 폭 1080px, 좌우 16px. 섹션 위아래 72px(모바일 48px). 그리드 간격 20px, 칸 최소 280px. 머리글 높이 60px.
+**웹 (표현, 2026-10-16 개정).** 최대 폭 1240px, 좌우 48px(모바일 20px). 읽는 글 폭 640px. 큰 섹션 사이 144px(모바일 88px), 작품 사이 96px(모바일 56px). 대표작 그리드 12열·열 간격 32px. 머리글 높이 60px.
 
-**간격 리듬.** 화면은 4의 배수(4·8·12·16·24·32·48·72)만 쓴다. 인쇄는 mm 값(위 레이아웃 값)을 쓴다.
+**웹 크레딧 축 (The Credit Axis Rule).** 페이지 전체에 가운데 축 하나. 왼쪽 칸 = 역할 라벨(Small 14px 500, Stone, 오른쪽 정렬), 오른쪽 칸 = 값(Credit Value, paper, 왼쪽 정렬), 두 칸 1fr : 1fr, 사이 56px. 600px 미만은 「라벨 위 · 값 아래」 왼쪽 정렬(라벨 104px 칸 + 값, 사이 20px로 둘 수도 있음). 크레딧 표는 작품마다 반복하지 않고 서비스·소개·문의에서만 쓴다.
+
+**간격 리듬.** 화면은 4의 배수(4·8·12·16·24·32·48·56·72·88·96·144)만 쓴다. 인쇄는 mm 값(위 레이아웃 값)을 쓴다.
 
 **바닥글.** A4 가운데 「우니스튜디오 · 문서명 · n / N」. 슬라이드는 왼쪽 아래 「uniStudio · 문서명」, **쪽번호 「n / N」은 오른쪽 아래**(2026-10-03 사용자 선택). 쪽번호에 0을 채우지 않는다(02 ✗ 2 ✓).
 
