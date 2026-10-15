@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { publicPortfolio, assertOwner, imageType, sourceHash, assertReview } from '../src/lib/admin-portfolio.mjs';
+import { publicPortfolio, assertOwner, imageType, sourceHash, assertReview, featuredCards, featuredSource } from '../src/lib/admin-portfolio.mjs';
 import handler from '../api/portfolio.js';
 
 const owner = '11111111-1111-4111-8111-111111111111';
@@ -154,6 +154,8 @@ test('publication tree excludes private data and advances main without force', a
   assert.deepEqual(tree.map((f) => f.path), ['src/data/archive.json', 'src/data/featured.ts', 'AGENTS.md']);
   assert.doesNotMatch(JSON.stringify(tree), /CONFIDENTIAL_SENTINEL|NEVER_DOWNLOAD|SECRET_SENTINEL/);
   assert.equal(calls.find((c) => c.path.endsWith('/git/refs/heads/main')).body.force, false);
+  // 옛 초안(tier 칸 없음)으로 게시해도 공개본의 크기 지정이 남는다
+  assert.deepEqual(featuredCards(tree[1].content).filter((c) => c.tier).map((c) => c.tier), ['major', 'lead', 'major']);
   assert.doesNotMatch(JSON.stringify(result.body), /SECRET_SENTINEL/);
 }));
 test('branch race is reported as conflict and does not mark the draft published', async () => withProviders({ conflict: true }, async (call, calls) => {
@@ -162,3 +164,21 @@ test('branch race is reported as conflict and does not mark the draft published'
   assert.equal(result.code, 409);
   assert.ok(!calls.some((c) => c.path.includes('save_portfolio')));
 }));
+
+test('대표작 크기 지정은 lead 1·major 2까지, 칸이 없으면 공개본을 물려받고 빈 값이면 해제된다', () => {
+  const second = '22222222-2222-4222-8222-222222222222', third = '33333333-3333-4333-8333-333333333333';
+  assert.equal(publicPortfolio([item({ tier: 'lead' })]).featured[0].tier, 'lead');
+  assert.throws(() => publicPortfolio([item({ tier: 'hero' })]), /크기/);
+  assert.throws(() => publicPortfolio([item({ tier: 'lead' }), item({ id: second, rank: 2, tier: 'lead' })]), /1개/);
+  assert.throws(() => publicPortfolio([item({ tier: 'major' }), item({ id: second, rank: 2, tier: 'major' }), item({ id: third, rank: 3, tier: 'major' })]), /2개/);
+  const previous = [{ slug: owner, tier: 'major' }];
+  assert.equal(publicPortfolio([item()], '', previous).featured[0].tier, 'major');
+  assert.equal('tier' in publicPortfolio([item({ tier: '' })], '', previous).featured[0], false);
+  assert.equal('tier' in publicPortfolio([item()]).featured[0], false);
+});
+test('공개 featured.ts 원문을 다시 읽으면 같은 카드가 나온다', () => {
+  const cards = featuredCards(readFileSync('src/data/featured.ts', 'utf8'));
+  assert.equal(cards.length, 9);
+  assert.deepEqual(featuredCards(featuredSource(cards)), cards);
+  assert.deepEqual(featuredCards('not a source'), []);
+});

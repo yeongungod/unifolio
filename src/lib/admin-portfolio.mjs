@@ -2,7 +2,13 @@ import { createHash } from 'node:crypto';
 
 export const OWNER_EMAIL = 'unistudio@yeongungod.com';
 export const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-export const FEATURED_TYPE = 'export type Featured = { slug: string; title: string; role: string; year: string; client: string; youtube?: string; image?: string; url?: string; note: string };';
+export const FEATURED_TYPE = 'export type Featured = { slug: string; title: string; role: string; year: string; client: string; youtube?: string; image?: string; url?: string; note: string; tier?: \'lead\' | \'major\' };';
+// 메인 화면 크기 위계: lead = 큰 1건, major = 중간 2건, 없으면 줄 목록.
+export const TIERS = { lead: 1, major: 2 };
+// 공개 featured.ts 원문에서 카드 배열만 읽는다(형식이 다르면 빈 배열 = 크기 지정 없음).
+export function featuredCards(source) {
+  try { return JSON.parse(source.slice(source.indexOf('= [') + 2).trim().replace(/;$/, '')); } catch { return []; }
+}
 export const digest = (text) => createHash('sha256').update(text).digest('hex');
 export const sourceHash = (archive, featured) => digest(JSON.stringify([archive.replace(/\r\n/g, '\n'), featured.replace(/\r\n/g, '\n')]));
 export const featuredSource = (cards) => `${FEATURED_TYPE}\nexport const featured: Featured[] = ${JSON.stringify(cards, null, 2)};\n`;
@@ -34,7 +40,8 @@ export function youtubeId(url) {
   return /^[\w-]{11}$/.test(id || '') ? id : undefined;
 }
 
-export function publicPortfolio(items, owner = '') {
+// previous = 지금 공개된 카드. tier 칸이 없는 옛 초안은 공개본의 크기 지정을 그대로 물려받는다.
+export function publicPortfolio(items, owner = '', previous = []) {
   if (!Array.isArray(items) || items.length > 500) fail('작업은 최대 500개까지 저장할 수 있습니다.');
   const ids = new Set(), ranks = new Set(), archive = [], cards = [], uploads = [];
   for (const item of items) {
@@ -61,8 +68,11 @@ export function publicPortfolio(items, owner = '') {
       image = '';
     }
     if (!image && !youtube && !item.upload) fail('대표작에는 이미지 또는 YouTube 영상이 필요합니다.');
-    cards.push({ rank: item.rank, slug: item.id, title: text(item.title || name, 300, true), role: text(item.role, 300, true), year: text(item.displayYear || String(item.year), 40, true), client, note: text(item.note, 1000), ...(url && { url }), ...(youtube && !item.upload && { youtube }), ...(image && { image }) });
+    const tier = Object.hasOwn(item, 'tier') ? item.tier : previous.find((c) => c?.slug === item.id)?.tier;
+    if (tier !== undefined && tier !== '' && !Object.hasOwn(TIERS, tier)) fail('대표작 크기 지정을 확인하세요.');
+    cards.push({ rank: item.rank, slug: item.id, title: text(item.title || name, 300, true), role: text(item.role, 300, true), year: text(item.displayYear || String(item.year), 40, true), client, note: text(item.note, 1000), ...(url && { url }), ...(youtube && !item.upload && { youtube }), ...(image && { image }), ...(tier && { tier }) });
   }
+  for (const [tier, max] of Object.entries(TIERS)) if (cards.filter((c) => c.tier === tier).length > max) fail('큰 대표작은 1개, 중간 대표작은 2개까지 지정할 수 있습니다.');
   return { archive, featured: cards.sort((a, b) => a.rank - b.rank).map(({ rank, ...card }) => card), uploads };
 }
 

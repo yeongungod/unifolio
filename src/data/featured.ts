@@ -1,4 +1,4 @@
-export type Featured = { slug: string; title: string; role: string; year: string; client: string; youtube?: string; image?: string; url?: string; note: string };
+export type Featured = { slug: string; title: string; role: string; year: string; client: string; youtube?: string; image?: string; url?: string; note: string; tier?: 'lead' | 'major' };
 export const featured: Featured[] = [
   {
     "slug": "22b50bd8-fe2d-8060-bd4b-fd70e0fae1ab",
@@ -28,7 +28,8 @@ export const featured: Featured[] = [
     "year": "2023",
     "client": "정도영 감독",
     "note": "제24회 대한민국국제청소년영화제 작품상 대학부 은상. 필름베리 배급.",
-    "image": "/images/work/nalchi.jpg"
+    "image": "/images/work/nalchi.jpg",
+    "tier": "major"
   },
   {
     "slug": "13c50bd8-fe2d-8051-bc48-cf0f28f42e1c",
@@ -37,7 +38,8 @@ export const featured: Featured[] = [
     "year": "2022",
     "client": "배준원 감독",
     "note": "제18회 대한민국대학영화제 최우수작품상 · 여자연기상. ㈜인디스토리 배급.",
-    "image": "/images/work/chimmuk.jpg"
+    "image": "/images/work/chimmuk.jpg",
+    "tier": "lead"
   },
   {
     "slug": "13c50bd8-fe2d-803e-b044-dc4018d720dc",
@@ -46,7 +48,8 @@ export const featured: Featured[] = [
     "year": "2022",
     "client": "김선연 감독",
     "note": "제1회 싸이파이안페스타 관객상. ㈜인디스토리 배급.",
-    "image": "/images/work/pd.jpg"
+    "image": "/images/work/pd.jpg",
+    "tier": "major"
   },
   {
     "slug": "3e150bd8-fe2d-81b7-8a63-f5c9b20e4443",
