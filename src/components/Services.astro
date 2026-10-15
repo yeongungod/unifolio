@@ -20,14 +20,14 @@ import { site } from '../data/site';
 </section>
 <style>
   .services { margin-top: var(--space-12); border-top: 1px solid var(--line); }
-  .service { padding-block: var(--space-6); border-bottom: 1px solid var(--line); }
+  .service { padding-top: var(--space-6); padding-bottom: var(--space-6); border-bottom: 1px solid var(--line); }
   .service dt { padding-top: calc((var(--type-web-work-size) - var(--type-web-small-size)) / 2); }
   .service dd { display: grid; gap: var(--space-2); }
   .desc { font-size: var(--type-web-body-size); font-weight: var(--type-web-body-weight); line-height: var(--type-web-body-leading); white-space: pre-line; }
   .process { display: grid; justify-items: center; gap: var(--space-2); margin-top: var(--space-12); text-align: center; }
   @media (max-width: 599.98px) {
     .services { margin-top: var(--space-8); }
-    .service { padding-block: var(--space-4); }
+    .service { padding-top: var(--space-4); padding-bottom: var(--space-4); }
     .service dt { padding-top: 0; }
     .process { margin-top: var(--space-8); }
   }

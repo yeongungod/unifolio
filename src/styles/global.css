@@ -1,13 +1,14 @@
 @import './tokens.css';
-/* SUITE = 사이트에 쓰인 글자만 담은 핵심 파일(약 34KB, scripts/subset-fonts.py).
-   여기 없는 글자만 'SUITE Full'(전체 woff2)이 대신 그린다: 브라우저는 그 글자가 나올 때만 전체 파일을 받는다.
-   unicode-range는 SUITE가 가진 범위(라틴·한글·기호)만: 한자·이모지는 전체 파일을 받지 않고 바로 시스템 글꼴로. */
+/* SUITE 한 서체를 두 파일로 나눠 둔다(같은 이름·굵기).
+   브라우저는 나중에 적힌 면부터 본다: 핵심 파일(사이트에 쓰인 글자만, 약 34KB, scripts/subset-fonts.py)을 먼저 받고,
+   거기 없는 글자가 나올 때만 앞의 전체 woff2를 받는다. 전체 파일의 unicode-range는 SUITE가 가진 범위만이라
+   한자·이모지 때문에 전체 파일을 받지 않는다. */
+@font-face { font-family: 'SUITE'; src: url('/fonts/SUITE-Medium.woff2') format('woff2'), url('/fonts/SUITE-Medium.ttf') format('truetype'); font-weight: 500; font-display: swap; unicode-range: U+0000-024F, U+1100-11FF, U+2000-22FF, U+3000-33FF, U+AC00-D7A3, U+FF00-FFEF; }
+@font-face { font-family: 'SUITE'; src: url('/fonts/SUITE-SemiBold.woff2') format('woff2'), url('/fonts/SUITE-SemiBold.ttf') format('truetype'); font-weight: 600; font-display: swap; unicode-range: U+0000-024F, U+1100-11FF, U+2000-22FF, U+3000-33FF, U+AC00-D7A3, U+FF00-FFEF; }
+@font-face { font-family: 'SUITE'; src: url('/fonts/SUITE-Bold.woff2') format('woff2'), url('/fonts/SUITE-Bold.ttf') format('truetype'); font-weight: 700; font-display: swap; unicode-range: U+0000-024F, U+1100-11FF, U+2000-22FF, U+3000-33FF, U+AC00-D7A3, U+FF00-FFEF; }
 @font-face { font-family: 'SUITE'; src: url('/fonts/SUITE-Medium-core.woff2') format('woff2'); font-weight: 500; font-display: swap; }
 @font-face { font-family: 'SUITE'; src: url('/fonts/SUITE-SemiBold-core.woff2') format('woff2'); font-weight: 600; font-display: swap; }
 @font-face { font-family: 'SUITE'; src: url('/fonts/SUITE-Bold-core.woff2') format('woff2'); font-weight: 700; font-display: swap; }
-@font-face { font-family: 'SUITE Full'; src: url('/fonts/SUITE-Medium.woff2') format('woff2'), url('/fonts/SUITE-Medium.ttf') format('truetype'); font-weight: 500; font-display: swap; unicode-range: U+0000-024F, U+1100-11FF, U+2000-22FF, U+3000-33FF, U+AC00-D7A3, U+FF00-FFEF; }
-@font-face { font-family: 'SUITE Full'; src: url('/fonts/SUITE-SemiBold.woff2') format('woff2'), url('/fonts/SUITE-SemiBold.ttf') format('truetype'); font-weight: 600; font-display: swap; unicode-range: U+0000-024F, U+1100-11FF, U+2000-22FF, U+3000-33FF, U+AC00-D7A3, U+FF00-FFEF; }
-@font-face { font-family: 'SUITE Full'; src: url('/fonts/SUITE-Bold.woff2') format('woff2'), url('/fonts/SUITE-Bold.ttf') format('truetype'); font-weight: 700; font-display: swap; unicode-range: U+0000-024F, U+1100-11FF, U+2000-22FF, U+3000-33FF, U+AC00-D7A3, U+FF00-FFEF; }
 
 /* 브랜드 값은 tokens.css(디자인시스템 DESIGN.md에서 생성). 여기엔 토큰을 조합한 사이트 전용 이름만 둔다. */
 :root {
@@ -28,12 +29,12 @@
 }
 
 * { box-sizing: border-box; }
-html { color-scheme: dark; scroll-behavior: smooth; scrollbar-color: var(--muted) var(--ink); -webkit-text-size-adjust: 100%; }
+html { color-scheme: dark; scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + var(--space-4)); scrollbar-color: var(--muted) var(--ink); -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   background: var(--ink);
   color: var(--paper);
-  font-family: 'SUITE', 'SUITE Full', 'Pretendard', 'Malgun Gothic', sans-serif;
+  font-family: 'SUITE', 'Pretendard', 'Malgun Gothic', sans-serif;
   font-size: var(--type-web-body-size);
   font-weight: var(--type-web-body-weight);
   line-height: var(--type-web-body-leading);
@@ -44,10 +45,9 @@ body {
 ::selection { background: var(--paper); color: var(--ink); }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; cursor: pointer; }
-a, button, summary { touch-action: manipulation; }
+a, button, summary { touch-action: manipulation; -webkit-tap-highlight-color: transparent; } /* 누름 표시는 hover·focus 면 색이 맡는다 */
 :where(a, button, iframe, summary, [tabindex]):focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 summary { min-height: 44px; align-content: center; cursor: pointer; }
-[id] { scroll-margin-top: calc(var(--header-h) + var(--space-4)); }
 img { max-width: 100%; display: block; }
 h1, h2, h3 { margin: 0; font-weight: 700; word-break: keep-all; overflow-wrap: anywhere; text-wrap: balance; }
 p, dd, li { word-break: keep-all; overflow-wrap: anywhere; } /* 한글 단어 중간에서 끊지 않는다 */
@@ -76,13 +76,13 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 /* 크레딧 축(The Credit Axis Rule): 왼쪽 역할 오른쪽 정렬 · 오른쪽 값 왼쪽 정렬, 가운데 축 하나 */
 .credits { margin: 0; }
-.credit-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--axis-gap); padding-block: var(--space-2); }
+.credit-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--axis-gap); padding-top: var(--space-2); padding-bottom: var(--space-2); }
 .credit-row > dt { text-align: right; color: var(--muted); font-size: var(--type-web-small-size); font-weight: var(--type-web-small-weight); line-height: var(--type-web-credit-value-leading); padding-top: calc((var(--type-web-credit-value-size) - var(--type-web-small-size)) / 2); }
 .credit-row > dd { margin: 0; font-size: var(--type-web-credit-value-size); font-weight: var(--type-web-credit-value-weight); line-height: var(--type-web-credit-value-leading); letter-spacing: var(--type-web-credit-value-tracking); }
 .credit-row > dd a { text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 4px; transition: text-decoration-color var(--hover); }
 .credit-row > dd a:hover { text-decoration-color: var(--paper); }
 @media (max-width: 599.98px) {
-  .credit-row { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-1); padding-block: var(--space-3); }
+  .credit-row { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-1); padding-top: var(--space-3); padding-bottom: var(--space-3); }
   .credit-row > dt { text-align: left; padding-top: 0; }
 }
 

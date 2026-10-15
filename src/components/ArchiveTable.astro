@@ -59,10 +59,10 @@ const role = (row: Row) => row.process.length ? row.process.map((p) => PROCESS[p
   .count { margin-top: var(--space-4); }
 
   .roll { margin-top: var(--space-8); }
-  .year-group { display: grid; grid-template-columns: var(--space-36) minmax(0, 1fr); column-gap: var(--space-8); padding-block: var(--space-8); border-top: 1px solid var(--line); }
+  .year-group { display: grid; grid-template-columns: var(--space-36) minmax(0, 1fr); column-gap: var(--space-8); padding-top: var(--space-8); padding-bottom: var(--space-8); border-top: 1px solid var(--line); }
   .year-group[hidden] { display: none; }
   .year { font-size: var(--type-web-work-lead-size); line-height: 1; letter-spacing: var(--type-web-work-lead-tracking); padding-top: var(--space-3); }
-  .arow { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1.3fr) var(--space-18); column-gap: var(--space-6); align-items: baseline; padding-block: var(--space-3); }
+  .arow { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1.3fr) var(--space-18); column-gap: var(--space-6); align-items: baseline; padding-top: var(--space-3); padding-bottom: var(--space-3); }
   .arow + .arow { border-top: 1px solid var(--line); }
   .arow[hidden] { display: none; }
   .rec { white-space: pre-line; }
