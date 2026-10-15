@@ -8,7 +8,7 @@ import { site } from '../data/site';
     <div class="slate">
       <span class="mark" aria-hidden="true"></span>
       <p class="t-small muted">{site.name} · {site.region} · {site.openedYear} 개업</p>
-      <a class="t-small" href={`mailto:${site.email}`}>{site.email}</a>
+      <a class="t-small muted" href={`mailto:${site.email}`}>{site.email}</a>
     </div>
   </div>
 </section>
@@ -20,8 +20,8 @@ import { site } from '../data/site';
   /* 슬레이트: 괘선 한 줄 + 가운데 축 위 아쿠아 막대 하나 */
   .slate { position: relative; display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-2) var(--space-6); flex-wrap: wrap; margin-top: var(--space-12); padding-top: var(--space-4); border-top: 1px solid var(--line); text-align: left; }
   .mark { position: absolute; top: calc(var(--space-1) / -2 - 0.5px); left: 50%; width: var(--space-14); height: var(--space-1); background: var(--accent); transform: translateX(-50%); }
-  .slate a { min-height: 44px; display: inline-flex; align-items: center; margin-block: calc((44px - 1lh) / -2); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 4px; transition: text-decoration-color var(--hover); }
-  .slate a:hover { text-decoration-color: var(--paper); }
+  .slate a { min-height: 44px; display: inline-flex; align-items: center; margin-block: calc((44px - 1lh) / -2); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 4px; transition: color var(--hover), text-decoration-color var(--hover); }
+  .slate a:hover { color: var(--paper); text-decoration-color: var(--paper); }
   @media (max-width: 599.98px) {
     .slate { flex-direction: column; align-items: center; text-align: center; }
   }

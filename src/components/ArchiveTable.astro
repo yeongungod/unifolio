@@ -2,6 +2,7 @@
 // 전체 작업을 크레딧 롤처럼: 해가 바뀔 때만 연도를 크게 한 번, 줄 = 작품명 · 의뢰처 · 맡은 일
 import rows from '../data/archive.json';
 import { site } from '../data/site';
+import { displayText as text } from '../lib/display.mjs';
 const PLATFORM: Record<string, string> = { Film: '영화', Live: '라이브', Music: '음악', Web: '웹콘텐츠', Edit: '편집', Game: '게임사운드', Filming: '촬영' };
 const PROCESS: Record<string, string> = { Mixing: '믹싱', 'Sound Design': '사운드디자인', ADR: 'ADR', Foley: '폴리', Record: '녹음', Mastering: '마스터링', 'Sound Assistant': '사운드 어시스트', PA: 'PA', Cinamatic: '시네마틱', Skill: '스킬', UI: 'UI' };
 // 주소 쿼리 ?field= 값(허용 목록). 첫 칸 all = 전체
@@ -17,8 +18,6 @@ const recognition = (row: Row) => row.recognition
     ...site.screenings.filter((screening) => screening.workId === row.id)
       .map((screening) => ({ text: `${screening.year} ${screening.title}\n${screening.detail}`, source: screening.source })),
   ];
-// 원본 데이터(노션)는 두고 화면에서만 정리: SUITE에 없는 대시는 '-'로, 이모지는 뺀다(SUITE 밖 글리프)
-const text = (s: string) => s.replace(/s*[—–−]s*/g, ' - ').replace(/s*[☀-➿🀀-🫿️]+/gu, '').trim();
 const role = (row: Row) => row.process.length ? row.process.map((p) => PROCESS[p] ?? p).join(' · ') : row.platform.map((p) => PLATFORM[p]).join(' · ');
 ---
 <div class="filters" role="group" aria-label="분야 필터">

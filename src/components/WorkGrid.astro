@@ -3,11 +3,10 @@
 import { featured } from '../data/featured';
 import rows from '../data/archive.json';
 import WorkMedia from './WorkMedia.astro';
+import { displayYear as year } from '../lib/display.mjs';
 const lead = featured.find((item) => item.tier === 'lead');
 const majors = featured.filter((item) => item.tier === 'major').slice(0, 2);
 const list = featured.filter((item) => item !== lead && !majors.includes(item));
-// 「2025 -」(진행 중)은 뒤에 구분점이 붙으면 「2025 - ·」로 읽혀서 화면에선 「2025~」로
-const year = (text: string) => text.replace(/s*-s*$/, '~');
 // 이미지 후보는 실제 칸 폭으로: 전폭 1144 / 7열 약 654 / 5열 약 458 / 목록 160(모바일 120)
 const sizes = {
   lead: '(min-width: 1240px) 1144px, (min-width: 600px) calc(100vw - 96px), calc(100vw - 40px)',
