@@ -1,38 +1,42 @@
 ---
+// 마지막 「제작사」 블록(End Card): 상호 → 연락처 크게 → 기관용 정보 크레딧 축 → 버튼
 import { site } from '../data/site';
-const [independentProduction, videoProduction] = site.licenses.split(' · ');
+const [independentProduction, videoProduction] = site.licenses.split(' · ').map((l) => l.split(' 신고 '));
 ---
-<section id="contact">
+<section id="contact" class="section end-card" aria-labelledby="contact-title">
   <div class="wrap">
-    <p class="label">Contact</p>
-    <h2>문의</h2>
-    <p class="muted" style="margin-top:12px">작업 범위와 일정을 알려주시면 견적을 드립니다.</p>
-    <table class="business-info">
-      <caption>{site.name} 사업자 정보</caption>
-      <tbody>
-        <tr><th scope="row">상호</th><td>{site.name}</td></tr>
-        <tr><th scope="row">대표</th><td>{site.owner}</td></tr>
-        <tr><th scope="row">사업자등록번호</th><td>{site.bizNo}</td></tr>
-        <tr><th scope="row">방송영상독립제작사</th><td>{independentProduction.split(' 신고 ')[1]}</td></tr>
-        <tr><th scope="row">비디오물제작업</th><td>{videoProduction.split(' 신고 ')[1]}</td></tr>
-        <tr><th scope="row">나라장터</th><td>나라장터 등록 업체</td></tr>
-        <tr><th scope="row">과세유형</th><td>{site.processNote.split('.')[0]}.</td></tr>
-        <tr><th scope="row">메일</th><td>{<a href={`mailto:${site.email}`}>{site.email}</a>}</td></tr>
-        <tr><th scope="row">전화</th><td>{<a href={site.phoneHref}>{site.phone}</a>}</td></tr>
-      </tbody>
-    </table>
-    <div class="links">
-      <a class="btn accent" href={`mailto:${site.email}`}>{site.email}</a>
+    <h2 id="contact-title" class="t-statement"><span class="visually-hidden">문의 · </span>{site.name}</h2>
+    <p class="direct">
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+      <a href={site.phoneHref}>{site.phone}</a>
+    </p>
+    <p class="t-small muted note">작업 범위와 일정을 알려주시면 견적을 드립니다.</p>
+    <dl class="credits info">
+      <div class="credit-row"><dt>대표</dt><dd>{site.owner}</dd></div>
+      <div class="credit-row"><dt>사업자등록번호</dt><dd>{site.bizNo}</dd></div>
+      <div class="credit-row"><dt>{independentProduction[0]}</dt><dd>신고 {independentProduction[1]}</dd></div>
+      <div class="credit-row"><dt>{videoProduction[0]}</dt><dd>신고 {videoProduction[1]}</dd></div>
+      <div class="credit-row"><dt>나라장터</dt><dd>등록 업체</dd></div>
+      <div class="credit-row"><dt>과세 유형</dt><dd>{site.taxType}</dd></div>
+      <div class="credit-row"><dt>소재지</dt><dd>{site.region}</dd></div>
+    </dl>
+    <div class="actions">
+      <a class="btn primary" href={`mailto:${site.email}`}>메일 보내기</a>
+      <a class="btn" href={site.phoneHref}>전화하기</a>
     </div>
-
   </div>
 </section>
 <style>
-  .links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
-  .business-info { width: 100%; border-collapse: collapse; margin-top: 24px; font-size: 16px; }
-  caption { text-align: left; font-weight: 600; margin-bottom: 12px; }
-  th, td { border-bottom: 1px solid var(--line); padding: 12px 0; text-align: left; vertical-align: top; overflow-wrap: anywhere; }
-  th { width: 32%; padding-right: 16px; font-weight: 600; }
-  td a { display: inline-flex; min-height: 44px; align-items: center; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; max-width: 100%; }
-  @media (max-width: 600px) { th { width: 40%; font-size: 14px; } }
+  .end-card { text-align: center; }
+  .direct { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 var(--space-8); margin-top: var(--space-6); font-size: var(--type-web-headline-size); font-weight: var(--type-web-credit-value-weight); line-height: var(--type-web-headline-leading); letter-spacing: var(--type-web-headline-tracking); }
+  .direct a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 6px; transition: text-decoration-color var(--hover); }
+  .direct a:hover { text-decoration-color: var(--paper); }
+  .note { margin-top: var(--space-3); }
+  .info { margin-top: var(--space-12); text-align: left; }
+  .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); margin-top: var(--space-12); }
+  @media (max-width: 599.98px) {
+    .end-card, .direct, .actions { text-align: left; justify-content: flex-start; }
+    .direct { flex-direction: column; }
+    .info, .actions { margin-top: var(--space-8); }
+  }
 </style>

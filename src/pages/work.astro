@@ -4,12 +4,16 @@ import ArchiveTable from '../components/ArchiveTable.astro';
 import { site } from '../data/site';
 ---
 <Base title={`전체 작업 · ${site.name}`} description="2019년부터 지금까지의 영상·사운드·라이브 작업 목록.">
-  <section style="border-top:0">
+  <section class="archive-page" aria-labelledby="archive-title">
     <div class="wrap">
-      <p class="label">Archive</p>
-      <h1 class="page-title">전체 작업</h1>
-      <p class="muted" style="margin-top:10px">2019년부터 지금까지 이어온 작업들입니다.</p>
+      <h1 id="archive-title" class="t-statement">전체 작업</h1>
+      <p class="t-lead intro">2019년부터 지금까지 이어온 작업들입니다.</p>
       <ArchiveTable />
     </div>
   </section>
 </Base>
+<style>
+  .archive-page { padding-top: var(--space-24); }
+  .intro { margin-top: var(--space-4); }
+  @media (max-width: 599.98px) { .archive-page { padding-top: var(--space-14); } }
+</style>

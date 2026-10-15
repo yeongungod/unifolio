@@ -1,62 +1,72 @@
 ---
+// 소개 = 「Sound by 박영운」 크레딧 블록. 수상·상영은 처음 5줄만, 나머지는 <details>(JS 없음).
 import { site } from '../data/site';
 import rows from '../data/archive.json';
 import { featured } from '../data/featured';
-import RecognitionList from './RecognitionList.astro';
-import { groupedRecognition } from '../lib/recognition.mjs';
-import ResponsiveImage from './ResponsiveImage.astro';
 const a = site.about;
-const groups = groupedRecognition(rows, a.awards, site.screenings, featured);
-const toolLogos: Record<string, { file: string; url: string }> = {
-  'Premiere Pro': { file: 'premiere-pro.svg', url: 'https://www.adobe.com/products/premiere.html' },
-  'Pro Tools': { file: 'pro-tools.png', url: 'https://www.avid.com/pro-tools' },
-  'After Effects': { file: 'after-effects.svg', url: 'https://www.adobe.com/products/aftereffects.html' },
-  'Photoshop': { file: 'photoshop.svg', url: 'https://www.adobe.com/products/photoshop.html' },
-  'Cubase': { file: 'cubase.png', url: 'https://www.steinberg.net/cubase/' },
-  'Ableton Live': { file: 'ableton-live.png', url: 'https://www.ableton.com/live/' },
-  'iZotope': { file: 'izotope.svg', url: 'https://www.izotope.com/' },
-  'Waves': { file: 'waves.png', url: 'https://www.waves.com/plugins' },
-  'UAD': { file: 'uad.png', url: 'https://www.uaudio.com/' },
-};
+const SHOWN = 5;
+const dateKey = (text: string) => { const [y, m = 0] = text.split('.').map(Number); return y * 100 + m; };
+const awards = [...a.awards].sort((x, y) => dateKey(y.year) - dateKey(x.year)).map((award) => {
+  const [, work, prize] = award.body.match(/^「([^」]+)」\s*(.*)$/) ?? [];
+  return { label: award.year, text: work ? `${award.title} · 「${work}」 · ${prize}` : `${award.title} · ${award.body}` };
+});
+const workName = (id: string) => featured.find((f) => f.slug === id)?.title ?? rows.find((r) => r.id === id)?.name ?? '';
+// 상영·공개는 작품별로 묶어 작품명을 한 번만 단다(크레딧의 역할명처럼)
+const screenings = site.screenings.map((s) => ({ work: workName(s.workId), text: `${s.title} · ${s.detail}`, source: s.source }))
+  .sort((x, y) => site.screenings.findIndex((s) => workName(s.workId) === x.work) - site.screenings.findIndex((s) => workName(s.workId) === y.work));
+const label = (list: typeof screenings, i: number) => (i === 0 || list[i - 1].work !== list[i].work ? list[i].work : '');
+const parts = <T,>(list: T[]) => [list.slice(0, SHOWN), list.slice(SHOWN)] as const;
+const [awardsShown, awardsMore] = parts(awards);
+const [screeningsShown, screeningsMore] = parts(screenings);
 ---
-<section id="studio">
+<section id="about" class="section" aria-labelledby="about-title">
   <div class="wrap">
-    <p class="label">Studio</p>
-    <h2>{site.name}</h2>
-    <p class="intro">{a.intro.split('\n').map((l, i) => <>{i > 0 && <br />}{l}</>)}</p>
-    <div class="cols">
-      <div>
-        <h3>이력</h3>
-        <RecognitionList groups={groups.slice(0, 3)} />
-        {groups.length > 3 && <details class="more-records"><summary>이력 더 보기</summary><RecognitionList groups={groups.slice(3)} /></details>}
-      </div>
-      <div>
-        <h3>학력 · 자격</h3>
-        <p>{a.edu}</p>
-        <ul class="plain">{a.certs.map((c) => <li>{c}</li>)}</ul>
-        <h3 style="margin-top:24px">사용 툴</h3>
-        <ul class="tools">{a.tools.map((tool) => (
-          <li><a href={toolLogos[tool].url} target="_blank" rel="noopener noreferrer">
-            <ResponsiveImage src={`/images/tools/${toolLogos[tool].file}`} alt="" width={28} height={28} sizes="28px" />
-            <span>{tool}</span>
-          </a></li>
-        ))}</ul>
-      </div>
-    </div>
+    <h2 id="about-title" class="section-title">소개</h2>
+    <p class="intro t-credit">{a.intro.split('\n').map((line) => <span class="line">{line}</span>)}</p>
+
+    <dl class="credits block">
+      <div class="credit-row"><dt>대표</dt><dd>{site.owner}</dd></div>
+      <div class="credit-row"><dt>학력</dt><dd>{a.edu}</dd></div>
+      <div class="credit-row"><dt>자격</dt><dd>{a.certs.map((c) => <span class="line">{c}</span>)}</dd></div>
+      <div class="credit-row"><dt>툴</dt><dd>{a.tools.join(' · ')}</dd></div>
+    </dl>
+
+    <h3 class="group-title">수상</h3>
+    <dl class="credits">
+      {awardsShown.map((r) => <div class="credit-row"><dt>{r.label}</dt><dd>{r.text}</dd></div>)}
+    </dl>
+    {awardsMore.length > 0 && (
+      <details class="more">
+        <summary class="t-small">수상 {awardsMore.length}건 더 보기</summary>
+        <dl class="credits">{awardsMore.map((r) => <div class="credit-row"><dt>{r.label}</dt><dd>{r.text}</dd></div>)}</dl>
+      </details>
+    )}
+
+    <h3 class="group-title">상영·공개</h3>
+    <dl class="credits">
+      {screeningsShown.map((r, i) => <div class="credit-row"><dt>{label(screeningsShown, i) || <span class="visually-hidden">{r.work}</span>}</dt><dd><a href={r.source} target="_blank" rel="noopener noreferrer">{r.text}</a></dd></div>)}
+    </dl>
+    {screeningsMore.length > 0 && (
+      <details class="more">
+        <summary class="t-small">상영·공개 {screeningsMore.length}건 더 보기</summary>
+        <dl class="credits">{screeningsMore.map((r, i) => <div class="credit-row"><dt>{label(screeningsMore, i) || <span class="visually-hidden">{r.work}</span>}</dt><dd><a href={r.source} target="_blank" rel="noopener noreferrer">{r.text}</a></dd></div>)}</dl>
+      </details>
+    )}
   </div>
 </section>
 <style>
-  .intro { margin-top: 18px; max-width: 60ch; font-size: 17px; }
-  .cols { display: grid; gap: 40px; grid-template-columns: 1.4fr 1fr; margin-top: 40px; }
-  .plain { list-style: none; padding: 0; margin: 12px 0 0; }
-  .more-records { border-top: 1px solid var(--line); margin-top: 16px; padding-top: 16px; font-size: 14px; }
-  .more-records summary { cursor: pointer; padding: 8px 0; }
-  .plain li { font-size: 14px; color: var(--muted); }
-  .tools { list-style: none; padding: 0; margin: 12px 0 0; font-size: 14px; color: var(--muted); }
-  .tools li + li { margin-top: 4px; }
-  .tools a { display: flex; align-items: center; gap: 12px; min-height: 44px; width: fit-content; color: inherit; text-decoration: none; }
-  .tools a:hover { color: var(--paper); }
-  .tools :global(picture) { width: 28px; height: 28px; flex: none; }
-  .tools :global(img) { width: 28px; height: 28px; object-fit: contain; filter: grayscale(1); }
-  @media (max-width: 700px) { .cols { grid-template-columns: 1fr; gap: 28px; } }
+  .intro { max-width: var(--space-web-read); margin: var(--space-8) auto 0; text-align: center; }
+  .line { display: block; }
+  .block { margin-top: var(--space-12); }
+  .group-title { margin-top: var(--space-18); margin-bottom: var(--space-4); text-align: center; }
+  .more { margin-top: var(--space-4); }
+  .more summary { display: flex; justify-content: center; color: var(--muted); list-style: none; transition: color var(--hover); }
+  .more summary::-webkit-details-marker { display: none; }
+  .more summary:hover, .more[open] summary { color: var(--paper); }
+  @media (max-width: 599.98px) {
+    .intro { text-align: left; }
+    .group-title, .more summary { text-align: left; justify-content: flex-start; }
+    .block { margin-top: var(--space-8); }
+    .group-title { margin-top: var(--space-12); }
+  }
 </style>

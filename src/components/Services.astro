@@ -1,21 +1,34 @@
 ---
 import { site } from '../data/site';
 ---
-<section id="services">
+<section id="services" class="section" aria-labelledby="services-title">
   <div class="wrap">
-    <p class="label">Services</p>
-    <h2>{site.servicesTitle}</h2>
-    <ul class="services">
+    <h2 id="services-title" class="section-title">{site.servicesTitle}</h2>
+    <dl class="credits services">
       {site.services.map((s) => (
-        <li><h3>{s.title}</h3><p class="muted">{s.desc.split('\n').map((l, i) => <>{i > 0 && <br />}{l}</>)}</p></li>
+        <div class="credit-row service">
+          <dt>{s.label}</dt>
+          <dd><span class="name t-work">{s.title}</span><span class="desc">{s.desc}</span></dd>
+        </div>
       ))}
-    </ul>
+    </dl>
+    <div class="process">
+      <p class="t-credit">{site.process.join(' → ')}</p>
+      <p class="t-small muted">{site.processNote.split('. ')[0].replace(/\.?$/, '.')}</p>
+    </div>
   </div>
 </section>
 <style>
-  /* 10-07: 2×2(회사소개서와 같은 배치). 4열은 칸이 247px이라 설명이 3줄로 접혔다 */
-  .services { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 20px 40px; grid-template-columns: repeat(2, 1fr); }
-  .services li { border-top: 1px solid var(--line); padding-top: 14px; }
-  .services p { margin-top: 6px; font-size: 14px; }
-  @media (max-width: 600px) { .services { grid-template-columns: 1fr; } }
+  .services { margin-top: var(--space-12); border-top: 1px solid var(--line); }
+  .service { padding-block: var(--space-6); border-bottom: 1px solid var(--line); }
+  .service dt { padding-top: calc((var(--type-web-work-size) - var(--type-web-small-size)) / 2); }
+  .service dd { display: grid; gap: var(--space-2); }
+  .desc { font-size: var(--type-web-body-size); font-weight: var(--type-web-body-weight); line-height: var(--type-web-body-leading); white-space: pre-line; }
+  .process { display: grid; justify-items: center; gap: var(--space-2); margin-top: var(--space-12); text-align: center; }
+  @media (max-width: 599.98px) {
+    .services { margin-top: var(--space-8); }
+    .service { padding-block: var(--space-4); }
+    .service dt { padding-top: 0; }
+    .process { margin-top: var(--space-8); }
+  }
 </style>

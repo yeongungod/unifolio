@@ -8,10 +8,9 @@ const maskSource = (file: string) => {
   return variants?.find(v => v.width === 360)?.src ?? original;
 };
 ---
-<section id="clients" class="animated two-rows" aria-labelledby="clients-title">
+<section id="clients" class="section animated two-rows" aria-labelledby="clients-title">
   <div class="wrap">
-    <p class="label">Client</p>
-    <h2 id="clients-title">함께한 곳</h2>
+    <h2 id="clients-title" class="section-title">함께한 곳</h2>
   </div>
   <div class="clients-window" tabindex="0" aria-label="참여 브랜드 로고. 키보드로 선택하면 이동이 멈춥니다.">
     <div id="clients-track" style={`--duration: ${clients.length * 5}s`}>
@@ -41,7 +40,7 @@ const maskSource = (file: string) => {
 </section>
 <style>
   #clients { background: var(--ink); color: var(--paper); overflow: hidden; }
-  .clients-window { margin: 30px auto 0; max-width: 1600px; }
+  .clients-window { margin: var(--space-12) auto 0; max-width: 1600px; }
   .clients-window:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
   .clients-list { display: flex; flex-wrap: wrap; justify-content: center; padding: 0; margin: 0; list-style: none; }
   .clients-list[aria-hidden] { display: none; }
@@ -56,7 +55,7 @@ const maskSource = (file: string) => {
   .clients-list :global(img.small) { width: 140px; }
   .client-logo.cover-logo > :global(picture) { mix-blend-mode: screen; }
   .clients-list :global(img.cover) { object-fit: cover; height: 64px; }
-  .animated .clients-window { overflow: hidden; mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent); }
+  .animated .clients-window { overflow: hidden; }
   .animated #clients-track { display: flex; width: max-content; animation: clients-flow var(--duration) linear infinite; }
   .animated .clients-list { display: flex; flex-wrap: nowrap; flex-shrink: 0; }
   .clients-window:focus-visible #clients-track { animation-play-state: paused; }
@@ -72,7 +71,6 @@ const maskSource = (file: string) => {
     .two-rows .clients-list { grid-auto-columns: 180px; }
   }
   @media (prefers-reduced-motion: reduce), print {
-    .animated .clients-window { mask-image: none; }
     .animated #clients-track { display: block; width: auto; animation: none; transform: none; }
     .animated .clients-list { display: flex; flex-wrap: wrap; }
     .animated .clients-list[aria-hidden] { display: none; }

@@ -1,12 +1,15 @@
 ---
+// 전체 작업을 크레딧 롤처럼: 해가 바뀔 때만 연도를 크게 한 번, 줄 = 작품명 · 의뢰처 · 맡은 일
 import rows from '../data/archive.json';
 import { site } from '../data/site';
 const PLATFORM: Record<string, string> = { Film: '영화', Live: '라이브', Music: '음악', Web: '웹콘텐츠', Edit: '편집', Game: '게임사운드', Filming: '촬영' };
 const PROCESS: Record<string, string> = { Mixing: '믹싱', 'Sound Design': '사운드디자인', ADR: 'ADR', Foley: '폴리', Record: '녹음', Mastering: '마스터링', 'Sound Assistant': '사운드 어시스트', PA: 'PA', Cinamatic: '시네마틱', Skill: '스킬', UI: 'UI' };
-const filters = ['전체', ...Object.values(PLATFORM)];
-const sorted: Array<(typeof rows)[number] & { url?: string; recognition?: string }> = [...rows].sort((a, b) => b.year - a.year);
-const hasLinks = sorted.some((row) => row.url);
-const recognition = (row: (typeof sorted)[number]) => row.recognition
+// 주소 쿼리 ?field= 값(허용 목록). 첫 칸 all = 전체
+const FIELDS: Array<[string, string]> = [['all', '전체'], ...Object.keys(PLATFORM).map((k): [string, string] => [k.toLowerCase(), PLATFORM[k]])];
+type Row = (typeof rows)[number] & { url?: string; recognition?: string };
+const sorted: Row[] = [...rows].sort((a, b) => b.year - a.year);
+const years = [...new Set(sorted.map((r) => r.year))];
+const recognition = (row: Row) => row.recognition
   ? [{ text: row.recognition, source: '' }]
   : [
     ...site.about.awards.filter((award) => award.workId === row.id)
@@ -14,68 +17,91 @@ const recognition = (row: (typeof sorted)[number]) => row.recognition
     ...site.screenings.filter((screening) => screening.workId === row.id)
       .map((screening) => ({ text: `${screening.year} ${screening.title}\n${screening.detail}`, source: screening.source })),
   ];
+// 원본 데이터(노션)는 두고 화면에서만 정리: SUITE에 없는 대시는 '-'로, 이모지는 뺀다(SUITE 밖 글리프)
+const text = (s: string) => s.replace(/s*[—–−]s*/g, ' - ').replace(/s*[☀-➿🀀-🫿️]+/gu, '').trim();
+const role = (row: Row) => row.process.length ? row.process.map((p) => PROCESS[p] ?? p).join(' · ') : row.platform.map((p) => PLATFORM[p]).join(' · ');
 ---
 <div class="filters" role="group" aria-label="분야 필터">
-  {filters.map((f, i) => <button class:list={['chip', { on: i === 0 }]} data-f={f} aria-pressed={i === 0 ? 'true' : 'false'}>{f}</button>)}
+  {FIELDS.map(([key, label], i) => <button class="chip" data-f={key} aria-pressed={i === 0 ? 'true' : 'false'}>{label}</button>)}
 </div>
-<p class="muted count" aria-live="polite"><span id="count">{sorted.length}</span>건</p>
-<table class="archive">
-  <thead><tr><th scope="col">연도</th><th scope="col">작업</th><th scope="col">분야</th><th scope="col">역할</th><th scope="col">클라이언트</th><th scope="col" class="recognition-heading">수상·상영</th>{hasLinks && <th scope="col">링크</th>}</tr></thead>
-  <tbody>
-    {sorted.map((r) => (
-      <tr data-p={r.platform.map((p) => PLATFORM[p]).join(' ')}>
-        <td>{r.year}</td>
-        <td class="name">{r.name}</td>
-        <td>{r.platform.map((p) => PLATFORM[p]).join(', ')}</td>
-        <td class="muted">{r.process.map((p) => PROCESS[p] ?? p).join(' · ')}</td>
-        <td class="muted">{r.client}</td>
-        <td class="recognition">{recognition(r).length > 0 && <><span class="recognition-label">수상·상영</span><ul>{recognition(r).map((item) => <li>{item.source ? <a href={item.source} target="_blank" rel="noopener noreferrer">{item.text}</a> : item.text}</li>)}</ul></>}</td>
-        {hasLinks && <td>{r.url ? <a class="work-link" href={r.url} target="_blank" rel="noopener noreferrer" aria-label={`${r.name} 영상 보기`}>영상 ↗</a> : null}</td>}
-      </tr>
-    ))}
-  </tbody>
-</table>
+<p class="count t-small muted" aria-live="polite"><span id="count">{sorted.length}</span>건</p>
+
+<div class="roll">
+  {years.map((year) => (
+    <section class="year-group" aria-labelledby={`y${year}`} data-year>
+      <h2 id={`y${year}`} class="year">{year}</h2>
+      <ul class="rows">
+        {sorted.filter((r) => r.year === year).map((r) => {
+          const records = recognition(r);
+          return (
+            <li class="arow" data-p={r.platform.map((p) => p.toLowerCase()).join(' ')}>
+              <span class="name t-credit">{text(r.name)}</span>
+              <span class="client t-small muted">{text(r.client)}</span>
+              <span class="role t-small">{role(r)}</span>
+              <span class="rec t-caption muted">
+                {records.length > 0 && <><span class="visually-hidden">수상·상영: </span>{records.map((item) => <span class="rec-item">{item.source ? <a href={item.source} target="_blank" rel="noopener noreferrer">{item.text}</a> : item.text}</span>)}</>}
+              </span>
+              <span class="link">{r.url && <a class="t-small" href={r.url} target="_blank" rel="noopener noreferrer" aria-label={`${text(r.name)} 영상 보기`}>영상 보기</a>}</span>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  ))}
+</div>
 
 <style>
-  .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 24px; }
-  .chip { background: none; border: 1px solid var(--line); color: var(--paper); border-radius: var(--radius-sm); min-height: 44px; padding: 6px 14px; font: inherit; font-size: 14px; cursor: pointer; }
-  .chip.on { background: var(--accent); border-color: var(--accent); color: var(--ink); font-weight: 600; }
-  .count { margin: 16px 0 8px; font-size: 14px; }
-  .archive { width: 100%; border-collapse: collapse; font-size: 14px; }
-  .archive th { text-align: left; font-weight: 600; color: var(--muted); padding: 8px 10px 8px 0; border-bottom: 1px solid var(--line); font-size: 12px; letter-spacing: .06em; }
-  .archive td { padding: 10px 10px 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; word-break: keep-all; overflow-wrap: anywhere; }
-  .archive td:first-child { font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .archive td:nth-child(3) { min-width: 7em; }
-  .chip:hover { border-color: var(--accent); }
-  .name { font-weight: 600; }
-  .work-link { white-space: nowrap; text-decoration: underline; text-underline-offset: 3px; }
-  .recognition-heading { width: 26%; }
-  .recognition { white-space: pre-line; font-size: 13px; }
-  .recognition ul { list-style: none; margin: 0; padding: 0; }
-  .recognition li + li { margin-top: 12px; }
-  .recognition a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
-  .recognition-label { display: none; }
-  .archive tr[hidden] { display: none; }
-  @media (max-width: 700px) {
-    .archive thead { display: none; }
-    .archive tr { display: grid; grid-template-columns: 56px 1fr; gap: 2px 10px; padding: 10px 0; border-bottom: 1px solid var(--line); }
-    .archive td { border: 0; padding: 0; }
-    .archive td:nth-child(n+3) { grid-column: 2; font-size: 13px; }
-    .archive .recognition:not(:empty) { margin-top: 8px; }
-    .archive .recognition:empty { display: none; }
-    .recognition-label { display: block; color: var(--paper); font-size: 12px; font-weight: 600; }
+  .filters { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-12); }
+  .chip { min-height: 44px; padding: var(--space-2) var(--space-4); border: 1px solid var(--line); border-radius: var(--radius-sm); background: none; color: var(--paper); font-size: var(--type-web-small-size); font-weight: var(--type-web-small-weight); transition: background-color var(--hover), border-color var(--hover), color var(--hover); }
+  .chip:hover { background: var(--ink-2); }
+  /* 선택 = paper 면(아쿠아는 머리글 막대·로고가 이미 두 곳) */
+  .chip[aria-pressed="true"] { background: var(--paper); border-color: var(--paper); color: var(--ink); font-weight: 600; }
+  .count { margin-top: var(--space-4); }
+
+  .roll { margin-top: var(--space-8); }
+  .year-group { display: grid; grid-template-columns: var(--space-36) minmax(0, 1fr); column-gap: var(--space-8); padding-block: var(--space-8); border-top: 1px solid var(--line); }
+  .year-group[hidden] { display: none; }
+  .year { font-size: var(--type-web-work-lead-size); line-height: 1; letter-spacing: var(--type-web-work-lead-tracking); padding-top: var(--space-3); }
+  .arow { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1.3fr) var(--space-18); column-gap: var(--space-6); align-items: baseline; padding-block: var(--space-3); }
+  .arow + .arow { border-top: 1px solid var(--line); }
+  .arow[hidden] { display: none; }
+  .rec { white-space: pre-line; }
+  .rec-item { display: block; }
+  .rec-item + .rec-item { margin-top: var(--space-2); }
+  .rec a, .link a { text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; transition: text-decoration-color var(--hover); }
+  .rec a:hover, .link a:hover { text-decoration-color: var(--paper); }
+  .link a { display: inline-flex; align-items: center; min-height: 44px; margin-block: calc((44px - 1lh) / -2); white-space: nowrap; }
+  @media (max-width: 899.98px) {
+    .year-group { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-2); }
+    .arow { grid-template-columns: minmax(0, 1fr) auto; row-gap: var(--space-1); }
+    .name { grid-column: 1; }
+    .link { grid-column: 2; grid-row: 1; }
+    .client, .role, .rec { grid-column: 1 / -1; }
+    .rec:empty { display: none; }
   }
 </style>
 
 <script>
-  const chips = document.querySelectorAll<HTMLButtonElement>('.chip');
-  const rows = document.querySelectorAll<HTMLTableRowElement>('tr[data-p]');
+  const chips = [...document.querySelectorAll<HTMLButtonElement>('.chip')];
+  const rows = document.querySelectorAll<HTMLLIElement>('.arow');
+  const groups = document.querySelectorAll<HTMLElement>('[data-year]');
   const count = document.getElementById('count')!;
-  chips.forEach((c) => c.addEventListener('click', () => {
-    chips.forEach((x) => { x.classList.toggle('on', x === c); x.setAttribute('aria-pressed', String(x === c)); });
-    const f = c.dataset.f!;
+  const allowed = chips.map((c) => c.dataset.f!);
+  function apply(field: string) {
+    chips.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.f === field)));
     let n = 0;
-    rows.forEach((r) => { const show = f === '전체' || r.dataset.p!.split(' ').includes(f); r.hidden = !show; if (show) n++; });
+    rows.forEach((r) => { const show = field === 'all' || r.dataset.p!.split(' ').includes(field); r.hidden = !show; if (show) n++; });
+    groups.forEach((g) => { g.hidden = !g.querySelector('.arow:not([hidden])'); });
     count.textContent = String(n);
+  }
+  chips.forEach((c) => c.addEventListener('click', () => {
+    const field = c.dataset.f!;
+    apply(field);
+    const url = new URL(location.href);
+    if (field === 'all') url.searchParams.delete('field'); else url.searchParams.set('field', field);
+    history.replaceState(null, '', url);
   }));
+  // 주소의 필터 복원: 허용 목록에 있는 값만
+  const start = new URLSearchParams(location.search).get('field');
+  if (start && start !== 'all' && allowed.includes(start)) apply(start);
 </script>

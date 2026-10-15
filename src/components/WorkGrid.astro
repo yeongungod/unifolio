@@ -1,14 +1,112 @@
 ---
+// 대표작: 큰 1(lead) → 중간 2(major) → 나머지는 줄 목록. tier가 없으면 전부 줄 목록으로 떨어진다.
 import { featured } from '../data/featured';
-import VideoCard from './VideoCard.astro';
+import rows from '../data/archive.json';
+import WorkMedia from './WorkMedia.astro';
+const lead = featured.find((item) => item.tier === 'lead');
+const majors = featured.filter((item) => item.tier === 'major').slice(0, 2);
+const list = featured.filter((item) => item !== lead && !majors.includes(item));
+// 「2025 -」(진행 중)은 뒤에 구분점이 붙으면 「2025 - ·」로 읽혀서 화면에선 「2025~」로
+const year = (text: string) => text.replace(/s*-s*$/, '~');
+// 이미지 후보는 실제 칸 폭으로: 전폭 1144 / 7열 약 654 / 5열 약 458 / 목록 160(모바일 120)
+const sizes = {
+  lead: '(min-width: 1240px) 1144px, (min-width: 600px) calc(100vw - 96px), calc(100vw - 40px)',
+  major: ['(min-width: 1240px) 654px, (min-width: 600px) calc((100vw - 96px) * 0.572), calc(100vw - 40px)', '(min-width: 1240px) 458px, (min-width: 600px) calc((100vw - 96px) * 0.4), calc(100vw - 40px)'],
+  row: '(min-width: 600px) 160px, 120px',
+};
 ---
-<section id="work">
+<section id="work" class="section" aria-labelledby="work-title">
   <div class="wrap">
-    <p class="label">Work</p>
-    <h2>대표작</h2>
-    <div class="grid" style="margin-top:28px">
-      {featured.map((item) => <VideoCard item={item} />)}
+    <div class="head">
+      <h2 id="work-title">대표작</h2>
+      <a class="all t-small" href="/work">전체 {rows.length}건 보기</a>
     </div>
-    <p style="margin-top:28px"><a class="btn" href="/work">전체 작업 보기</a></p>
+
+    {lead && (
+      <article class="lead">
+        <WorkMedia item={lead} sizes={sizes.lead} priority />
+        <div class="lead-caption">
+          <h3 class="t-work-lead">{lead.title}</h3>
+          <div class="meta">
+            <p class="t-credit">{lead.client} · {year(lead.year)}</p>
+            <p class="t-small muted">{lead.role}</p>
+            {lead.note && <p class="t-small muted">{lead.note}</p>}
+          </div>
+        </div>
+      </article>
+    )}
+
+    {majors.length > 0 && (
+      <div class="majors">
+        {majors.map((item, i) => (
+          <article class:list={['major', i ? 'second' : 'first']}>
+            <WorkMedia item={item} sizes={sizes.major[i]} frame="natural" />
+            <h3 class="t-work">{item.title}</h3>
+            <p class="t-credit">{item.client} · {year(item.year)}</p>
+            <p class="t-small muted">{item.role}</p>
+          </article>
+        ))}
+      </div>
+    )}
+
+    <ul class="work-list" aria-label="그 밖의 대표작">
+      {list.map((item) => (
+        <li class="work-row rise-on-view" data-player>
+          <div class="thumb"><WorkMedia item={item} sizes={sizes.row} /></div>
+          <h3 class="title t-work">{item.title}</h3>
+          <p class="meta t-small"><span class="year muted">{year(item.year)}</span><span class="client">{item.client}</span><span class="role muted">{item.role}</span></p>
+        </li>
+      ))}
+    </ul>
   </div>
 </section>
+
+<style>
+  .head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-4); margin-bottom: var(--space-8); }
+  .all { display: inline-flex; align-items: center; min-height: 44px; color: var(--muted); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 4px; transition: color var(--hover), text-decoration-color var(--hover); }
+  .all:hover { color: var(--paper); text-decoration-color: var(--paper); }
+
+  /* 큰 1: 전폭 스틸, 글자는 사진 아래 */
+  .lead-caption { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--space-8); row-gap: var(--space-3); margin-top: var(--space-6); }
+  .lead-caption h3 { grid-column: 1 / 8; }
+  .lead-caption .meta { grid-column: 8 / 13; display: grid; gap: var(--space-1); align-content: start; padding-top: var(--space-2); }
+
+  /* 중간 2: 12열 7/5 엇갈림, 포스터는 원본 비율 그대로 */
+  .majors { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--space-8); margin-top: var(--work-gap); align-items: start; }
+  .major { display: grid; gap: var(--space-1); }
+  .major h3 { margin-top: var(--space-4); }
+  .first { grid-column: 1 / 8; }
+  .second { grid-column: 8 / 13; margin-top: var(--space-24); }
+
+  /* 나머지: 줄 목록 = 썸네일 | 연도 | 작품명 | 의뢰처 | 역할 */
+  .work-list { margin-top: var(--work-gap); border-top: 1px solid var(--line); }
+  .work-row { display: grid; grid-template-columns: 160px var(--space-24) minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1.2fr); column-gap: var(--space-6); align-items: center; padding-block: var(--space-4); border-bottom: 1px solid var(--line); }
+  /* 자손 선택자(> *)는 Astro 범위 속성 때문에 우선순위가 높아져 모바일 배치를 막는다: 칸마다 직접 지정 */
+  .thumb, .year, .title, .client, .role { grid-row: 1; }
+  .work-row .meta { display: contents; }
+  .thumb { grid-column: 1; }
+  .year { grid-column: 2; }
+  .title { grid-column: 3; }
+  .client { grid-column: 4; }
+  .role { grid-column: 5; }
+  .work-row.is-playing .thumb { grid-column: 1 / -1; grid-row: 2; margin-top: var(--space-4); }
+
+  @media (max-width: 899.98px) {
+    .lead-caption h3, .lead-caption .meta { grid-column: 1 / -1; }
+    .lead-caption .meta { padding-top: 0; }
+    /* 두 줄: 작품명 / 연도 · 의뢰처 · 역할 */
+    .work-row { grid-template-columns: 160px minmax(0, 1fr); row-gap: var(--space-1); align-items: start; }
+    .thumb { grid-column: 1; grid-row: 1 / 3; }
+    .title { grid-column: 2; grid-row: 1; }
+    .work-row .meta { display: block; grid-column: 2; grid-row: 2; }
+    .meta span + span::before { content: ' · '; color: var(--muted); }
+    .work-row.is-playing .thumb { grid-column: 1 / -1; grid-row: 3; }
+  }
+  @media (max-width: 599.98px) {
+    .head { margin-bottom: var(--space-6); }
+    .first, .second { grid-column: 1 / -1; margin-top: 0; }
+    .second { margin-top: var(--work-gap); }
+    .work-row { grid-template-columns: 120px minmax(0, 1fr); column-gap: var(--space-4); }
+    .work-row .title { font-size: var(--type-web-title-size); line-height: var(--type-web-title-leading); }
+  }
+</style>

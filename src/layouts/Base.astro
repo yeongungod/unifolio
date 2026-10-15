@@ -1,9 +1,12 @@
 ---
 import '../styles/global.css';
 import { site } from '../data/site';
+import rows from '../data/archive.json';
 interface Props { title: string; description: string; bodyClass?: string; noindex?: boolean }
 const { title, description, bodyClass = '', noindex = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const onArchive = /^\/work\/?$/.test(Astro.url.pathname);
+const menu = [['/#work', '대표작'], ['/#services', '작업 범위'], ['/#about', '소개'], ['/#contact', '문의']];
 ---
 <!doctype html>
 <html lang="ko">
@@ -25,44 +28,57 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <meta property="og:url" content={canonical} />
   <meta property="og:image" content={new URL('/og.png', Astro.site)} />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="preload" href="/fonts/SUITE-Medium.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="/fonts/SUITE-Bold.woff2" as="font" type="font/woff2" crossorigin />
+  {['Medium', 'SemiBold', 'Bold'].map((w) => <link rel="preload" href={`/fonts/SUITE-${w}-core.woff2`} as="font" type="font/woff2" crossorigin />)}
 </head>
 <body class={bodyClass}>
   <a class="skip-link no-print" href="#main">본문 바로가기</a>
   <header class="site-header">
     <div class="wrap row">
-      <a href="/" class="logo" aria-label="uniStudio 홈">
+      <a href="/" class="logo" aria-label={`${site.name} 홈`}>
         <svg width="26" height="23" viewBox="0 0 133.8 120" aria-hidden="true"><g transform="scale(1.53846)"><g transform="translate(7.5,-11)" fill="none" stroke-width="15" stroke-linecap="round"><path d="M0 38.5V61.5M48 31.5V68.5M72 25.5V74.5" stroke="#FBF9F6"/><path d="M24 18.5V81.5" stroke="#9CC3D5"/></g></g></svg>
         <img class="wordmark" src="/lockup-white.svg" alt="" width="142" height="29" />
       </a>
       <nav aria-label="주요 메뉴">
-        <a href="/#work" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>대표작</a>
-        <a href="/#studio">스튜디오</a>
-        <a href="/work" aria-current={/^\/work\/?$/.test(Astro.url.pathname) ? 'page' : undefined}>아카이브</a>
-        <a href="/#contact">문의</a>
+        <ul>{menu.map(([href, label]) => <li><a href={href}>{label}</a></li>)}</ul>
+        <a class="archive-link" href="/work" aria-current={onArchive ? 'page' : undefined}>아카이브<span class="count">{rows.length}</span></a>
       </nav>
     </div>
   </header>
   <main id="main" tabindex="-1"><slot /></main>
   <footer class="site-footer">
     <div class="wrap">
-      <p class="muted">© {new Date().getFullYear()} {site.nameEn}. All rights reserved.</p>
+      <p class="t-caption muted">© {new Date().getFullYear()} {site.name}</p>
     </div>
   </footer>
 </body>
 </html>
 
 <style>
-  .site-header { position: sticky; top: 0; z-index: 10; background: var(--header-bg); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
-  .row { display: flex; align-items: center; justify-content: space-between; height: 60px; }
-  .logo { display: flex; align-items: center; min-width: 44px; min-height: 44px; }
+  .site-header { position: sticky; top: 0; z-index: 10; background: var(--ink); border-bottom: 1px solid var(--line); }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); height: var(--header-h); }
+  .logo { display: flex; align-items: center; min-width: 44px; min-height: 44px; flex: none; }
   .logo svg { display: none; }
   .wordmark { width: 142px; height: auto; }
-  nav { display: flex; gap: 4px; font-size: 14px; font-weight: 600; }
-  nav a { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding-inline: 10px; opacity: 0.8; }
-  nav a[aria-current="page"] { opacity: 1; text-decoration: underline; text-underline-offset: 6px; }
-  nav a:hover { opacity: 1; color: var(--accent); }
-  .site-footer { border-top: 1px solid var(--line); padding: 32px 0; font-size: 13px; }
-  @media (max-width: 600px) { nav { gap: 0; font-size: 13px; } nav a { padding-inline: 8px; } .wordmark { display: none; } .logo svg { display: block; } }
+  nav, nav ul { display: flex; align-items: center; }
+  nav a {
+    position: relative; display: inline-flex; align-items: center; justify-content: center; min-width: 44px; height: var(--header-h);
+    padding-inline: var(--space-3); color: var(--muted);
+    font-size: var(--type-web-small-size); font-weight: var(--type-web-small-weight); white-space: nowrap; transition: color var(--hover);
+  }
+  nav a:hover, nav a[aria-current="page"] { color: var(--paper); }
+  /* 현재 위치 = 아쿠아 막대(면). 스크롤 추적 JS가 없으므로 아카이브에서만 켜진다 */
+  nav a[aria-current="page"]::after { content: ''; position: absolute; left: var(--space-3); right: var(--space-3); bottom: -1px; height: var(--space-1); background: var(--accent); }
+  .archive-link { margin-left: var(--space-2); }
+  .archive-link::before { content: ''; position: absolute; left: calc(var(--space-2) * -1); top: 50%; width: 1px; height: var(--space-4); background: var(--line); transform: translateY(-50%); }
+  .count { margin-left: var(--space-1); color: var(--muted); }
+  .site-footer { padding-block: var(--space-24) var(--space-12); text-align: center; }
+  @media (max-width: 599.98px) {
+    .wordmark { display: none; }
+    .logo svg { display: block; }
+    nav a { padding-inline: var(--space-2); }
+    nav a[aria-current="page"]::after { left: var(--space-2); right: var(--space-2); }
+    .archive-link { margin-left: var(--space-1); }
+    .archive-link::before { left: calc(var(--space-1) * -1); }
+    .count { display: none; }
+  }
 </style>
