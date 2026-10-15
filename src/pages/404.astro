@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+---
+<Base title={`페이지를 찾을 수 없습니다 · ${site.name}`} description="요청하신 페이지를 찾을 수 없습니다. 우니스튜디오 홈이나 전체 작업에서 필요한 정보를 확인해 주세요." noindex>
+  <section>
+    <div class="wrap">
+      <p class="label">404</p>
+      <h1 class="page-title">페이지를 찾을 수 없습니다</h1>
+      <p class="muted message">주소를 확인하거나 홈과 전체 작업에서 필요한 정보를 찾아주세요.</p>
+      <div class="links"><a class="btn" href="/">홈으로</a><a class="btn" href="/work">전체 작업 보기</a></div>
+    </div>
+  </section>
+</Base>
+<style>
+  .message { margin-top: 16px; }
+  .links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+</style>

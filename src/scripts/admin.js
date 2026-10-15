@@ -50,7 +50,7 @@ function list() {
   $('total').textContent = `${draft.items.length}개 · 공개 선택 ${draft.items.filter((i) => i.public).length}개`;
   $('items').replaceChildren();
   draft.items.filter((i) => i.name.toLowerCase().includes(q)).forEach((item) => {
-    const button = el('button', `${item.public ? '공개' : '비공개'}${item.rank ? ` · 대표 ${item.rank}` : ''} — ${item.name || '새 작업'}`, $('items'));
+    const button = el('button', `${item.public ? '공개' : '비공개'}${item.rank ? ` · 대표 ${item.rank}` : ''} · ${item.name || '새 작업'}`, $('items'));
     button.type = 'button'; button.setAttribute('aria-current', String(item === selected));
     button.onclick = () => { if (!busy) show(item); };
   });

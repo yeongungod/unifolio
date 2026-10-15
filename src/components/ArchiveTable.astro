@@ -38,7 +38,7 @@ const recognition = (row: (typeof sorted)[number]) => row.recognition
 
 <style>
   .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 24px; }
-  .chip { background: none; border: 1px solid var(--line); color: var(--paper); border-radius: var(--radius-sm); padding: 6px 14px; font: inherit; font-size: 14px; cursor: pointer; }
+  .chip { background: none; border: 1px solid var(--line); color: var(--paper); border-radius: var(--radius-sm); min-height: 44px; padding: 6px 14px; font: inherit; font-size: 14px; cursor: pointer; }
   .chip.on { background: var(--accent); border-color: var(--accent); color: var(--ink); font-weight: 600; }
   .count { margin: 16px 0 8px; font-size: 14px; }
   .archive { width: 100%; border-collapse: collapse; font-size: 14px; }
@@ -63,7 +63,7 @@ const recognition = (row: (typeof sorted)[number]) => row.recognition
     .archive td:nth-child(n+3) { grid-column: 2; font-size: 13px; }
     .archive .recognition:not(:empty) { margin-top: 8px; }
     .archive .recognition:empty { display: none; }
-    .recognition-label { display: block; color: var(--accent); font-size: 12px; font-weight: 600; }
+    .recognition-label { display: block; color: var(--paper); font-size: 12px; font-weight: 600; }
   }
 </style>
 

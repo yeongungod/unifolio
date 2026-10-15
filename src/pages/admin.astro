@@ -34,7 +34,7 @@ const categories = { Film: '영화', Live: '라이브', Music: '음악', Web: '�
           <fieldset><legend>메인 대표작</legend>
             <label>대표작 순서<select name="rank"><option value="0">대표작에 표시하지 않음</option>{Array.from({ length: 9 }, (_, i) => <option value={i + 1}>{i + 1}번</option>)}</select></label>
             <label>카드 제목<input name="title" maxlength="300" /></label>
-            <div class="pair"><label>표시 연도<input name="displayYear" maxlength="40" placeholder="2023 – 25" /></label><label>카드 역할<input name="role" maxlength="300" /></label></div>
+            <div class="pair"><label>표시 연도<input name="displayYear" maxlength="40" placeholder="2023 - 25" /></label><label>카드 역할<input name="role" maxlength="300" /></label></div>
             <label>카드 설명<textarea name="note" maxlength="1000" rows="3"></textarea></label>
             <label>대표 이미지 · JPG / PNG / WebP, 8 MiB 이하<input id="upload" type="file" accept="image/jpeg,image/png,image/webp" /></label>
             <p class="help">이미지는 대표작 카드에 사용됩니다. 새 이미지가 있으면 영상 썸네일 대신 표시합니다. 영상 원본은 올리지 않고 URL로 연결합니다.</p>
