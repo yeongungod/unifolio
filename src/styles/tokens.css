@@ -9,6 +9,7 @@
   --muted-text: #605C56;
   --rule: #E3DED8;
   --rule-on-ink: rgba(251, 249, 246, 0.12);
+  --rule-on-ink-solid: #302E2C;
   --radius-none: 0;
   --radius-sm: 4px;
   --radius-lg: 12px;
@@ -90,6 +91,10 @@
   --type-slide-meta-weight: 400;
   --type-slide-meta-leading: 1.4;
   --type-slide-meta-tracking: 0;
+  --type-slide-table-size: 26px;
+  --type-slide-table-weight: 400;
+  --type-slide-table-leading: 1.4;
+  --type-slide-table-tracking: 0;
   --type-web-display-size: clamp(2.75rem, calc(1.1714rem + 6.4762vw), 7rem);
   --type-web-display-weight: 700;
   --type-web-display-leading: 1.16;
