@@ -189,3 +189,10 @@ test('무대 루프 영상은 /video/loops/*.mp4만, 칸이 없으면 공개본�
   assert.equal(publicPortfolio([item()], '', previous).featured[0].loop, '/video/loops/a.mp4');
   assert.equal('loop' in publicPortfolio([item({ loop: '' })], '', previous).featured[0], false);
 });
+
+test('무대 초점(focus)은 「가로% 세로%」만, 칸이 없으면 공개본을 물려받는다', () => {
+  assert.equal(publicPortfolio([item({ focus: '70% 30%' })]).featured[0].focus, '70% 30%');
+  for (const bad of ['70%', '70% 30% 1%', 'left top', '101% 0%', 'url(x)']) assert.throws(() => publicPortfolio([item({ focus: bad })]), /초점/);
+  assert.equal(publicPortfolio([item()], '', [{ slug: owner, focus: '50% 20%' }]).featured[0].focus, '50% 20%');
+  assert.equal('focus' in publicPortfolio([item({ focus: '' })], '', [{ slug: owner, focus: '50% 20%' }]).featured[0], false);
+});

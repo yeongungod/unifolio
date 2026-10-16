@@ -205,3 +205,10 @@ test('노션 변환은 공개본의 루프 영상 경로를 유지하고 엉뚱�
   assert.equal(result.featured[0].loop, '/video/loops/a-tmp.mp4');
   assert.equal('loop' in result.featured[1], false);
 });
+
+test('노션 변환은 공개본의 무대 초점을 유지하고 엉뚱한 값은 버린다', () => {
+  const result = convertPages([page(1, { rank: 1, url: 'https://youtu.be/G7P6u0izwsk' }), page(2, { rank: 2, url: 'https://youtu.be/9DyECX8JTNg' })],
+    [{ slug: page(1).id, focus: '60% 25%' }, { slug: page(2).id, focus: 'center' }]);
+  assert.equal(result.featured[0].focus, '60% 25%');
+  assert.equal('focus' in result.featured[1], false);
+});
