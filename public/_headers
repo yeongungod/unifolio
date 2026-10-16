@@ -14,3 +14,7 @@
 
 https://:project.pages.dev/*
   X-Robots-Tag: noindex
+
+# Vercel이 기본으로 보내던 값 유지
+/*
+  Strict-Transport-Security: max-age=63072000
