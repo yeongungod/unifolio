@@ -18,7 +18,7 @@ export default async function handler(req, res) {
     const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
     if (!body || Buffer.byteLength(JSON.stringify(body)) > 2 * 1024 * 1024) fail('초안 크기가 너무 큽니다.', 413);
     const sb = async (path, data) => {
-      const r = await fetch(`${supabase}${path}`, { method: data === undefined ? 'GET' : 'POST', headers: { apikey: key, Authorization: authorization, 'Content-Type': 'application/json' }, ...(data !== undefined && { body: JSON.stringify(data) }), signal: AbortSignal.timeout(15000), redirect: 'error' });
+      const r = await fetch(`${supabase}${path}`, { method: data === undefined ? 'GET' : 'POST', headers: { apikey: key, Authorization: authorization, 'Content-Type': 'application/json' }, ...(data !== undefined && { body: JSON.stringify(data) }), signal: AbortSignal.timeout(15000), redirect: 'manual' });
       if (!r.ok) fail(path.includes('save_portfolio') ? '저장하지 못했습니다. 다른 창에서 바뀐 초안인지 확인하고 다시 불러오세요.' : '로그인 또는 저장소 권한을 확인하세요.', r.status === 401 ? 401 : 409);
       return r.json();
     };
@@ -36,7 +36,7 @@ export default async function handler(req, res) {
     if (!['prepare', 'publish'].includes(body.action)) fail('알 수 없는 작업입니다.');
     if (!process.env.PORTFOLIO_GITHUB_TOKEN) fail('게시 연결이 아직 완료되지 않았습니다.', 503);
     const gh = async (path, data, method = 'POST') => {
-      const r = await fetch(`${REPO}${path}`, { method: data === undefined ? 'GET' : method, headers: { Authorization: `Bearer ${process.env.PORTFOLIO_GITHUB_TOKEN}`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', 'Content-Type': 'application/json' }, ...(data !== undefined && { body: JSON.stringify(data) }), signal: AbortSignal.timeout(20000), redirect: 'error' });
+      const r = await fetch(`${REPO}${path}`, { method: data === undefined ? 'GET' : method, headers: { Authorization: `Bearer ${process.env.PORTFOLIO_GITHUB_TOKEN}`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', 'Content-Type': 'application/json' }, ...(data !== undefined && { body: JSON.stringify(data) }), signal: AbortSignal.timeout(20000), redirect: 'manual' });
       if (!r.ok) fail('GitHub 요청을 완료하지 못했습니다. 사이트 상태를 확인한 뒤 다시 미리보기하세요.', [409, 422].includes(r.status) ? 409 : 502);
       return r.json();
     };
@@ -61,7 +61,7 @@ export default async function handler(req, res) {
     const files = [];
     let size = 0;
     for (const upload of out.uploads) {
-      const r = await fetch(`${supabase}/storage/v1/object/authenticated/portfolio-private/${upload.path}`, { headers: { apikey: key, Authorization: authorization }, signal: AbortSignal.timeout(15000), redirect: 'error' });
+      const r = await fetch(`${supabase}/storage/v1/object/authenticated/portfolio-private/${upload.path}`, { headers: { apikey: key, Authorization: authorization }, signal: AbortSignal.timeout(15000), redirect: 'manual' });
       if (!r.ok || Number(r.headers.get('content-length')) > 8 * 1024 * 1024) fail('선택한 비공개 이미지를 읽지 못했습니다.');
       const chunks = []; let length = 0;
       for await (const chunk of r.body) { length += chunk.length; if (length > 8 * 1024 * 1024) fail('이미지가 8 MiB를 초과합니다.'); chunks.push(chunk); }

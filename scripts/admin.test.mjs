@@ -196,3 +196,20 @@ test('무대 초점(focus)은 「가로% 세로%」만, 칸이 없으면 공개�
   assert.equal(publicPortfolio([item()], '', [{ slug: owner, focus: '50% 20%' }]).featured[0].focus, '50% 20%');
   assert.equal('focus' in publicPortfolio([item({ focus: '' })], '', [{ slug: owner, focus: '50% 20%' }]).featured[0], false);
 });
+
+test('Cloudflare Pages 진입점은 같은 handler로 상태·헤더·본문을 그대로 전달한다', async () => {
+  const { onRequest } = await import('../functions/api/portfolio.js');
+  const url = 'https://yeongungod.com/api/portfolio';
+  const closed = await onRequest({ request: new Request(url) });
+  assert.equal(closed.status, 503);
+  assert.equal(closed.headers.get('Cache-Control'), 'no-store');
+  assert.match(closed.headers.get('Content-Type'), /application\/json/);
+  process.env.SUPABASE_URL = 'https://test.supabase.co';
+  process.env.SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_test';
+  try {
+    const post = (headers, body = '{"action":"load"}') => onRequest({ request: new Request(url, { method: 'POST', headers, body }) });
+    assert.equal((await post({ Origin: 'https://evil.example', 'Content-Type': 'application/json' })).status, 403);
+    assert.equal((await post({ Origin: 'https://yeongungod.com', 'Content-Type': 'application/json' })).status, 401);
+    assert.equal((await post({ Origin: 'https://yeongungod.com', 'Content-Type': 'application/json', Authorization: 'Bearer t' }, JSON.stringify({ action: 'load', pad: 'x'.repeat(2 * 1024 * 1024) }))).status, 413);
+  } finally { delete process.env.SUPABASE_URL; delete process.env.SUPABASE_PUBLISHABLE_KEY; }
+});
