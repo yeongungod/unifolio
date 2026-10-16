@@ -43,7 +43,7 @@ def main():
         if item.get('youtube') and not item.get('image'):
             video = item['youtube']
             assert re.fullmatch(r'[\w-]{11}', video), video
-            remote = f'https://i.ytimg.com/vi/{video}/hqdefault.jpg'
+            remote = f'https://i.ytimg.com/vi/{video}/maxresdefault.jpg'  # 무대(16:9)용 1280×720
             local = f'/images/work/youtube/{video}.jpg'
             original = PUBLIC / local.lstrip('/')
             if not original.exists():
@@ -51,7 +51,7 @@ def main():
                 with urlopen(remote, timeout=20) as response:
                     data = response.read()
                 original.write_bytes(data)
-            sources[local] = [360, 720]
+            sources[local] = [360, 720, 1080]
             thumbnails[local] = remote
     for file, folder, widths in [
         ('src/data/clients.ts', 'clients', [180, 360, 720]),

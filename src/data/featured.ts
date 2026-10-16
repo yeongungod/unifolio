@@ -8,7 +8,8 @@ export const featured: Featured[] = [
     "client": "해보자시리즈",
     "note": "",
     "url": "https://www.youtube.com/watch?v=G7P6u0izwsk",
-    "youtube": "G7P6u0izwsk"
+    "youtube": "G7P6u0izwsk",
+    "loop": "/video/loops/haboja-tmp.mp4"
   },
   {
     "slug": "13c50bd8-fe2d-8018-89db-f6d1e9dc6a61",
@@ -19,7 +20,8 @@ export const featured: Featured[] = [
     "note": "서울아트비디오페스티벌 음향상. ㈜씨엠닉스 배급.",
     "url": "https://youtu.be/jCAnh8ssnn8",
     "youtube": "jCAnh8ssnn8",
-    "image": "/images/work/saraji.jpg"
+    "image": "/images/work/saraji.jpg",
+    "loop": "/video/loops/saraji-tmp.mp4"
   },
   {
     "slug": "13c50bd8-fe2d-8088-a6c3-d5c4005aa5f1",
@@ -28,7 +30,7 @@ export const featured: Featured[] = [
     "year": "2023",
     "client": "정도영 감독",
     "note": "제24회 대한민국국제청소년영화제 작품상 대학부 은상. 필름베리 배급.",
-    "image": "/images/work/nalchi.jpg",
+    "image": "/images/work/nalchi_wide_tmp.jpg",
     "tier": "major"
   },
   {
@@ -48,7 +50,7 @@ export const featured: Featured[] = [
     "year": "2022",
     "client": "김선연 감독",
     "note": "제1회 싸이파이안페스타 관객상. ㈜인디스토리 배급.",
-    "image": "/images/work/pd.jpg",
+    "image": "/images/work/pd_wide_tmp.jpg",
     "tier": "major"
   },
   {
@@ -59,7 +61,8 @@ export const featured: Featured[] = [
     "client": "대한민국 해군 · 공군",
     "note": "창설 기념 광고·훈련소 다큐·정신전력 교육 영상 등.",
     "url": "https://www.youtube.com/watch?v=4j_y34frjNU",
-    "youtube": "4j_y34frjNU"
+    "youtube": "4j_y34frjNU",
+    "loop": "/video/loops/navy-tmp.mp4"
   },
   {
     "slug": "22b50bd8-fe2d-8069-87b0-f725d2e3236f",

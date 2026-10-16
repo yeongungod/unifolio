@@ -155,76 +155,6 @@
       "width": 205
     }
   ],
-  "/images/tools/ableton-live.png": [
-    {
-      "src": "/images/optimized/tools/ableton-live.png.28.webp",
-      "width": 28
-    },
-    {
-      "src": "/images/optimized/tools/ableton-live.png.56.webp",
-      "width": 56
-    },
-    {
-      "src": "/images/optimized/tools/ableton-live.png.84.webp",
-      "width": 84
-    }
-  ],
-  "/images/tools/cubase.png": [
-    {
-      "src": "/images/optimized/tools/cubase.png.28.webp",
-      "width": 28
-    },
-    {
-      "src": "/images/optimized/tools/cubase.png.56.webp",
-      "width": 56
-    },
-    {
-      "src": "/images/optimized/tools/cubase.png.84.webp",
-      "width": 84
-    }
-  ],
-  "/images/tools/pro-tools.png": [
-    {
-      "src": "/images/optimized/tools/pro-tools.png.28.webp",
-      "width": 28
-    },
-    {
-      "src": "/images/optimized/tools/pro-tools.png.56.webp",
-      "width": 56
-    },
-    {
-      "src": "/images/optimized/tools/pro-tools.png.84.webp",
-      "width": 84
-    }
-  ],
-  "/images/tools/uad.png": [
-    {
-      "src": "/images/optimized/tools/uad.png.28.webp",
-      "width": 28
-    },
-    {
-      "src": "/images/optimized/tools/uad.png.56.webp",
-      "width": 56
-    },
-    {
-      "src": "/images/optimized/tools/uad.png.84.webp",
-      "width": 84
-    }
-  ],
-  "/images/tools/waves.png": [
-    {
-      "src": "/images/optimized/tools/waves.png.28.webp",
-      "width": 28
-    },
-    {
-      "src": "/images/optimized/tools/waves.png.56.webp",
-      "width": 56
-    },
-    {
-      "src": "/images/optimized/tools/waves.png.84.webp",
-      "width": 84
-    }
-  ],
   "/images/work/chimmuk.jpg": [
     {
       "src": "/images/optimized/work/chimmuk.jpg.360.webp",
@@ -239,17 +169,17 @@
       "width": 1080
     }
   ],
-  "/images/work/nalchi.jpg": [
+  "/images/work/nalchi_wide_tmp.jpg": [
     {
-      "src": "/images/optimized/work/nalchi.jpg.360.webp",
+      "src": "/images/optimized/work/nalchi_wide_tmp.jpg.360.webp",
       "width": 360
     },
     {
-      "src": "/images/optimized/work/nalchi.jpg.720.webp",
+      "src": "/images/optimized/work/nalchi_wide_tmp.jpg.720.webp",
       "width": 720
     },
     {
-      "src": "/images/optimized/work/nalchi.jpg.1080.webp",
+      "src": "/images/optimized/work/nalchi_wide_tmp.jpg.1080.webp",
       "width": 1080
     }
   ],
@@ -267,17 +197,17 @@
       "width": 1080
     }
   ],
-  "/images/work/pd.jpg": [
+  "/images/work/pd_wide_tmp.jpg": [
     {
-      "src": "/images/optimized/work/pd.jpg.360.webp",
+      "src": "/images/optimized/work/pd_wide_tmp.jpg.360.webp",
       "width": 360
     },
     {
-      "src": "/images/optimized/work/pd.jpg.720.webp",
+      "src": "/images/optimized/work/pd_wide_tmp.jpg.720.webp",
       "width": 720
     },
     {
-      "src": "/images/optimized/work/pd.jpg.1008.webp",
+      "src": "/images/optimized/work/pd_wide_tmp.jpg.1008.webp",
       "width": 1008
     }
   ],
@@ -295,44 +225,60 @@
       "width": 1080
     }
   ],
-  "https://i.ytimg.com/vi/4j_y34frjNU/hqdefault.jpg": [
+  "https://i.ytimg.com/vi/4j_y34frjNU/maxresdefault.jpg": [
     {
       "src": "/images/optimized/work/youtube/4j_y34frjNU.jpg.360.webp",
       "width": 360
     },
     {
-      "src": "/images/optimized/work/youtube/4j_y34frjNU.jpg.480.webp",
-      "width": 480
+      "src": "/images/optimized/work/youtube/4j_y34frjNU.jpg.720.webp",
+      "width": 720
+    },
+    {
+      "src": "/images/optimized/work/youtube/4j_y34frjNU.jpg.1080.webp",
+      "width": 1080
     }
   ],
-  "https://i.ytimg.com/vi/9DyECX8JTNg/hqdefault.jpg": [
+  "https://i.ytimg.com/vi/9DyECX8JTNg/maxresdefault.jpg": [
     {
       "src": "/images/optimized/work/youtube/9DyECX8JTNg.jpg.360.webp",
       "width": 360
     },
     {
-      "src": "/images/optimized/work/youtube/9DyECX8JTNg.jpg.480.webp",
-      "width": 480
+      "src": "/images/optimized/work/youtube/9DyECX8JTNg.jpg.720.webp",
+      "width": 720
+    },
+    {
+      "src": "/images/optimized/work/youtube/9DyECX8JTNg.jpg.1080.webp",
+      "width": 1080
     }
   ],
-  "https://i.ytimg.com/vi/G7P6u0izwsk/hqdefault.jpg": [
+  "https://i.ytimg.com/vi/G7P6u0izwsk/maxresdefault.jpg": [
     {
       "src": "/images/optimized/work/youtube/G7P6u0izwsk.jpg.360.webp",
       "width": 360
     },
     {
-      "src": "/images/optimized/work/youtube/G7P6u0izwsk.jpg.480.webp",
-      "width": 480
+      "src": "/images/optimized/work/youtube/G7P6u0izwsk.jpg.720.webp",
+      "width": 720
+    },
+    {
+      "src": "/images/optimized/work/youtube/G7P6u0izwsk.jpg.1080.webp",
+      "width": 1080
     }
   ],
-  "https://i.ytimg.com/vi/TbFCH78wKlc/hqdefault.jpg": [
+  "https://i.ytimg.com/vi/TbFCH78wKlc/maxresdefault.jpg": [
     {
       "src": "/images/optimized/work/youtube/TbFCH78wKlc.jpg.360.webp",
       "width": 360
     },
     {
-      "src": "/images/optimized/work/youtube/TbFCH78wKlc.jpg.480.webp",
-      "width": 480
+      "src": "/images/optimized/work/youtube/TbFCH78wKlc.jpg.720.webp",
+      "width": 720
+    },
+    {
+      "src": "/images/optimized/work/youtube/TbFCH78wKlc.jpg.1080.webp",
+      "width": 1080
     }
   ]
 }
