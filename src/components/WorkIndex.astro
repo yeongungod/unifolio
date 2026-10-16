@@ -1,0 +1,251 @@
+---
+// 첫 화면 = 대표작 인덱스 무대(2026-10-16 안 A). 큰 글자 목록에 마우스를 올리거나(포인터 기기) 화면 가운데로 굴려 오면(터치)
+// 무대 스틸이 먹색으로 한 번 눌렀다 바뀐다. 탭·클릭 1번 = 무대에서 재생(유튜브) 또는 영상 열기(외부 링크).
+// loop가 있으면 데스크톱·화면 안에서만 무음 루프를 스틸 위에 겹친다(감속 설정·데이터 절약·390px 이하·터치는 스틸만).
+import { existsSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { imageMetadata } from 'astro/assets/utils';
+import { featured } from '../data/featured';
+import rows from '../data/archive.json';
+import images from '../data/optimized-images.json';
+import { site } from '../data/site';
+import ResponsiveImage from './ResponsiveImage.astro';
+import { displayText as text, displayYear as year } from '../lib/display.mjs';
+
+const file = (path: string) => join(process.cwd(), 'public', path);
+// 무대 실제 폭: 전폭 1144의 7/12 약 654 / 900px 미만은 1단 전폭
+const sizes = '(min-width: 1240px) 654px, (min-width: 900px) calc((100vw - 96px) * 0.572), (min-width: 600px) calc(100vw - 96px), calc(100vw - 40px)';
+const items = await Promise.all(featured.map(async (item, i) => {
+  // 유튜브 썸네일은 optimize-assets.py가 받아 둔 maxres(1280×720)가 있으면 그것, 새로 게시된 작품은 늘 있는 hqdefault
+  const maxres = `https://i.ytimg.com/vi/${item.youtube}/maxresdefault.jpg`;
+  const src = item.image ?? (maxres in images ? maxres : `https://i.ytimg.com/vi/${item.youtube}/hqdefault.jpg`);
+  const size = item.image ? await imageMetadata(readFileSync(file(item.image))) : src === maxres ? { width: 1280, height: 720 } : { width: 480, height: 360 };
+  const width = size?.width ?? 1280, height = size?.height ?? 720;
+  const loop = item.loop && existsSync(file(item.loop)) ? item.loop : undefined;
+  const webm = loop?.replace(/\.mp4$/, '.webm');
+  return {
+    ...item, title: text(item.title), role: text(item.role), note: text(item.note), year: year(item.year),
+    n: String(i + 1).padStart(2, '0'), src, width, height, portrait: height > width,
+    loop, webm: webm && existsSync(file(webm)) ? webm : undefined,
+    action: item.youtube ? '재생' : item.url ? '영상' : '',
+  };
+}));
+---
+<section id="work" class="index-stage" aria-labelledby="hero-title" data-index>
+  <div class="wrap grid">
+    <div class="intro">
+      <h1 id="hero-title" class="t-statement">{site.hero.title.split('\n').map((line) => <span class="line">{line}</span>)}</h1>
+      <p class="sub t-small muted">{site.hero.sub}</p>
+    </div>
+
+    <div class="stage-col">
+      <div class="stage">
+        {items.map((it, i) => (
+          <figure class:list={['layer', { on: i === 0, portrait: it.portrait }]} data-loop={it.loop} data-webm={it.webm}>
+            <ResponsiveImage src={it.src} alt="" width={it.width} height={it.height} sizes={sizes} loading={i ? 'lazy' : 'eager'} fetchpriority={i ? undefined : 'high'} />
+          </figure>
+        ))}
+        <button type="button" class="chip" hidden={!items[0].action} aria-label={items[0].action && `${items[0].title} ${items[0].action}`}>
+          <svg viewBox="0 0 10 12" width="8" height="10" aria-hidden="true"><path d="M0 0L10 6L0 12Z" fill="currentColor" /></svg><span>{items[0].action}</span>
+        </button>
+        <!-- 5초 넘게 움직이는 자동 재생이라 멈춤 버튼을 둔다(WCAG 2.2.2). 루프가 도는 동안만 보인다 -->
+        <button type="button" class="chip hold" hidden>움직임 멈춤</button>
+      </div>
+      <div class="credits-stack">
+        {items.map((it, i) => (
+          <div id={`credit-${i}`} class:list={['credit', { on: i === 0 }]}>
+            <p class="ct t-title">{it.title}</p>
+            <p class="t-credit">{it.client} · {it.year}</p>
+            <p class="t-small muted">{it.role}</p>
+            {it.note && <p class="note t-small muted">{it.note}</p>}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <ol class="index" aria-label="대표작">
+      {items.map((it, i) => {
+        // 접근 이름 = 보이는 글자 + 숨긴 동작(보이는 번호·제목이 이름 앞에 그대로 오게)
+        const inner = [<span class="n">{it.n}</span>, <span class="name">{it.title}</span>, it.action && <span class="visually-hidden">{it.youtube ? ' 재생' : ' 영상 보기 (새 창)'}</span>];
+        return (
+          <li class:list={['row', { on: i === 0 }]}>
+            {it.youtube ? (
+              <button type="button" class="pick t-work" data-yt={it.youtube} aria-describedby={`credit-${i}`}>{inner}</button>
+            ) : it.url ? (
+              <a class="pick t-work" href={it.url} target="_blank" rel="noopener noreferrer" aria-describedby={`credit-${i}`}>{inner}</a>
+            ) : (
+              <button type="button" class="pick t-work" aria-describedby={`credit-${i}`}>{inner}</button>
+            )}
+          </li>
+        );
+      })}
+    </ol>
+    <a class="all t-small" href="/work">전체 {rows.length}건 보기</a>
+  </div>
+</section>
+
+<style>
+  .index-stage { padding-top: var(--space-12); }
+  .grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--space-8); align-items: start; }
+  .intro, .index, .all { grid-column: 1 / 7; }
+  .stage-col { grid-column: 7 / 13; grid-row: 1 / 4; position: sticky; top: calc(var(--header-h) + var(--space-6)); }
+  .line { display: block; }
+  .sub { margin-top: var(--space-4); max-width: 30em; }
+
+  /* 무대: 16:9 먹색 판. 층은 겹쳐 두고 켜진 것만 보인다. 꺼진 층은 display:none이라 lazy 스틸을 받지 않는다 */
+  .stage { position: relative; aspect-ratio: 16 / 9; background: var(--ink-2); overflow: hidden; }
+  .layer { position: absolute; inset: 0; margin: 0; display: none; opacity: 0; transition: opacity 160ms ease-in, display 160ms allow-discrete; }
+  /* 켜질 때는 먹색으로 잠깐 눌렀다(120ms) 밝힌다 */
+  .layer.on { display: block; opacity: 1; transition: opacity 320ms var(--ease-out) 120ms, display 0s; }
+  @starting-style { .layer.on { opacity: 0; } }
+  .layer :global(picture), .layer :global(img), .layer :global(video), .layer :global(iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .layer :global(img), .layer :global(video) { object-fit: cover; }
+  /* 세로 포스터는 자르지 않는다: 먹색 여백 + 원본 비율 */
+  .portrait { background: var(--ink); }
+  .portrait :global(img) { object-fit: contain; }
+  .layer :global(video) { opacity: 0; transition: opacity 400ms var(--ease-out); }
+  .layer :global(video.ready) { opacity: 1; }
+  .chip { position: absolute; top: var(--space-2); right: var(--space-2); z-index: 1; display: inline-flex; align-items: center; gap: var(--space-1); min-height: 32px; padding: var(--space-1) var(--space-3); border: 0; border-radius: var(--radius-sm); background: var(--ink); color: var(--paper); font-size: var(--type-web-caption-size); font-weight: 600; line-height: 1; transition: background-color var(--hover), color var(--hover); }
+  .chip:hover { background: var(--paper); color: var(--ink); }
+  .chip[hidden] { display: none; }
+  .hold { top: auto; right: auto; bottom: var(--space-2); left: var(--space-2); }
+
+  /* 크레딧 줄: 9개를 한 칸에 겹쳐 높이를 고정(바뀔 때 아래 목록이 밀리지 않게) */
+  .credits-stack { display: grid; margin-top: var(--space-4); }
+  .credit { grid-area: 1 / 1; display: grid; gap: var(--space-1); align-content: start; visibility: hidden; }
+  .credit.on { visibility: visible; }
+  .ct { display: none; } /* 2단에선 옆 목록의 켜진 줄이 제목이다 */
+
+  /* 인덱스: 번호 | 큰 작품명. 켜진 줄은 종이색 + 왼쪽 아쿠아 막대, 나머지는 Stone */
+  .index { margin-top: var(--space-12); }
+  .row { position: relative; }
+  .pick { display: grid; grid-template-columns: var(--space-12) minmax(0, 1fr); align-items: baseline; width: 100%; min-height: 44px; padding: var(--space-2) 0; border: 0; background: none; color: var(--muted); text-align: left; transition: color var(--hover); }
+  .row.on .pick, .pick:hover { color: var(--paper); }
+  .row.on::before { content: ''; position: absolute; left: calc(var(--space-3) * -1); top: calc(var(--space-2) + 0.2em); width: var(--space-1); height: 0.8em; background: var(--accent); font-size: var(--type-web-work-size); }
+  .n { font-size: var(--type-web-small-size); font-weight: 600; }
+  .name { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+  .pick:focus-visible { outline-offset: 2px; }
+  @media (max-width: 899.98px) { .pick { scroll-margin-top: calc(var(--header-h) + 56.25vw + 200px); } } /* 붙어 있는 무대 밑으로 포커스가 숨지 않게 */
+  .all { display: inline-flex; align-items: center; min-height: 44px; margin-top: var(--space-6); justify-self: start; color: var(--muted); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 4px; transition: color var(--hover), text-decoration-color var(--hover); }
+  .all:hover { color: var(--paper); text-decoration-color: var(--paper); }
+
+  @media (max-width: 899.98px) {
+    .index-stage { padding-top: var(--space-8); }
+    .grid { grid-template-columns: minmax(0, 1fr); }
+    .intro, .index, .all { grid-column: 1; }
+    /* 1단: 무대가 머리글 아래에 붙어 있고 목록이 그 밑으로 지나간다 */
+    .stage-col { grid-column: 1; grid-row: auto; top: var(--header-h); z-index: 2; margin-top: var(--space-6); margin-inline: calc(var(--gutter) * -1); padding: var(--space-3) var(--gutter) var(--space-4); background: var(--ink); border-bottom: 1px solid var(--line); }
+    .credits-stack { margin-top: var(--space-3); }
+    .ct { display: block; }
+    .index { margin-top: var(--space-4); }
+  }
+  @media (max-width: 599.98px) {
+    .note { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-index]');
+  if (root) {
+    const layers = [...root.querySelectorAll<HTMLElement>('.layer')];
+    const rowsEl = [...root.querySelectorAll<HTMLElement>('.row')];
+    const credits = [...root.querySelectorAll<HTMLElement>('.credit')];
+    const picks = rowsEl.map((r) => r.querySelector<HTMLElement>('.pick')!);
+    const chip = root.querySelector<HTMLButtonElement>('.chip')!;
+    const stage = root.querySelector<HTMLElement>('.stage')!;
+    const pointer = matchMedia('(hover: hover) and (pointer: fine)');
+    // 루프는 마우스 기기 · 391px 이상 · 감속 설정 없음 · 데이터 절약 아님일 때만
+    const loopOk = () => matchMedia('(hover: hover) and (pointer: fine) and (min-width: 391px) and (prefers-reduced-motion: no-preference)').matches
+      && !(navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
+    const hold = root.querySelector<HTMLButtonElement>('.hold')!;
+    let active = 0, playing = -1, seen = false, inView = false, held = false, loaded = document.readyState === 'complete';
+
+    const syncVideo = () => layers.forEach((layer, i) => {
+      let video = layer.querySelector('video');
+      const can = i === active && playing < 0 && loaded && !!layer.dataset.loop && loopOk();
+      if (i === active) hold.hidden = !can;
+      const want = can && inView && !held;
+      if (want && !video) {
+        video = document.createElement('video');
+        Object.assign(video, { muted: true, loop: true, playsInline: true, preload: 'none', poster: layer.querySelector('img')?.currentSrc ?? '' });
+        video.setAttribute('aria-hidden', 'true');
+        for (const [src, type] of [[layer.dataset.webm, 'video/webm; codecs="av01.0.08M.08"'], [layer.dataset.loop, 'video/mp4']]) {
+          if (!src) continue;
+          const s = document.createElement('source');
+          Object.assign(s, { src, type });
+          video.append(s);
+        }
+        video.addEventListener('playing', () => video!.classList.add('ready'), { once: true });
+        layer.append(video);
+      }
+      if (!video) return;
+      if (want) video.play().catch(() => {});
+      else video.pause();
+    });
+
+    const stop = () => {
+      if (playing < 0) return;
+      layers[playing].querySelector('iframe')?.remove();
+      playing = -1;
+      chip.hidden = !chip.querySelector('span')!.textContent;
+    };
+    // 첫 상호작용 때 나머지 스틸을 미리 받아 둔다(꺼진 층의 lazy 이미지는 그 전엔 안 받음)
+    const prefetch = () => {
+      if (seen) return;
+      seen = true;
+      root.querySelectorAll<HTMLImageElement>('.layer img[loading="lazy"]').forEach((img) => { img.loading = 'eager'; });
+    };
+    root.querySelector('.index')!.addEventListener('pointerenter', prefetch, { once: true });
+    const activate = (i: number) => {
+      if (i === active) return;
+      prefetch();
+      [layers, rowsEl, credits].forEach((list) => { list[active].classList.remove('on'); list[i].classList.add('on'); });
+      active = i;
+      const pick = picks[i], action = pick.dataset.yt ? '재생' : pick.tagName === 'A' ? '영상' : '';
+      chip.hidden = !action;
+      chip.querySelector('span')!.textContent = action;
+      chip.setAttribute('aria-label', `${pick.querySelector('.name')!.textContent} ${action}`);
+      syncVideo();
+    };
+    const play = (i: number) => {
+      stop();
+      activate(i);
+      const id = picks[i].dataset.yt;
+      if (!id) return;
+      const f = document.createElement('iframe');
+      f.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+      f.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+      f.allowFullscreen = true;
+      f.title = `${picks[i].querySelector('.name')!.textContent} 재생`;
+      playing = i;
+      syncVideo();
+      layers[i].append(f);
+      chip.hidden = true;
+      f.focus();
+    };
+
+    picks.forEach((pick, i) => {
+      pick.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse' && playing < 0) activate(i); });
+      pick.addEventListener('focus', () => { if (playing < 0) activate(i); });
+      if (pick.tagName === 'BUTTON') pick.addEventListener('click', () => (pick.dataset.yt ? play(i) : (stop(), activate(i))));
+      else pick.addEventListener('click', () => { stop(); activate(i); });
+    });
+    chip.addEventListener('click', () => picks[active].click());
+    hold.addEventListener('click', () => {
+      held = !held;
+      hold.textContent = held ? '움직임 재생' : '움직임 멈춤';
+      syncVideo();
+    });
+
+    // 터치·펜: 붙어 있는 무대 아래 남은 화면의 가운데쯤(위에서 75%) 띠에 들어온 줄이 켜진다. 2단 탭 없음
+    if (!pointer.matches) {
+      const io = new IntersectionObserver((entries) => {
+        for (const e of entries) if (e.isIntersecting && playing < 0) activate(rowsEl.indexOf(e.target as HTMLElement));
+      }, { rootMargin: '-75% 0px -24% 0px' });
+      rowsEl.forEach((r) => io.observe(r));
+    }
+    new IntersectionObserver(([e]) => { inView = e.isIntersecting; syncVideo(); }).observe(stage);
+    // 루프는 페이지 로드가 끝난 뒤에만(LCP = 첫 스틸)
+    if (!loaded) addEventListener('load', () => { loaded = true; syncVideo(); }, { once: true });
+  }
+</script>

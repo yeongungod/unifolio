@@ -8,9 +8,9 @@ const maskSource = (file: string) => {
   return variants?.find(v => v.width === 360)?.src ?? original;
 };
 ---
-<section id="clients" class="section animated two-rows" aria-labelledby="clients-title">
+<section id="clients" class="band animated" aria-labelledby="clients-title">
   <div class="wrap">
-    <h2 id="clients-title" class="section-title">함께한 곳</h2>
+    <p id="clients-title" class="t-small muted">함께한 곳</p><!-- 띠의 작은 이름표: 제목 위계(h2)에서 뺀다 -->
   </div>
   <div class="clients-window" tabindex="0" aria-label="참여 브랜드 로고. 키보드로 선택하면 이동이 멈춥니다.">
     <div id="clients-track" style={`--duration: ${clients.length * 5}s`}>
@@ -39,8 +39,9 @@ const maskSource = (file: string) => {
   </div>
 </section>
 <style>
-  #clients { background: var(--ink); color: var(--paper); overflow: hidden; }
-  .clients-window { margin: var(--space-12) auto 0; max-width: 1600px; }
+  /* 첫 화면 바로 아래 구분 띠(10-16 안 A): 작은 제목 + 한 줄 로고 흐름 */
+  #clients { margin-top: var(--space-24); padding-block: var(--space-6) var(--space-4); border-block: 1px solid var(--line); background: var(--ink); color: var(--paper); overflow: hidden; }
+  .clients-window { margin: var(--space-2) auto 0; max-width: 1600px; }
   .clients-window:focus-visible { outline: 2px solid var(--paper); outline-offset: -2px; }
   .clients-list { display: flex; flex-wrap: wrap; justify-content: center; padding: 0; margin: 0; list-style: none; }
   .clients-list[aria-hidden] { display: none; }
@@ -59,16 +60,12 @@ const maskSource = (file: string) => {
   .animated #clients-track { display: flex; width: max-content; animation: clients-flow var(--duration) linear infinite; }
   .animated .clients-list { display: flex; flex-wrap: nowrap; flex-shrink: 0; }
   .clients-window:focus-visible #clients-track { animation-play-state: paused; }
-  .two-rows .clients-window { max-width: 1600px; }
-  .two-rows #clients-track { animation-duration: calc(var(--duration) / 2); }
-  .two-rows .clients-list { display: grid; grid-template-rows: repeat(2, 120px); grid-auto-flow: column; grid-auto-columns: 280px; }
   @keyframes clients-flow { to { transform: translateX(-50%); } }
   @media (max-width: 600px) {
     .clients-list li { flex-basis: 180px; padding-inline: 16px; }
     .client-logo > :global(picture) { width: 148px; height: 64px; }
     .clients-list :global(img) { width: 148px; height: 64px; }
     .client-logo { width: 148px; height: 64px; }
-    .two-rows .clients-list { grid-auto-columns: 180px; }
   }
   @media (prefers-reduced-motion: reduce), print {
     .animated #clients-track { display: block; width: auto; animation: none; transform: none; }
