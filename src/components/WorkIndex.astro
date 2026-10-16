@@ -1,6 +1,6 @@
 ---
-// 첫 화면 = 대표작 인덱스 무대(2026-10-16 안 A, v3 시네마 프레임). 이름에 마우스를 올리거나(포인터 기기) 화면 가운데로 굴려 오면(터치)
-// 2.39:1 화면의 스틸이 먹색으로 한 번 눌렀다 바뀐다. 탭·클릭 1번 = 무대에서 재생(유튜브) 또는 영상 열기(외부 링크).
+// 첫 화면 = 대표작 인덱스 무대(2026-10-16 안 A, v4 전면 무대 + 큰 이름). 이름에 마우스를 올리거나(포인터 기기) 화면 가운데로 굴려 오면(터치)
+// 첫 화면을 채운 스틸이 먹색으로 한 번 눌렀다 바뀐다. 탭·클릭 1번 = 무대에서 재생(유튜브) 또는 영상 열기(외부 링크).
 // loop가 있으면 데스크톱·화면 안에서만 무음 루프를 스틸 위에 겹친다(감속 설정·데이터 절약·390px 이하·터치는 스틸만).
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -8,15 +8,16 @@ import { imageMetadata } from 'astro/assets/utils';
 import { featured } from '../data/featured';
 import rows from '../data/archive.json';
 import images from '../data/optimized-images.json';
+import scrims from '../data/stage-scrim.json'; // scripts/stage-scrim.py가 작품마다 실측한 막 농도
 import { site } from '../data/site';
 import ResponsiveImage from './ResponsiveImage.astro';
 import { displayText as text, displayYear as year } from '../lib/display.mjs';
 
 const file = (path: string) => join(process.cwd(), 'public', path);
-// 무대(v3 「시네마 프레임」): 2.39:1 화면 하나 + 위아래 먹색 여백에 글자. 사진 위에는 글자를 얹지 않는다.
+// 무대(v4): 머리글 아래 첫 화면 전체가 스틸·루프. 큰 이름은 그 위 왼쪽 아래, 작은 글자는 먹색 단색 조각 위.
 // 휴대폰은 96vw로 적어 412px·1.75배 화면이 960 대신 720을 고르게 한다(필요 721px, 1px 차이)
-const sizes = '(min-width: 900px) min(100vw - 96px, 1280px), 96vw';
-// 큰 목록용 짧은 이름: [LIVE CLIP] 머리표·(Feat. …) 꼬리표만 걷는다(크레딧 판·원본 데이터는 전체 제목)
+const sizes = '(min-width: 900px) 100vw, 96vw';
+// 큰 목록용 짧은 이름: [LIVE CLIP] 머리표·(Feat. …) 꼬리표만 걷는다(크레딧·원본 데이터는 전체 제목)
 const short = (t: string) => t.replace(/^\[[^\]]+\]\s*/, '').replace(/\s*\(Feat\.[^)]*\)/, '').trim();
 const items = await Promise.all(featured.map(async (item) => {
   // 유튜브 썸네일은 optimize-assets.py가 받아 둔 maxres(1280×720)가 있으면 그것, 새로 게시된 작품은 늘 있는 hqdefault
@@ -26,9 +27,10 @@ const items = await Promise.all(featured.map(async (item) => {
   const width = size?.width ?? 1280, height = size?.height ?? 720;
   const loop = item.loop && existsSync(file(item.loop)) ? item.loop : undefined;
   const webm = loop?.replace(/\.mp4$/, '.webm');
+  const name = short(text(item.title));
   return {
-    ...item, title: text(item.title), name: short(text(item.title)), role: text(item.role), note: text(item.note), year: year(item.year),
-    src, width, height, portrait: height > width,
+    ...item, title: text(item.title), name, long: name.length > 14, role: text(item.role), note: text(item.note), year: year(item.year),
+    src, width, height, portrait: height > width, focus: item.focus ?? '50% 40%', scrim: (scrims as Record<string, number>)[item.slug] ?? 0.65, // 새 작품은 흰 바탕도 통과하는 0.65
     loop, webm: webm && existsSync(file(webm)) ? webm : undefined,
     action: item.youtube ? '재생' : item.url ? '영상' : '',
     // 제목이 의뢰처 이름으로 시작하면(해보자시리즈·해군공군) 크레딧 줄엔 연도만
@@ -39,26 +41,21 @@ const items = await Promise.all(featured.map(async (item) => {
 const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
 ---
 <section id="work" class="index-stage" aria-labelledby="hero-title" data-index data-start={start}>
-  <div class="intro">
-    <h1 id="hero-title" class="t-headline">{site.hero.title.split('\n').join(' ')}</h1>
-    <p class="sub t-small soft">{site.hero.sub}</p>
-  </div>
-
   <div class="stage-col">
     <div class="stage">
       <div class="screen">
         {items.map((it, i) => (
-          <figure class:list={['layer', { on: i === start, portrait: it.portrait, still: !it.loop }]} data-loop={it.loop} data-webm={it.webm}>
+          <figure class:list={['layer', { on: i === start, portrait: it.portrait, still: !it.loop }]} style={`--focus: ${it.focus}; --scrim: ${it.scrim}`} data-loop={it.loop} data-webm={it.webm}>
             <ResponsiveImage src={it.src} alt="" width={it.width} height={it.height} sizes={sizes} loading={i === start ? 'eager' : 'lazy'} fetchpriority={i === start ? 'high' : undefined} />
           </figure>
         ))}
-        <div class="tools">
-          <!-- 5초 넘게 움직이는 자동 재생이라 멈춤 버튼을 둔다(WCAG 2.2.2). 루프가 도는 동안만 보인다 -->
-          <button type="button" class="chip hold" hidden>움직임 멈춤</button>
-          <button type="button" class="chip play" tabindex="-1" hidden={!items[start].action} aria-label={items[start].action && `${items[start].title} ${items[start].action}`}>
-            <svg viewBox="0 0 10 12" width="8" height="10" aria-hidden="true"><path d="M0 0L10 6L0 12Z" fill="currentColor" /></svg><span>{items[start].action}</span>
-          </button>
-        </div>
+      </div>
+      <div class="tools">
+        <!-- 5초 넘게 움직이는 자동 재생이라 멈춤 버튼을 둔다(WCAG 2.2.2). 루프가 도는 동안만 보인다 -->
+        <button type="button" class="chip hold" hidden>움직임 멈춤</button>
+        <button type="button" class="chip play" tabindex="-1" hidden={!items[start].action} aria-label={items[start].action && `${items[start].title} ${items[start].action}`}>
+          <svg viewBox="0 0 10 12" width="8" height="10" aria-hidden="true"><path d="M0 0L10 6L0 12Z" fill="currentColor" /></svg><span>{items[start].action}</span>
+        </button>
       </div>
     </div>
     <div class="credits-stack">
@@ -72,12 +69,18 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
     </div>
   </div>
 
+  <div class="intro plate">
+    <h1 id="hero-title" class="t-title">{site.hero.title.split('\n').join(' ')}</h1>
+    <p class="sub t-caption soft">{site.hero.sub}</p>
+    <a class="all t-small" href="/work">전체 작업 {rows.length}건 보기</a>
+  </div>
+
   <ol class="index" aria-label="대표작">
     {items.map((it, i) => {
       // 번호는 0을 채우지 않는다(DESIGN.md 웹 무대). 접근 이름 = 보이는 번호·이름 + 숨긴 동작
       const inner = [<span class="n">{i + 1}</span>, <span class="name">{it.name}</span>, it.action && <span class="visually-hidden">{it.youtube ? ' 재생' : ' 영상 보기 (새 창)'}</span>];
       return (
-        <li class:list={['row', { on: i === start }]}>
+        <li class:list={['row', { on: i === start, long: it.long }]}>
           {it.youtube ? (
             <button type="button" class="pick" data-yt={it.youtube} aria-describedby={`credit-${i}`}>{inner}</button>
           ) : it.url ? (
@@ -85,93 +88,99 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
           ) : (
             <button type="button" class="pick" aria-describedby={`credit-${i}`}>{inner}</button>
           )}
+          <p class="row-credit t-caption" aria-hidden="true"><span>{it.by} · {it.role}</span></p>
         </li>
       );
     })}
   </ol>
-  <div class="foot"><a class="all t-small" href="/work">전체 작업 {rows.length}건 보기</a></div>
 </section>
 
 <style>
-  /* 글자는 전부 먹색 바탕 위: 종이색 100% 약 17:1, 흐린 글자(종이 50%) 약 5:1 */
-  .index-stage { --soft: color-mix(in srgb, var(--paper) 50%, transparent); --name: clamp(28px, calc(12px + 1.8vw), 40px); }
+  /* 대비(DESIGN.md 웹 무대): 큰 이름은 3:1, 작은 글자는 4.5:1을 스틸 9장의 실제 글자 자리에서 실측(scripts는 13_A인덱스무대_구현.md v4 절).
+     --scrim = 작품마다 스틸 전체에 고르게 까는 먹색 막(고정, scripts/stage-scrim.py 실측), --dim = 꺼진 이름의 종이색 비율(스크립트 DIM과 같게). 작은 글자는 먹색 100% 조각 위 */
+  .index-stage { --dim: 65%; --soft: color-mix(in srgb, var(--paper) 50%, transparent); --plate: var(--ink); }
   .soft { color: var(--soft); }
+  .plate { background: var(--plate); }
 
-  /* 900px 이상: 첫 화면(머리글·로고 띠를 뺀 높이) = 위 띠(표어 · 아카이브 | 크레딧) · 2.39:1 화면 · 아래 띠(이름) */
+  /* 900px 이상: 첫 화면 = 무대. 네 귀퉁이 격자: 왼쪽 위 표어 · 오른쪽 위 크레딧 · 왼쪽 아래 큰 이름 · 오른쪽 아래 재생 */
   .index-stage {
     --side: max(var(--gutter), calc((100% - var(--space-web-max)) / 2 + var(--gutter)));
-    display: grid; grid-template-columns: var(--side) minmax(0, 1fr) auto var(--side); grid-template-rows: auto minmax(0, 1fr) auto;
-    column-gap: var(--space-8); row-gap: var(--space-4);
-    height: calc(100svh - var(--header-h) - 1px - var(--band-h)); min-height: 560px; padding-block: var(--space-6) var(--space-4);
+    position: relative; display: grid; grid-template-columns: var(--side) minmax(0, 1fr) auto var(--side); grid-template-rows: auto minmax(0, 1fr);
+    column-gap: var(--space-8); height: calc(100svh - var(--header-h) - 1px); min-height: 600px; padding-block: var(--space-8) var(--space-12); overflow: hidden;
   }
-  .intro { grid-area: 1 / 2; align-self: end; }
-  .sub { margin-top: var(--space-1); }
   .stage-col { display: contents; }
-  .credits-stack { grid-area: 1 / 3; align-self: end; width: min(440px, 36vw); text-align: right; }
-  .stage { grid-area: 2 / 2 / 3 / 4; min-height: 0; container-type: size; }
-  .index { grid-area: 3 / 2 / 4 / 4; }
-  .foot { grid-area: 1 / 2; justify-self: end; align-self: end; } /* 아카이브는 위 띠, 표어 오른쪽 */
+  .stage { position: absolute; inset: 0; }
+  .screen { position: absolute; inset: 0; overflow: hidden; background: var(--ink-2); }
+  .intro { position: relative; z-index: 2; grid-area: 1 / 2; justify-self: start; display: grid; gap: var(--space-1); max-width: 420px; padding: var(--space-3) var(--space-4); }
+  .all { justify-self: start; display: inline-flex; align-items: center; min-height: 32px; color: var(--paper); text-decoration: underline; text-decoration-color: var(--soft); text-underline-offset: 4px; transition: text-decoration-color var(--hover); }
+  .all:hover { text-decoration-color: var(--paper); }
+  .credits-stack { position: relative; z-index: 2; grid-area: 1 / 3; align-self: start; display: grid; width: min(380px, 30vw); padding: var(--space-3) var(--space-4); background: var(--plate); }
+  .index { position: relative; z-index: 2; grid-area: 2 / 2 / 3 / 4; align-self: end; }
+  .tools { position: absolute; z-index: 3; right: var(--side); bottom: var(--space-12); display: flex; gap: var(--space-2); }
 
-  /* 화면: 칸 안에서 가장 큰 2.39:1(시네마스코프). 층은 겹쳐 두고 켜진 것만 보인다(꺼진 층은 lazy 스틸을 받지 않는다) */
-  .screen { position: relative; width: min(100cqw, 239cqh); aspect-ratio: 2.39 / 1; margin-inline: auto; overflow: hidden; background: var(--ink-2); }
+  /* 층은 겹쳐 두고 켜진 것만 보인다(꺼진 층은 lazy 스틸을 받지 않는다) */
   .layer { position: absolute; inset: 0; margin: 0; display: none; opacity: 0; transition: opacity 200ms ease-in, display 200ms allow-discrete; }
+  .layer::after { content: ''; position: absolute; inset: 0; z-index: 1; background: var(--ink); opacity: var(--scrim, 0.65); pointer-events: none; } /* 균일한 막(그라데이션 없음), 스틸과 함께 바뀐다 */
   /* 켜질 때는 먹색으로 잠깐 눌렀다(100ms) 300ms에 밝힌다. opacity만 */
   .layer.on { display: block; opacity: 1; transition: opacity 300ms var(--ease-out) 100ms, display 0s; }
   @starting-style { .layer.on { opacity: 0; } }
   .layer :global(picture), .layer :global(img), .layer :global(video), .layer :global(iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  /* 초점: 사람 얼굴·주제가 보통 위쪽에 있어 세로 40%에 맞춘다 */
-  .layer :global(img), .layer :global(video) { object-fit: cover; object-position: 50% 40%; }
-  .portrait { background: var(--ink); }
-  .portrait :global(img) { object-fit: contain; object-position: 50% 50%; }
+  /* 작품별 초점(featured.ts focus): 이름이 얹히는 왼쪽 아래를 피해 얼굴·주제를 둔다 */
+  .layer :global(img), .layer :global(video) { object-fit: cover; object-position: var(--focus); }
+  .portrait :global(img) { object-fit: contain; object-position: 78% 50%; }
   .layer :global(video) { opacity: 0; transition: opacity 300ms var(--ease-out); }
   .layer :global(video.ready) { opacity: 1; }
-  .layer :global(iframe) { background: var(--ink); }
+  /* 재생 중: 막·글자를 걷고 유튜브가 무대 전체(닫기 = 같은 칩) */
+  .layer :global(iframe) { z-index: 2; background: var(--ink); }
+  .playing .layer::after, .playing .intro, .playing .credits-stack, .playing .index { display: none; }
+  .playing .tools { top: var(--space-3); right: 50%; bottom: auto; transform: translateX(50%); } /* 유튜브 조작부를 피해 위 가운데 */
   /* 루프 없는 스틸만 8초에 1.00 → 1.04 한 번(transform만, 반복 없음). 데스크톱·감속 없음·데이터 절약 아님일 때만 */
   @media (hover: hover) and (pointer: fine) and (min-width: 391px) and (prefers-reduced-motion: no-preference) {
     :global(html:not(.save-data)) .still.on :global(img) { animation: stage-drift 8s linear both; }
   }
   @keyframes stage-drift { from { transform: scale(1); } to { transform: scale(1.04); } }
-  .tools { position: absolute; z-index: 2; top: var(--space-3); right: var(--space-3); display: flex; gap: var(--space-2); }
   .chip { display: inline-flex; align-items: center; gap: var(--space-1); min-height: 32px; padding: var(--space-1) var(--space-3); border: 0; border-radius: var(--radius-sm); background: var(--ink); color: var(--paper); font-size: var(--type-web-caption-size); font-weight: 600; line-height: 1; transition: background-color var(--hover), color var(--hover); }
   .chip:hover { background: var(--paper); color: var(--ink); }
   .chip[hidden] { display: none; }
 
-  /* 크레딧: 오른쪽 위 한 곳. 9개를 한 칸에 겹쳐 높이를 고정(바뀔 때 화면이 흔들리지 않게) */
-  .credits-stack { display: grid; }
-  .credit { grid-area: 1 / 1; display: grid; gap: 2px; align-content: end; visibility: hidden; }
+  /* 크레딧(오른쪽 위): 9개를 한 칸에 겹쳐 높이 고정 */
+  .credit { grid-area: 1 / 1; display: grid; gap: 2px; align-content: start; visibility: hidden; }
   .credit.on { visibility: visible; }
-  .note { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden; }
+  .note { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
 
-  /* 이름: 화면 아래 띠에 크게 흐르는 줄. 켜진 이름은 종이색 + 앞 아쿠아 막대, 나머지는 종이 50% */
-  .index { font-size: var(--name); font-weight: 700; line-height: 1.2; letter-spacing: -0.03em; }
-  .row { position: relative; display: inline; margin-right: 0.5em; }
-  .pick { display: inline; padding: 0; border: 0; background: none; color: var(--soft); text-align: left; letter-spacing: inherit; line-height: inherit; transition: color var(--hover); }
+  /* 큰 이름: 왼쪽 아래부터 쌓인 한 줄씩. 켜진 이름 종이색 100% + 번호 아쿠아 면, 꺼진 이름은 종이 --dim */
+  .index { font-size: clamp(40px, min(4.6vw, 6.6svh), 80px); font-weight: 700; line-height: 1.04; letter-spacing: -0.035em; }
+  .row { position: relative; }
+  .row.long { font-size: 0.74em; line-height: 1.4; } /* 긴 이름은 줄임표 대신 한 단계 작게 */
+  .pick { display: inline-flex; align-items: baseline; max-width: 100%; padding: 0; border: 0; background: none; color: color-mix(in srgb, var(--paper) var(--dim), transparent); text-align: left; letter-spacing: inherit; line-height: inherit; white-space: nowrap; transition: color var(--hover); }
   .row.on .pick, .pick:hover { color: var(--paper); }
-  .n { margin-right: 0.2em; font-size: max(13px, 0.3em); font-weight: 600; vertical-align: 1.5em; letter-spacing: 0; }
-  .row.on .n { color: var(--ink); background: var(--accent); padding: 0 0.3em; } /* 켜진 번호만 아쿠아 면(한 화면 1곳) */
+  .name { overflow: hidden; text-overflow: clip; }
+  .n { flex: none; width: 1.6em; font-size: max(13px, 0.24em); font-weight: 600; letter-spacing: 0; align-self: flex-start; margin-top: 0.4em; }
+  .row.long .n { font-size: max(13px, 0.32em); }
+  .row.on .n { width: auto; margin-right: 0.3em; padding: 0 0.4em; color: var(--ink); background: var(--accent); } /* 켜진 번호만 아쿠아 면(한 화면 1곳) */
   .pick:focus-visible { outline-offset: 2px; }
-  .all { display: inline-flex; align-items: center; min-height: 44px; color: var(--paper); text-decoration: underline; text-decoration-color: var(--soft); text-underline-offset: 4px; white-space: nowrap; transition: text-decoration-color var(--hover); }
-  .all:hover { text-decoration-color: var(--paper); }
-  /* 키 낮은 노트북(1280×800 등): 부제·노트를 빼서 화면에 높이를 준다 */
-  @media (min-width: 900px) and (max-height: 860px) { .sub, .note { display: none; } }
+  .row-credit { display: none; }
 
   @media (max-width: 899.98px) {
-    /* 1단: 표어 → 16:9 화면(머리글 아래에 붙음) + 크레딧 → 이름 목록이 그 밑으로 지나간다 */
-    .index-stage { display: block; height: auto; min-height: 0; padding: 0; }
-    .intro { padding: var(--space-8) var(--gutter) var(--space-6); }
-    .stage-col { display: block; position: sticky; top: var(--header-h); z-index: 2; background: var(--ink); border-bottom: 1px solid var(--line); }
-    .stage { container-type: normal; }
-    .screen { width: 100%; aspect-ratio: 16 / 9; }
-    .tools { top: var(--space-2); right: var(--space-2); }
-    .credits-stack { width: auto; padding: var(--space-3) var(--gutter) var(--space-4); text-align: left; }
-    .credit { align-content: start; }
-    .note { display: none; } /* 붙은 판을 낮게: 수상·배급은 아래 「소개」에도 있다 */
-    .index { padding: var(--space-4) var(--gutter) 0; font-size: 30px; line-height: 1.25; }
-    .row { display: block; margin: 0 0 var(--space-2); }
-    .pick { display: block; min-height: 44px; word-break: keep-all; }
-    .foot { padding: var(--space-4) var(--gutter) 0; text-align: left; }
-    /* 붙어 있는 화면 밑으로 포커스가 숨지 않게 */
-    .pick { scroll-margin-top: calc(var(--header-h) + 56.25vw + 120px); }
+    /* 1단: 첫 화면 대부분(78svh)이 머리글 아래에 붙은 무대, 이름 줄이 그 아래쪽부터 무대 위로 지나간다 */
+    .index-stage { display: block; height: auto; min-height: 0; padding: 0; overflow: visible; }
+    .stage-col { display: block; position: sticky; top: var(--header-h); z-index: 0; height: 78svh; }
+    .credits-stack { display: none; } /* 휴대폰은 켜진 줄 밑 크레딧 조각 */
+    .intro { position: absolute; top: var(--space-4); left: var(--gutter); max-width: calc(100% - var(--gutter) * 2 - 120px); justify-self: auto; }
+    .sub { display: none; }
+    .tools { top: var(--space-3); right: var(--gutter); bottom: auto; }
+    .intro ~ .index { margin-top: -34svh; }
+    .index { padding: 0 var(--gutter) var(--space-12); font-size: 34px; line-height: 1.12; }
+    .row { margin-bottom: var(--space-3); }
+    .row.long { font-size: 0.82em; }
+    .pick { white-space: normal; word-break: keep-all; min-height: 44px; }
+    .row-credit { display: block; margin-top: var(--space-1); visibility: hidden; letter-spacing: 0; }
+    .row-credit span { padding: 2px var(--space-2); background: var(--plate); }
+    .row.on .row-credit { visibility: visible; }
+    .tools { z-index: 3; }
+    .playing .stage-col { z-index: 5; }
+    .tools { position: absolute; }
+    .pick { scroll-margin-top: calc(var(--header-h) + 30svh); }
   }
 </style>
 
@@ -216,11 +225,17 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
       else video.pause();
     });
 
+    const label = chip.querySelector('span')!;
+    let action = label.textContent ?? '';
     const stop = () => {
       if (playing < 0) return;
       layers[playing].querySelector('iframe')?.remove();
       playing = -1;
-      chip.hidden = !chip.querySelector('span')!.textContent;
+      root.classList.remove('playing');
+      label.textContent = action;
+      chip.hidden = !action;
+      chip.setAttribute('aria-label', `${picks[active].querySelector('.name')!.textContent} ${action}`);
+      syncVideo();
     };
     // 첫 상호작용 때 나머지 스틸을 미리 받아 둔다(꺼진 층의 lazy 이미지는 그 전엔 안 받음)
     const prefetch = () => {
@@ -234,9 +249,10 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
       prefetch();
       [layers, rowsEl, credits].forEach((list) => { list[active].classList.remove('on'); list[i].classList.add('on'); });
       active = i;
-      const pick = picks[i], action = pick.dataset.yt ? '재생' : pick.tagName === 'A' ? '영상' : '';
+      const pick = picks[i];
+      action = pick.dataset.yt ? '재생' : pick.tagName === 'A' ? '영상' : '';
       chip.hidden = !action;
-      chip.querySelector('span')!.textContent = action;
+      label.textContent = action;
       chip.setAttribute('aria-label', `${pick.querySelector('.name')!.textContent} ${action}`);
       syncVideo();
     };
@@ -253,7 +269,12 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
       playing = i;
       syncVideo();
       layers[i].append(f);
-      chip.hidden = true;
+      // 재생 중엔 막·글자를 걷고 같은 칩이 「닫기」가 된다(Esc도 닫음)
+      root.classList.add('playing');
+      label.textContent = '닫기';
+      chip.hidden = false;
+      chip.setAttribute('aria-label', '재생 닫기');
+      chip.tabIndex = 0;
       f.focus();
     };
 
@@ -263,21 +284,22 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
       if (pick.tagName === 'BUTTON') pick.addEventListener('click', () => (pick.dataset.yt ? play(i) : (stop(), activate(i))));
       else pick.addEventListener('click', () => { stop(); activate(i); });
     });
-    chip.addEventListener('click', () => picks[active].click());
+    chip.addEventListener('click', () => { if (playing < 0) picks[active].click(); else { const back = picks[playing]; stop(); chip.tabIndex = -1; back.focus(); } });
+    addEventListener('keydown', (e) => { if (e.key === 'Escape' && playing >= 0) chip.click(); });
     hold.addEventListener('click', () => {
       held = !held;
       hold.textContent = held ? '움직임 재생' : '움직임 멈춤';
       syncVideo();
     });
 
-    // 터치·펜: 붙어 있는 무대 아래 남은 화면의 가운데쯤(위에서 75%) 띠에 들어온 줄이 켜진다. 2단 탭 없음
+    // 터치·펜: 무대 위를 지나가는 이름 줄이 화면 가운데 띠에 오면 켜진다. 2단 탭 없음
     if (!pointer.matches) {
       // 처음 스크롤하기 전엔 바꾸지 않는다(로드 때 띠에 걸린 줄이 켜지며 나머지 스틸을 미리 받지 않게)
       let scrolled = false;
       addEventListener('scroll', () => { scrolled = true; }, { once: true, passive: true });
       const io = new IntersectionObserver((entries) => {
         for (const e of entries) if (scrolled && e.isIntersecting && playing < 0) activate(rowsEl.indexOf(e.target as HTMLElement));
-      }, { rootMargin: '-75% 0px -24% 0px' });
+      }, { rootMargin: '-50% 0px -49% 0px' });
       rowsEl.forEach((r) => io.observe(r));
     }
     new IntersectionObserver(([e]) => { inView = e.isIntersecting; syncVideo(); }).observe(stage);
