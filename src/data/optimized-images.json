@@ -167,6 +167,10 @@
     {
       "src": "/images/optimized/work/chimmuk.jpg.1080.webp",
       "width": 1080
+    },
+    {
+      "src": "/images/optimized/work/chimmuk.jpg.1280.webp",
+      "width": 1280
     }
   ],
   "/images/work/nalchi_wide_tmp.jpg": [
@@ -181,6 +185,10 @@
     {
       "src": "/images/optimized/work/nalchi_wide_tmp.jpg.1080.webp",
       "width": 1080
+    },
+    {
+      "src": "/images/optimized/work/nalchi_wide_tmp.jpg.1250.webp",
+      "width": 1250
     }
   ],
   "/images/work/onside.jpg": [
@@ -195,6 +203,10 @@
     {
       "src": "/images/optimized/work/onside.jpg.1080.webp",
       "width": 1080
+    },
+    {
+      "src": "/images/optimized/work/onside.jpg.1280.webp",
+      "width": 1280
     }
   ],
   "/images/work/pd_wide_tmp.jpg": [
@@ -237,6 +249,10 @@
     {
       "src": "/images/optimized/work/youtube/4j_y34frjNU.jpg.1080.webp",
       "width": 1080
+    },
+    {
+      "src": "/images/optimized/work/youtube/4j_y34frjNU.jpg.1280.webp",
+      "width": 1280
     }
   ],
   "https://i.ytimg.com/vi/9DyECX8JTNg/maxresdefault.jpg": [
@@ -251,6 +267,10 @@
     {
       "src": "/images/optimized/work/youtube/9DyECX8JTNg.jpg.1080.webp",
       "width": 1080
+    },
+    {
+      "src": "/images/optimized/work/youtube/9DyECX8JTNg.jpg.1280.webp",
+      "width": 1280
     }
   ],
   "https://i.ytimg.com/vi/G7P6u0izwsk/maxresdefault.jpg": [
@@ -265,6 +285,10 @@
     {
       "src": "/images/optimized/work/youtube/G7P6u0izwsk.jpg.1080.webp",
       "width": 1080
+    },
+    {
+      "src": "/images/optimized/work/youtube/G7P6u0izwsk.jpg.1280.webp",
+      "width": 1280
     }
   ],
   "https://i.ytimg.com/vi/TbFCH78wKlc/maxresdefault.jpg": [
@@ -279,6 +303,10 @@
     {
       "src": "/images/optimized/work/youtube/TbFCH78wKlc.jpg.1080.webp",
       "width": 1080
+    },
+    {
+      "src": "/images/optimized/work/youtube/TbFCH78wKlc.jpg.1280.webp",
+      "width": 1280
     }
   ]
 }

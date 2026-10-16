@@ -40,7 +40,12 @@ const maskSource = (file: string) => {
 </section>
 <style>
   /* 첫 화면 바로 아래 구분 띠(10-16 안 A): 작은 제목 + 한 줄 로고 흐름 */
-  #clients { margin-top: var(--space-24); padding-block: var(--space-6) var(--space-4); border-block: 1px solid var(--line); background: var(--ink); color: var(--paper); overflow: hidden; }
+  #clients { padding-block: var(--space-3); border-block: 1px solid var(--line); background: var(--ink); color: var(--paper); overflow: hidden; }
+  @media (min-width: 900px) {
+    #clients { box-sizing: border-box; height: var(--band-h); }
+    #clients .clients-list li { height: 88px; padding-block: var(--space-1); }
+  }
+  @media (max-width: 899.98px) { #clients { margin-top: var(--space-14); } }
   .clients-window { margin: var(--space-2) auto 0; max-width: 1600px; }
   .clients-window:focus-visible { outline: 2px solid var(--paper); outline-offset: -2px; }
   .clients-list { display: flex; flex-wrap: wrap; justify-content: center; padding: 0; margin: 0; list-style: none; }
