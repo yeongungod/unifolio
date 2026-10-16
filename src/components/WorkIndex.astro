@@ -35,8 +35,10 @@ const items = await Promise.all(featured.map(async (item) => {
     by: item.client && !text(item.title).startsWith(item.client) ? `${item.client} · ${year(item.year)}` : year(item.year),
   };
 }));
+// 처음 켜지는 작품 = 대표작 tier lead(없으면 첫 작품). 채팅·자막이 박힌 썸네일보다 영화 스틸이 첫인상(10-16 마스터)
+const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
 ---
-<section id="work" class="index-stage" aria-labelledby="hero-title" data-index>
+<section id="work" class="index-stage" aria-labelledby="hero-title" data-index data-start={start}>
   <div class="intro">
     <h1 id="hero-title" class="t-headline">{site.hero.title.split('\n').join(' ')}</h1>
     <p class="sub t-small soft">{site.hero.sub}</p>
@@ -46,22 +48,22 @@ const items = await Promise.all(featured.map(async (item) => {
     <div class="stage">
       <div class="screen">
         {items.map((it, i) => (
-          <figure class:list={['layer', { on: i === 0, portrait: it.portrait, still: !it.loop }]} data-loop={it.loop} data-webm={it.webm}>
-            <ResponsiveImage src={it.src} alt="" width={it.width} height={it.height} sizes={sizes} loading={i ? 'lazy' : 'eager'} fetchpriority={i ? undefined : 'high'} />
+          <figure class:list={['layer', { on: i === start, portrait: it.portrait, still: !it.loop }]} data-loop={it.loop} data-webm={it.webm}>
+            <ResponsiveImage src={it.src} alt="" width={it.width} height={it.height} sizes={sizes} loading={i === start ? 'eager' : 'lazy'} fetchpriority={i === start ? 'high' : undefined} />
           </figure>
         ))}
         <div class="tools">
           <!-- 5초 넘게 움직이는 자동 재생이라 멈춤 버튼을 둔다(WCAG 2.2.2). 루프가 도는 동안만 보인다 -->
           <button type="button" class="chip hold" hidden>움직임 멈춤</button>
-          <button type="button" class="chip play" tabindex="-1" hidden={!items[0].action} aria-label={items[0].action && `${items[0].title} ${items[0].action}`}>
-            <svg viewBox="0 0 10 12" width="8" height="10" aria-hidden="true"><path d="M0 0L10 6L0 12Z" fill="currentColor" /></svg><span>{items[0].action}</span>
+          <button type="button" class="chip play" tabindex="-1" hidden={!items[start].action} aria-label={items[start].action && `${items[start].title} ${items[start].action}`}>
+            <svg viewBox="0 0 10 12" width="8" height="10" aria-hidden="true"><path d="M0 0L10 6L0 12Z" fill="currentColor" /></svg><span>{items[start].action}</span>
           </button>
         </div>
       </div>
     </div>
     <div class="credits-stack">
       {items.map((it, i) => (
-        <div id={`credit-${i}`} class:list={['credit', { on: i === 0 }]}>
+        <div id={`credit-${i}`} class:list={['credit', { on: i === start }]}>
           <p class="ct t-title">{it.title}</p>
           <p class="t-small">{it.by} · <span class="soft">{it.role}</span></p>
           {it.note && <p class="note t-caption soft">{it.note}</p>}
@@ -75,7 +77,7 @@ const items = await Promise.all(featured.map(async (item) => {
       // 번호는 0을 채우지 않는다(DESIGN.md 웹 무대). 접근 이름 = 보이는 번호·이름 + 숨긴 동작
       const inner = [<span class="n">{i + 1}</span>, <span class="name">{it.name}</span>, it.action && <span class="visually-hidden">{it.youtube ? ' 재생' : ' 영상 보기 (새 창)'}</span>];
       return (
-        <li class:list={['row', { on: i === 0 }]}>
+        <li class:list={['row', { on: i === start }]}>
           {it.youtube ? (
             <button type="button" class="pick" data-yt={it.youtube} aria-describedby={`credit-${i}`}>{inner}</button>
           ) : it.url ? (
@@ -189,7 +191,7 @@ const items = await Promise.all(featured.map(async (item) => {
     const loopOk = () => matchMedia('(hover: hover) and (pointer: fine) and (min-width: 391px) and (prefers-reduced-motion: no-preference)').matches
       && !(navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
     const hold = root.querySelector<HTMLButtonElement>('.hold')!;
-    let active = 0, playing = -1, seen = false, inView = false, held = false, loaded = document.readyState === 'complete';
+    let active = Number(root.dataset.start) || 0, playing = -1, seen = false, inView = false, held = false, loaded = document.readyState === 'complete';
 
     const syncVideo = () => layers.forEach((layer, i) => {
       let video = layer.querySelector('video');
