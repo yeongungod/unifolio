@@ -14,7 +14,7 @@ export function GET() {
       item = { id: card.slug, name: card.title, year: Number(card.year.slice(0, 4)), platform: [card.title.includes('팬미팅') ? 'Live' : 'Web'], process: [card.role], client: card.client, public: true, archive: false, rank: 0, title: card.title, displayYear: card.year, role: card.role, note: '', image: '', upload: '' };
       items.push(item);
     }
-    Object.assign(item, { rank: i + 1, title: card.title, displayYear: card.year, role: card.role, note: card.note, image: card.image || '', url: card.url || ('url' in item ? item.url : ''), tier: card.tier || '' });
+    Object.assign(item, { rank: i + 1, title: card.title, displayYear: card.year, role: card.role, note: card.note, image: card.image || '', url: card.url || ('url' in item ? item.url : ''), tier: card.tier || '', loop: card.loop || '' });
   });
   const recognition = Object.fromEntries(archive.map((r) => [r.id, [
     ...site.about.awards.filter((a) => a.workId === r.id).map((a) => `${a.year} ${a.title}\n${a.body.replace(/^「[^」]+」\s*/, '')}`),

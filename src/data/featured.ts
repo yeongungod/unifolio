@@ -1,4 +1,4 @@
-export type Featured = { slug: string; title: string; role: string; year: string; client: string; youtube?: string; image?: string; url?: string; note: string; tier?: 'lead' | 'major' };
+export type Featured = { slug: string; title: string; role: string; year: string; client: string; youtube?: string; image?: string; url?: string; note: string; tier?: 'lead' | 'major'; loop?: string };
 export const featured: Featured[] = [
   {
     "slug": "22b50bd8-fe2d-8060-bd4b-fd70e0fae1ab",

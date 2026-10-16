@@ -2,9 +2,11 @@ import { createHash } from 'node:crypto';
 
 export const OWNER_EMAIL = 'unistudio@yeongungod.com';
 export const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-export const FEATURED_TYPE = 'export type Featured = { slug: string; title: string; role: string; year: string; client: string; youtube?: string; image?: string; url?: string; note: string; tier?: \'lead\' | \'major\' };';
+export const FEATURED_TYPE = 'export type Featured = { slug: string; title: string; role: string; year: string; client: string; youtube?: string; image?: string; url?: string; note: string; tier?: \'lead\' | \'major\'; loop?: string };';
 // 메인 화면 크기 위계: lead = 큰 1건, major = 중간 2건, 없으면 줄 목록.
 export const TIERS = { lead: 1, major: 2 };
+// 무대 무음 루프: 저장소에 직접 넣은 public/video/loops/ 파일만(scripts/make-loop.mjs). 같은 이름 .webm은 있으면 함께 쓴다.
+export const LOOP = /^\/video\/loops\/[a-z0-9-]+\.mp4$/;
 // 공개 featured.ts 원문에서 카드 배열만 읽는다(형식이 다르면 빈 배열 = 크기 지정 없음).
 export function featuredCards(source) {
   try { return JSON.parse(source.slice(source.indexOf('= [') + 2).trim().replace(/;$/, '')); } catch { return []; }
@@ -70,7 +72,10 @@ export function publicPortfolio(items, owner = '', previous = []) {
     if (!image && !youtube && !item.upload) fail('대표작에는 이미지 또는 YouTube 영상이 필요합니다.');
     const tier = Object.hasOwn(item, 'tier') ? item.tier : previous.find((c) => c?.slug === item.id)?.tier;
     if (tier !== undefined && tier !== '' && !Object.hasOwn(TIERS, tier)) fail('대표작 크기 지정을 확인하세요.');
-    cards.push({ rank: item.rank, slug: item.id, title: text(item.title || name, 300, true), role: text(item.role, 300, true), year: text(item.displayYear || String(item.year), 40, true), client, note: text(item.note, 1000), ...(url && { url }), ...(youtube && !item.upload && { youtube }), ...(image && { image }), ...(tier && { tier }) });
+    // tier처럼 관리자 화면에 칸이 없다: 옛 초안은 공개본 값을 물려받는다.
+    const loop = Object.hasOwn(item, 'loop') ? item.loop : previous.find((c) => c?.slug === item.id)?.loop;
+    if (loop && (typeof loop !== 'string' || !LOOP.test(loop))) fail('루프 영상 경로를 확인하세요.');
+    cards.push({ rank: item.rank, slug: item.id, title: text(item.title || name, 300, true), role: text(item.role, 300, true), year: text(item.displayYear || String(item.year), 40, true), client, note: text(item.note, 1000), ...(url && { url }), ...(youtube && !item.upload && { youtube }), ...(image && { image }), ...(tier && { tier }), ...(loop && { loop }) });
   }
   for (const [tier, max] of Object.entries(TIERS)) if (cards.filter((c) => c.tier === tier).length > max) fail('큰 대표작은 1개, 중간 대표작은 2개까지 지정할 수 있습니다.');
   return { archive, featured: cards.sort((a, b) => a.rank - b.rank).map(({ rank, ...card }) => card), uploads };

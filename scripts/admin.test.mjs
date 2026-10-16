@@ -182,3 +182,10 @@ test('공개 featured.ts 원문을 다시 읽으면 같은 카드가 나온다',
   assert.deepEqual(featuredCards(featuredSource(cards)), cards);
   assert.deepEqual(featuredCards('not a source'), []);
 });
+test('무대 루프 영상은 /video/loops/*.mp4만, 칸이 없으면 공개본을 물려받고 빈 값이면 해제된다', () => {
+  assert.equal(publicPortfolio([item({ loop: '/video/loops/saraji-tmp.mp4' })]).featured[0].loop, '/video/loops/saraji-tmp.mp4');
+  for (const bad of ['https://evil.example/a.mp4', '/video/loops/../x.mp4', '/video/loops/a.webm', 3]) assert.throws(() => publicPortfolio([item({ loop: bad })]), /루프/);
+  const previous = [{ slug: owner, loop: '/video/loops/a.mp4' }];
+  assert.equal(publicPortfolio([item()], '', previous).featured[0].loop, '/video/loops/a.mp4');
+  assert.equal('loop' in publicPortfolio([item({ loop: '' })], '', previous).featured[0], false);
+});
