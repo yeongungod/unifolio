@@ -1,6 +1,6 @@
 ---
-// 첫 화면 = 대표작 인덱스 무대(2026-10-16 안 A). 큰 글자 목록에 마우스를 올리거나(포인터 기기) 화면 가운데로 굴려 오면(터치)
-// 무대 스틸이 먹색으로 한 번 눌렀다 바뀐다. 탭·클릭 1번 = 무대에서 재생(유튜브) 또는 영상 열기(외부 링크).
+// 첫 화면 = 대표작 인덱스 무대(2026-10-16 안 A, v3 시네마 프레임). 이름에 마우스를 올리거나(포인터 기기) 화면 가운데로 굴려 오면(터치)
+// 2.39:1 화면의 스틸이 먹색으로 한 번 눌렀다 바뀐다. 탭·클릭 1번 = 무대에서 재생(유튜브) 또는 영상 열기(외부 링크).
 // loop가 있으면 데스크톱·화면 안에서만 무음 루프를 스틸 위에 겹친다(감속 설정·데이터 절약·390px 이하·터치는 스틸만).
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -13,8 +13,11 @@ import ResponsiveImage from './ResponsiveImage.astro';
 import { displayText as text, displayYear as year } from '../lib/display.mjs';
 
 const file = (path: string) => join(process.cwd(), 'public', path);
-// 무대 = 첫 화면 전체 배경(v2). 900px 미만은 화면 폭 전체 띠.
-const sizes = '100vw';
+// 무대(v3 「시네마 프레임」): 2.39:1 화면 하나 + 위아래 먹색 여백에 글자. 사진 위에는 글자를 얹지 않는다.
+// 휴대폰은 96vw로 적어 412px·1.75배 화면이 960 대신 720을 고르게 한다(필요 721px, 1px 차이)
+const sizes = '(min-width: 900px) min(100vw - 96px, 1280px), 96vw';
+// 큰 목록용 짧은 이름: [LIVE CLIP] 머리표·(Feat. …) 꼬리표만 걷는다(크레딧 판·원본 데이터는 전체 제목)
+const short = (t: string) => t.replace(/^\[[^\]]+\]\s*/, '').replace(/\s*\(Feat\.[^)]*\)/, '').trim();
 const items = await Promise.all(featured.map(async (item) => {
   // 유튜브 썸네일은 optimize-assets.py가 받아 둔 maxres(1280×720)가 있으면 그것, 새로 게시된 작품은 늘 있는 hqdefault
   const maxres = `https://i.ytimg.com/vi/${item.youtube}/maxresdefault.jpg`;
@@ -24,7 +27,7 @@ const items = await Promise.all(featured.map(async (item) => {
   const loop = item.loop && existsSync(file(item.loop)) ? item.loop : undefined;
   const webm = loop?.replace(/\.mp4$/, '.webm');
   return {
-    ...item, title: text(item.title), role: text(item.role), note: text(item.note), year: year(item.year),
+    ...item, title: text(item.title), name: short(text(item.title)), role: text(item.role), note: text(item.note), year: year(item.year),
     src, width, height, portrait: height > width,
     loop, webm: webm && existsSync(file(webm)) ? webm : undefined,
     action: item.youtube ? '재생' : item.url ? '영상' : '',
@@ -34,150 +37,147 @@ const items = await Promise.all(featured.map(async (item) => {
 }));
 ---
 <section id="work" class="index-stage" aria-labelledby="hero-title" data-index>
-  <div class="intro panel">
-    <h1 id="hero-title" class="t-work-lead">{site.hero.title.split('\n').map((line) => <span class="line">{line}</span>)}</h1>
-    <p class="sub t-lead">{site.hero.sub}</p>
+  <div class="intro">
+    <h1 id="hero-title" class="t-headline">{site.hero.title.split('\n').join(' ')}</h1>
+    <p class="sub t-small soft">{site.hero.sub}</p>
   </div>
 
   <div class="stage-col">
     <div class="stage">
-      {items.map((it, i) => (
-        <figure class:list={['layer', { on: i === 0, portrait: it.portrait }]} data-loop={it.loop} data-webm={it.webm}>
-          <ResponsiveImage src={it.src} alt="" width={it.width} height={it.height} sizes={sizes} loading={i ? 'lazy' : 'eager'} fetchpriority={i ? undefined : 'high'} />
-        </figure>
-      ))}
-      <div class="tools">
-        <!-- 5초 넘게 움직이는 자동 재생이라 멈춤 버튼을 둔다(WCAG 2.2.2). 루프가 도는 동안만 보인다 -->
-        <button type="button" class="chip hold" hidden>움직임 멈춤</button>
-        <button type="button" class="chip play" tabindex="-1" hidden={!items[0].action} aria-label={items[0].action && `${items[0].title} ${items[0].action}`}>
-          <svg viewBox="0 0 10 12" width="8" height="10" aria-hidden="true"><path d="M0 0L10 6L0 12Z" fill="currentColor" /></svg><span>{items[0].action}</span>
-        </button>
+      <div class="screen">
+        {items.map((it, i) => (
+          <figure class:list={['layer', { on: i === 0, portrait: it.portrait, still: !it.loop }]} data-loop={it.loop} data-webm={it.webm}>
+            <ResponsiveImage src={it.src} alt="" width={it.width} height={it.height} sizes={sizes} loading={i ? 'lazy' : 'eager'} fetchpriority={i ? undefined : 'high'} />
+          </figure>
+        ))}
+        <div class="tools">
+          <!-- 5초 넘게 움직이는 자동 재생이라 멈춤 버튼을 둔다(WCAG 2.2.2). 루프가 도는 동안만 보인다 -->
+          <button type="button" class="chip hold" hidden>움직임 멈춤</button>
+          <button type="button" class="chip play" tabindex="-1" hidden={!items[0].action} aria-label={items[0].action && `${items[0].title} ${items[0].action}`}>
+            <svg viewBox="0 0 10 12" width="8" height="10" aria-hidden="true"><path d="M0 0L10 6L0 12Z" fill="currentColor" /></svg><span>{items[0].action}</span>
+          </button>
+        </div>
       </div>
     </div>
     <div class="credits-stack">
       {items.map((it, i) => (
         <div id={`credit-${i}`} class:list={['credit', { on: i === 0 }]}>
           <p class="ct t-title">{it.title}</p>
-          <p class="t-credit">{it.by}</p>
-          <p class="t-small soft">{it.role}</p>
-          {it.note && <p class="note t-small soft">{it.note}</p>}
+          <p class="t-small">{it.by} · <span class="soft">{it.role}</span></p>
+          {it.note && <p class="note t-caption soft">{it.note}</p>}
         </div>
       ))}
     </div>
   </div>
 
-  <ol class="index panel" aria-label="대표작">
+  <ol class="index" aria-label="대표작">
     {items.map((it, i) => {
-      // 번호는 0을 채우지 않는다(DESIGN.md 웹 무대). 접근 이름 = 보이는 번호·제목 + 숨긴 동작
-      const inner = [<span class="n">{i + 1}</span>, <span class="name">{it.title}</span>, it.action && <span class="visually-hidden">{it.youtube ? ' 재생' : ' 영상 보기 (새 창)'}</span>];
+      // 번호는 0을 채우지 않는다(DESIGN.md 웹 무대). 접근 이름 = 보이는 번호·이름 + 숨긴 동작
+      const inner = [<span class="n">{i + 1}</span>, <span class="name">{it.name}</span>, it.action && <span class="visually-hidden">{it.youtube ? ' 재생' : ' 영상 보기 (새 창)'}</span>];
       return (
         <li class:list={['row', { on: i === 0 }]}>
           {it.youtube ? (
-            <button type="button" class="pick t-work" data-yt={it.youtube} aria-describedby={`credit-${i}`}>{inner}</button>
+            <button type="button" class="pick" data-yt={it.youtube} aria-describedby={`credit-${i}`}>{inner}</button>
           ) : it.url ? (
-            <a class="pick t-work" href={it.url} target="_blank" rel="noopener noreferrer" aria-describedby={`credit-${i}`}>{inner}</a>
+            <a class="pick" href={it.url} target="_blank" rel="noopener noreferrer" aria-describedby={`credit-${i}`}>{inner}</a>
           ) : (
-            <button type="button" class="pick t-work" aria-describedby={`credit-${i}`}>{inner}</button>
+            <button type="button" class="pick" aria-describedby={`credit-${i}`}>{inner}</button>
           )}
         </li>
       );
     })}
   </ol>
-  <div class="foot panel"><a class="all t-small" href="/work">전체 작업 {rows.length}건 보기</a></div>
+  <div class="foot"><a class="all t-small" href="/work">전체 작업 {rows.length}건 보기</a></div>
 </section>
 
 <style>
-  /* 무대 위 글자 면: 먹색 단색 85% 고정(그라데이션 덧칠 없음). 흰 스틸 위 최악에도 종이색 11:1, 흐린 글자(종이 62%) 5:1 이상 */
-  .index-stage { --plate: color-mix(in srgb, var(--ink) 85%, transparent); --soft: color-mix(in srgb, var(--paper) 62%, transparent); }
+  /* 글자는 전부 먹색 바탕 위: 종이색 100% 약 17:1, 흐린 글자(종이 50%) 약 5:1 */
+  .index-stage { --soft: color-mix(in srgb, var(--paper) 50%, transparent); --name: clamp(28px, calc(12px + 1.8vw), 40px); }
   .soft { color: var(--soft); }
-  .line { display: block; }
 
-  /* 900px 이상: 첫 화면(머리글·로고 띠를 뺀 높이) 전체가 무대, 왼쪽 글자 판이 그 위에 */
+  /* 900px 이상: 첫 화면(머리글·로고 띠를 뺀 높이) = 위 띠(표어 · 아카이브 | 크레딧) · 2.39:1 화면 · 아래 띠(이름) */
   .index-stage {
     --side: max(var(--gutter), calc((100% - var(--space-web-max)) / 2 + var(--gutter)));
-    position: relative; display: grid; grid-template-columns: var(--side) minmax(0, 600px) minmax(0, 1fr); grid-template-rows: 1fr auto auto;
-    min-height: calc(100svh - var(--header-h) - 1px - var(--band-h)); overflow: hidden; /* 1px = 머리글 아래 선 */
+    display: grid; grid-template-columns: var(--side) minmax(0, 1fr) auto var(--side); grid-template-rows: auto minmax(0, 1fr) auto;
+    column-gap: var(--space-8); row-gap: var(--space-4);
+    height: calc(100svh - var(--header-h) - 1px - var(--band-h)); min-height: 560px; padding-block: var(--space-6) var(--space-4);
   }
-  .panel { position: relative; z-index: 1; grid-column: 2; margin-left: calc(var(--space-8) * -1); padding-inline: var(--space-8); background: var(--plate); }
-  /* 글자 판은 무대 위에서 아래 끝까지 한 기둥(남는 높이는 표어 위로) */
-  .intro { display: flex; flex-direction: column; justify-content: flex-end; padding-top: var(--space-8); }
-  .sub { margin-top: var(--space-3); color: var(--soft); }
-  .index { padding-top: var(--space-6); }
-  .foot { padding-block: var(--space-2) var(--space-6); }
-  .stage-col { position: absolute; inset: 0; }
+  .intro { grid-area: 1 / 2; align-self: end; }
+  .sub { margin-top: var(--space-1); }
+  .stage-col { display: contents; }
+  .credits-stack { grid-area: 1 / 3; align-self: end; width: min(440px, 36vw); text-align: right; }
+  .stage { grid-area: 2 / 2 / 3 / 4; min-height: 0; container-type: size; }
+  .index { grid-area: 3 / 2 / 4 / 4; }
+  .foot { grid-area: 1 / 2; justify-self: end; align-self: end; } /* 아카이브는 위 띠, 표어 오른쪽 */
 
-  /* 무대: 층은 겹쳐 두고 켜진 것만 보인다. 꺼진 층은 display:none이라 lazy 스틸을 받지 않는다 */
-  .stage { position: absolute; inset: 0; background: var(--ink-2); overflow: hidden; }
+  /* 화면: 칸 안에서 가장 큰 2.39:1(시네마스코프). 층은 겹쳐 두고 켜진 것만 보인다(꺼진 층은 lazy 스틸을 받지 않는다) */
+  .screen { position: relative; width: min(100cqw, 239cqh); aspect-ratio: 2.39 / 1; margin-inline: auto; overflow: hidden; background: var(--ink-2); }
   .layer { position: absolute; inset: 0; margin: 0; display: none; opacity: 0; transition: opacity 200ms ease-in, display 200ms allow-discrete; }
   /* 켜질 때는 먹색으로 잠깐 눌렀다(100ms) 300ms에 밝힌다. opacity만 */
   .layer.on { display: block; opacity: 1; transition: opacity 300ms var(--ease-out) 100ms, display 0s; }
   @starting-style { .layer.on { opacity: 0; } }
-  .layer :global(picture), .layer :global(img), .layer :global(video) { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .layer :global(picture), .layer :global(img), .layer :global(video), .layer :global(iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   /* 초점: 사람 얼굴·주제가 보통 위쪽에 있어 세로 40%에 맞춘다 */
   .layer :global(img), .layer :global(video) { object-fit: cover; object-position: 50% 40%; }
-  /* 세로 포스터는 자르지 않는다: 먹색 여백 + 원본 비율, 글자 판이 없는 오른쪽에 */
   .portrait { background: var(--ink); }
-  .portrait :global(img) { object-fit: contain; object-position: 78% 50%; }
+  .portrait :global(img) { object-fit: contain; object-position: 50% 50%; }
   .layer :global(video) { opacity: 0; transition: opacity 300ms var(--ease-out); }
   .layer :global(video.ready) { opacity: 1; }
-  /* 재생 중인 유튜브는 글자 판 오른쪽 칸에 16:9로(판이 플레이어를 가리지 않게) */
-  .layer :global(iframe) { position: absolute; top: 50%; right: var(--side); width: min(calc(100% - var(--side) * 2 - 600px), 760px); aspect-ratio: 16 / 9; border: 0; background: var(--ink); transform: translateY(-50%); }
-  .tools { position: absolute; z-index: 2; top: var(--space-4); right: var(--side); display: flex; gap: var(--space-2); }
+  .layer :global(iframe) { background: var(--ink); }
+  /* 루프 없는 스틸만 8초에 1.00 → 1.04 한 번(transform만, 반복 없음). 데스크톱·감속 없음·데이터 절약 아님일 때만 */
+  @media (hover: hover) and (pointer: fine) and (min-width: 391px) and (prefers-reduced-motion: no-preference) {
+    :global(html:not(.save-data)) .still.on :global(img) { animation: stage-drift 8s linear both; }
+  }
+  @keyframes stage-drift { from { transform: scale(1); } to { transform: scale(1.04); } }
+  .tools { position: absolute; z-index: 2; top: var(--space-3); right: var(--space-3); display: flex; gap: var(--space-2); }
   .chip { display: inline-flex; align-items: center; gap: var(--space-1); min-height: 32px; padding: var(--space-1) var(--space-3); border: 0; border-radius: var(--radius-sm); background: var(--ink); color: var(--paper); font-size: var(--type-web-caption-size); font-weight: 600; line-height: 1; transition: background-color var(--hover), color var(--hover); }
   .chip:hover { background: var(--paper); color: var(--ink); }
   .chip[hidden] { display: none; }
 
-  /* 크레딧 줄: 무대 오른쪽 아래 한 곳. 9개를 한 칸에 겹쳐 높이를 고정 */
-  .credits-stack { position: absolute; z-index: 1; right: var(--side); bottom: var(--space-6); display: grid; width: min(400px, 30%); padding: var(--space-4) var(--space-6); background: var(--plate); }
-  .credit { grid-area: 1 / 1; display: grid; gap: var(--space-1); align-content: start; visibility: hidden; }
+  /* 크레딧: 오른쪽 위 한 곳. 9개를 한 칸에 겹쳐 높이를 고정(바뀔 때 화면이 흔들리지 않게) */
+  .credits-stack { display: grid; }
+  .credit { grid-area: 1 / 1; display: grid; gap: 2px; align-content: end; visibility: hidden; }
   .credit.on { visibility: visible; }
-  .ct { display: none; } /* 넓은 화면에선 왼쪽 목록의 켜진 줄이 제목이다 */
-  @media (min-width: 900px) { .credit:not(.on) { display: none; } } /* 아래에 붙은 판이라 높이가 바뀌어도 밀리는 것이 없다 */
+  .note { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden; }
 
-  /* 인덱스: 번호 | 큰 작품명. 켜진 줄은 종이색 + 왼쪽 아쿠아 막대, 나머지는 흐린 종이색 */
-  .row { position: relative; }
-  .pick { display: grid; grid-template-columns: var(--space-8) minmax(0, 1fr); align-items: baseline; width: 100%; min-height: 44px; padding: var(--space-1) 0; border: 0; background: none; color: var(--soft); text-align: left; transition: color var(--hover); }
+  /* 이름: 화면 아래 띠에 크게 흐르는 줄. 켜진 이름은 종이색 + 앞 아쿠아 막대, 나머지는 종이 50% */
+  .index { font-size: var(--name); font-weight: 700; line-height: 1.2; letter-spacing: -0.03em; }
+  .row { position: relative; display: inline; margin-right: 0.5em; }
+  .pick { display: inline; padding: 0; border: 0; background: none; color: var(--soft); text-align: left; letter-spacing: inherit; line-height: inherit; transition: color var(--hover); }
   .row.on .pick, .pick:hover { color: var(--paper); }
-  .row.on::before { content: ''; position: absolute; left: calc(var(--space-3) * -1); top: calc(var(--space-1) + 0.24em); width: var(--space-1); height: 0.8em; background: var(--accent); font-size: var(--type-web-work-size); }
-  .n { font-size: var(--type-web-small-size); font-weight: 600; }
-  /* 넓은 화면은 한 줄(전체 제목은 크레딧 판·접근 이름에), 1단에선 두 줄까지 */
-  .name { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden; }
-  /* 키 낮은 노트북(1280×800 등): 로고 띠까지 첫 화면에 들어오게 부제를 빼고 줄을 조인다(누름 칸 40px, WCAG 2.5.8 24px 이상) */
-  @media (min-width: 900px) and (max-height: 860px) {
-    .sub { display: none; }
-    .intro { padding-top: var(--space-6); }
-    .index { padding-top: var(--space-4); }
-    .foot { padding-bottom: var(--space-4); }
-    .pick { min-height: 40px; padding-block: 0; }
-  }
+  .n { margin-right: 0.2em; font-size: max(13px, 0.3em); font-weight: 600; vertical-align: 1.5em; letter-spacing: 0; }
+  .row.on .n { color: var(--ink); background: var(--accent); padding: 0 0.3em; } /* 켜진 번호만 아쿠아 면(한 화면 1곳) */
   .pick:focus-visible { outline-offset: 2px; }
-  .all { display: inline-flex; align-items: center; min-height: 44px; color: var(--paper); text-decoration: underline; text-decoration-color: var(--soft); text-underline-offset: 4px; transition: text-decoration-color var(--hover); }
+  .all { display: inline-flex; align-items: center; min-height: 44px; color: var(--paper); text-decoration: underline; text-decoration-color: var(--soft); text-underline-offset: 4px; white-space: nowrap; transition: text-decoration-color var(--hover); }
   .all:hover { text-decoration-color: var(--paper); }
+  /* 키 낮은 노트북(1280×800 등): 부제·노트를 빼서 화면에 높이를 준다 */
+  @media (min-width: 900px) and (max-height: 860px) { .sub, .note { display: none; } }
 
   @media (max-width: 899.98px) {
-    /* 1단: 표어 → 화면 폭 전체 무대(머리글 아래에 붙음) → 목록이 그 밑으로 지나간다 */
-    .index-stage { display: block; min-height: 0; padding-block: 0; overflow: visible; }
-    .panel { margin-left: 0; padding-inline: var(--gutter); background: none; }
-    .intro { display: block; padding-block: var(--space-8) var(--space-6); }
-    .stage-col { position: sticky; top: var(--header-h); z-index: 2; background: var(--ink); border-bottom: 1px solid var(--line); }
-    .stage { position: relative; height: min(75vw, 44svh); }
-    .portrait :global(img) { object-position: 50% 50%; }
-    .layer :global(iframe) { inset: 0; width: 100%; height: 100%; aspect-ratio: auto; transform: none; }
+    /* 1단: 표어 → 16:9 화면(머리글 아래에 붙음) + 크레딧 → 이름 목록이 그 밑으로 지나간다 */
+    .index-stage { display: block; height: auto; min-height: 0; padding: 0; }
+    .intro { padding: var(--space-8) var(--gutter) var(--space-6); }
+    .stage-col { display: block; position: sticky; top: var(--header-h); z-index: 2; background: var(--ink); border-bottom: 1px solid var(--line); }
+    .stage { container-type: normal; }
+    .screen { width: 100%; aspect-ratio: 16 / 9; }
     .tools { top: var(--space-2); right: var(--space-2); }
-    .credits-stack { position: static; width: auto; padding: var(--space-3) var(--gutter) var(--space-4); background: none; }
-    .ct { display: block; }
+    .credits-stack { width: auto; padding: var(--space-3) var(--gutter) var(--space-4); text-align: left; }
+    .credit { align-content: start; }
     .note { display: none; } /* 붙은 판을 낮게: 수상·배급은 아래 「소개」에도 있다 */
-    .index { padding-top: var(--space-4); }
-    .name { -webkit-line-clamp: 2; }
-    .foot { padding-block: var(--space-4) 0; }
-    /* 붙어 있는 무대 밑으로 포커스가 숨지 않게 */
-    .pick { scroll-margin-top: calc(var(--header-h) + min(75vw, 44svh) + 120px); }
+    .index { padding: var(--space-4) var(--gutter) 0; font-size: 30px; line-height: 1.25; }
+    .row { display: block; margin: 0 0 var(--space-2); }
+    .pick { display: block; min-height: 44px; word-break: keep-all; }
+    .foot { padding: var(--space-4) var(--gutter) 0; text-align: left; }
+    /* 붙어 있는 화면 밑으로 포커스가 숨지 않게 */
+    .pick { scroll-margin-top: calc(var(--header-h) + 56.25vw + 120px); }
   }
 </style>
 
 <script>
   const root = document.querySelector<HTMLElement>('[data-index]');
   if (root) {
+    // 데이터 절약이면 스틸 느린 확대도 끈다(CSS가 이 표시를 본다)
+    if ((navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData) document.documentElement.classList.add('save-data');
     const layers = [...root.querySelectorAll<HTMLElement>('.layer')];
     const rowsEl = [...root.querySelectorAll<HTMLElement>('.row')];
     const credits = [...root.querySelectorAll<HTMLElement>('.credit')];
@@ -270,8 +270,11 @@ const items = await Promise.all(featured.map(async (item) => {
 
     // 터치·펜: 붙어 있는 무대 아래 남은 화면의 가운데쯤(위에서 75%) 띠에 들어온 줄이 켜진다. 2단 탭 없음
     if (!pointer.matches) {
+      // 처음 스크롤하기 전엔 바꾸지 않는다(로드 때 띠에 걸린 줄이 켜지며 나머지 스틸을 미리 받지 않게)
+      let scrolled = false;
+      addEventListener('scroll', () => { scrolled = true; }, { once: true, passive: true });
       const io = new IntersectionObserver((entries) => {
-        for (const e of entries) if (e.isIntersecting && playing < 0) activate(rowsEl.indexOf(e.target as HTMLElement));
+        for (const e of entries) if (scrolled && e.isIntersecting && playing < 0) activate(rowsEl.indexOf(e.target as HTMLElement));
       }, { rootMargin: '-75% 0px -24% 0px' });
       rowsEl.forEach((r) => io.observe(r));
     }

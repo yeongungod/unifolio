@@ -36,7 +36,7 @@ def main():
     sources = {}
     featured = (ROOT / 'src/data/featured.ts').read_text(encoding='utf-8')
     for url in re.findall(r'"image":\s*"(/images/[^"?]+)"', featured):
-        sources[url] = [360, 720, 1080, 1280]  # 1280 = 전면 무대(100vw)
+        sources[url] = [360, 720, 960, 1080, 1280]  # 960 = 휴대폰 2배 화면, 1280 = 전면 무대(100vw)
     items = json.loads(re.search(r'export const featured[^=]*=\s*(\[[\s\S]*\]);', featured)[1])
     thumbnails = {}
     for item in items:
@@ -51,7 +51,7 @@ def main():
                 with urlopen(remote, timeout=20) as response:
                     data = response.read()
                 original.write_bytes(data)
-            sources[local] = [360, 720, 1080, 1280]
+            sources[local] = [360, 720, 960, 1080, 1280]
             thumbnails[local] = remote
     for file, folder, widths in [
         ('src/data/clients.ts', 'clients', [180, 360, 720]),
