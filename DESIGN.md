@@ -97,6 +97,42 @@ typography:
     fontWeight: 400
     lineHeight: 1.4
     letterSpacing: "0"
+  slide-report-display:
+    fontFamily: "SUITE"
+    fontSize: "112px"
+    fontWeight: 700
+    lineHeight: 1.16
+    letterSpacing: "-0.03em"
+  slide-report-headline:
+    fontFamily: "SUITE"
+    fontSize: "84px"
+    fontWeight: 700
+    lineHeight: 1.12
+    letterSpacing: "-0.03em"
+  slide-report-lead:
+    fontFamily: "SUITE"
+    fontSize: "36px"
+    fontWeight: 400
+    lineHeight: 1.45
+    letterSpacing: "-0.02em"
+  slide-report-body:
+    fontFamily: "SUITE"
+    fontSize: "32px"
+    fontWeight: 400
+    lineHeight: 1.5
+    letterSpacing: "-0.02em"
+  slide-report-stat:
+    fontFamily: "SUITE"
+    fontSize: "288px"
+    fontWeight: 700
+    lineHeight: 1
+    letterSpacing: "-0.04em"
+  slide-report-table:
+    fontFamily: "SUITE"
+    fontSize: "28px"
+    fontWeight: 400
+    lineHeight: 1.3
+    letterSpacing: "0"
   web-display:
     fontFamily: "SUITE, Pretendard, Malgun Gothic, sans-serif"
     fontSize: "clamp(2.75rem, calc(1.1714rem + 6.4762vw), 7rem)"
@@ -347,15 +383,20 @@ components:
 
 - **바탕.** 본문 장은 paper. 먹색(ink)은 표지·장 구분·인용·마지막장만, 덱의 30% 이하.
 - **축.** 본문 장은 왼쪽 크레딧 축: 라벨 칸 x 96~384(오른쪽 정렬, Meta Graphite) · 틈 48 · 값 칸 x 432~1809. 표지·마지막장만 가운데 축(라벨 끝 x 932, 값 시작 x 988).
-- **고정 위치.** 제목(Headline, 결론 문장) y 96 · 리드 y 276 · 본문 y 360~888 · 출처 괘선 y 904, 출처 y 916 · 바닥글 y 996. 바닥글 = 왼쪽 「uniStudio · 문서명」, 가운데 장 이름, 오른쪽 「n / N」.
+- **고정 위치.** 제목(Report Headline 84, 결론 문장, 2줄 상자의 아래에 붙음) y 96 · 리드 y 296 · 본문 y 400~880 · 출처 괘선 y 904, 출처 y 916 · 바닥글 y 996. 바닥글 = 왼쪽 「uniStudio · 문서명」, 가운데 장 이름, 오른쪽 「n / N」.
 - **섹션 탭 「01 · 요약」·탭 밑줄 폐지**(10-03 선택을 10-16 개정. 장 이름은 바닥글 가운데로). 영문 대문자 머리표·0 채운 번호·원형 번호 배지 금지.
 - **아쿠아 예산.** 오른쪽 띠 15px + 장마다 면 1곳(표 최신 열 · 큰 숫자 아래 막대 8px 이상 · 타임라인 오늘 줄 · 표지/마지막장 로고 바 중 하나). 로고는 표지·마지막장에만.
 - **모서리 0.** 보고서 덱은 카드(18)·칩(6)·알약을 쓰지 않는다. 같은 크기 카드 나열 금지 → 헤어라인·네이티브 표·크레딧 줄.
-- **표.** 세로선 없음, 머리 행 Bold + 아래 먹 선 1pt, 행 사이 Hairline, 합계 행 위 먹 선 + white 면, 숫자 오른쪽 정렬. 글자 Table 26px. **차트**는 네이티브, 주인공 ink · 나머지 Stone(흑백 인쇄에도 남게).
+- **표.** 세로선 없음, 머리 행 Bold + 아래 먹 선 1pt, 행 사이 Hairline, 합계 행 위 먹 선(면 없음), 마지막 행 아래 선 없음(출처 괘선과 겹침 방지), 숫자 오른쪽 정렬. 글자 Report Table 28px, 칸 여백 위아래 10·좌우 24, 칸 글자가 값 축 x 432에 오도록 표 틀은 24px 왼쪽으로. 열 폭은 실제 글자 폭 비례. 강조 열 = 머리 칸만 아쿠아 + 값 굵게, 강조 행 = 첫 칸만 아쿠아 + 행 굵게. **차트**는 네이티브, 주인공 ink · 나머지 Stone(흑백 인쇄에도 남게).
 - **글자 하한.** 본문 30px(15pt) · 표 26px · 출처·바닥글 24px. 자동 축소 금지, 넘치면 장을 나눈다. 장당 메시지 1, 본문 6줄, 표 8행 × 6열, 글자만 있는 장 연속 3장 금지.
 - **글꼴.** SUITE 400·700(「SUITE」 + 굵게) 두 단계만. SUITE는 fsType 4라 **PPTX에 포함하지 않는다** → PowerPoint로 내보낸 PDF를 함께 보내고 편집자에게 SUITE 설치 안내. `•`·`≤`·`≥`·이탤릭 없음(대신 줄·「이하」·굵기).
 - **마지막장.** uniBusiness = 사업자 블록, uniYoutube·uniSide = 작성자·작성일·자료 기준·문의.
 - **숫자.** 「250만 원」 띄어 씀, 음수·날짜 ASCII `-`, 기간 `~`, 증감엔 비교 기준, 비율 차이 %p.
+- **글자 단계(10-16 2차, 1920 캔버스에서 「얌전·빈약」 보정).** 보고서 전용 `slide-report-*`: Display 112(표지·장 제목) · Headline 84(본문 제목·인용, 행간 1.12) · Lead 36 Graphite · Body 32 · Stat 288 · Table 28. 제목:본문 약 2.6:1. 크레딧 줄이 5개 이상이면 Body 30(목록은 작게), 4개 이하면 Report Body 32. 요약 첫 줄(결론)은 Lead 36 굵게, 나머지는 Body 30 보통.
+- **아래 기준선.** 크레딧 줄·표·글만 있는 본문·타임라인은 블록 바닥을 본문 아래선 y 880에 맞춘다(위가 비면 그 여백이 의도된 여백). 근거 블록(차트·이미지)이 있는 본문만 y 400에서 시작.
+- **크레딧 줄 리듬.** 줄 위아래 여백 18(촘촘한 롤 12), 묶음 사이 56(`break: true`). 묶음 경계와 마지막 줄 아래에는 선을 긋지 않는다. 라벨은 값 첫 줄 글자 높이 가운데에 맞춘다.
+- **큰 숫자.** Stat 288 굵게 + 단위 Headline 84(약 3.4:1). 값 칸 80%를 넘으면 200 한 단계만. 아쿠아 막대 8px를 숫자 글리프 바로 아래(글상자 위 0.8em)에, 폭 = 숫자 폭. 뜻은 Lead 36 굵게, 비교는 크레딧 줄 하나.
+- **차트·인용·표지.** 막대 차트는 범주 이름을 라벨 칸에, 막대는 x 432에서 시작(크레딧 축), 단위는 라벨 칸. 인용은 여는 낫표를 축 밖으로 내어 걸어 글자가 x 432에서 시작. 표지·마지막장 괘선은 가운데 축 대칭(x 480~1440), 로고도 가운데.
 
 ## Elevation & Depth
 
