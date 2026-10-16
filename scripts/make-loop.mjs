@@ -3,7 +3,7 @@
 // 출력: <out>/<slug>.mp4(1280×720 H.264 무음 약 2Mbps) · <slug>.jpg(첫 프레임 포스터) · --webm이면 <slug>.webm(AV1)
 // 기본 출력 폴더 public/video/loops/. featured.ts의 해당 작품에 "loop": "/video/loops/<slug>.mp4"를 넣으면 무대에 쓰인다.
 // 🔴 남의 작품(영화·광고) 장면이다. 공개 전에 감독·권리자 사용 허락을 받는다. 원본 영상 파일은 저장소에 넣지 않는다.
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -22,7 +22,10 @@ const ffmpeg = (...a) => execFileSync(tool('ffmpeg'), ['-hide_banner', '-logleve
 mkdirSync(out, { recursive: true });
 const file = (ext) => join(out, `${slug}.${ext}`);
 // 16:9로 꽉 채워 자른다(세로·4:3 원본도 1280×720). 소리는 버린다(-an).
-const vf = 'scale=1280:720:force_original_aspect_ratio=increase,crop=1280:720,setsar=1,fps=30';
+// 영화 예고편의 위아래 검은 띠(레터박스)는 cropdetect로 먼저 걷어 낸다.
+const detect = spawnSync(tool('ffmpeg'), ['-hide_banner', '-ss', start, '-t', String(seconds), '-i', input, '-vf', 'cropdetect=24:2:0', '-f', 'null', '-'], { encoding: 'utf8' }).stderr ?? '';
+const bars = [...detect.matchAll(/crop=(\d+:\d+:\d+:\d+)/g)].at(-1)?.[1];
+const vf = `${bars ? `crop=${bars},` : ''}scale=1280:720:force_original_aspect_ratio=increase,crop=1280:720,setsar=1,fps=30`;
 const cut = ['-ss', start, '-t', String(seconds), '-i', input, '-an', '-vf', vf];
 
 ffmpeg(...cut, '-c:v', 'libx264', '-profile:v', 'high', '-pix_fmt', 'yuv420p', '-b:v', '2M', '-maxrate', '2.5M', '-bufsize', '4M', '-preset', 'slow', '-movflags', '+faststart', file('mp4'));

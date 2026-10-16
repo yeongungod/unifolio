@@ -28,6 +28,8 @@ const items = await Promise.all(featured.map(async (item, i) => {
     n: String(i + 1).padStart(2, '0'), src, width, height, portrait: height > width,
     loop, webm: webm && existsSync(file(webm)) ? webm : undefined,
     action: item.youtube ? '재생' : item.url ? '영상' : '',
+    // 제목이 의뢰처 이름으로 시작하면(해보자시리즈·해군공군) 크레딧 줄엔 연도만
+    by: item.client && !text(item.title).startsWith(item.client) ? `${item.client} · ${year(item.year)}` : year(item.year),
   };
 }));
 ---
@@ -35,7 +37,7 @@ const items = await Promise.all(featured.map(async (item, i) => {
   <div class="wrap grid">
     <div class="intro">
       <h1 id="hero-title" class="t-statement">{site.hero.title.split('\n').map((line) => <span class="line">{line}</span>)}</h1>
-      <p class="sub t-small muted">{site.hero.sub}</p>
+      <p class="sub t-lead">{site.hero.sub}</p>
     </div>
 
     <div class="stage-col">
@@ -45,7 +47,7 @@ const items = await Promise.all(featured.map(async (item, i) => {
             <ResponsiveImage src={it.src} alt="" width={it.width} height={it.height} sizes={sizes} loading={i ? 'lazy' : 'eager'} fetchpriority={i ? undefined : 'high'} />
           </figure>
         ))}
-        <button type="button" class="chip" hidden={!items[0].action} aria-label={items[0].action && `${items[0].title} ${items[0].action}`}>
+        <button type="button" class="chip" tabindex="-1" hidden={!items[0].action} aria-label={items[0].action && `${items[0].title} ${items[0].action}`}>
           <svg viewBox="0 0 10 12" width="8" height="10" aria-hidden="true"><path d="M0 0L10 6L0 12Z" fill="currentColor" /></svg><span>{items[0].action}</span>
         </button>
         <!-- 5초 넘게 움직이는 자동 재생이라 멈춤 버튼을 둔다(WCAG 2.2.2). 루프가 도는 동안만 보인다 -->
@@ -55,7 +57,7 @@ const items = await Promise.all(featured.map(async (item, i) => {
         {items.map((it, i) => (
           <div id={`credit-${i}`} class:list={['credit', { on: i === 0 }]}>
             <p class="ct t-title">{it.title}</p>
-            <p class="t-credit">{it.client} · {it.year}</p>
+            <p class="t-credit">{it.by}</p>
             <p class="t-small muted">{it.role}</p>
             {it.note && <p class="note t-small muted">{it.note}</p>}
           </div>
@@ -125,7 +127,7 @@ const items = await Promise.all(featured.map(async (item, i) => {
   .n { font-size: var(--type-web-small-size); font-weight: 600; }
   .name { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
   .pick:focus-visible { outline-offset: 2px; }
-  @media (max-width: 899.98px) { .pick { scroll-margin-top: calc(var(--header-h) + 56.25vw + 200px); } } /* 붙어 있는 무대 밑으로 포커스가 숨지 않게 */
+  @media (max-width: 899.98px) { .pick { scroll-margin-top: calc(var(--header-h) + 56.25vw + 140px); } } /* 붙어 있는 무대 밑으로 포커스가 숨지 않게 */
   .all { display: inline-flex; align-items: center; min-height: 44px; margin-top: var(--space-6); justify-self: start; color: var(--muted); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 4px; transition: color var(--hover), text-decoration-color var(--hover); }
   .all:hover { color: var(--paper); text-decoration-color: var(--paper); }
 
@@ -137,10 +139,8 @@ const items = await Promise.all(featured.map(async (item, i) => {
     .stage-col { grid-column: 1; grid-row: auto; top: var(--header-h); z-index: 2; margin-top: var(--space-6); margin-inline: calc(var(--gutter) * -1); padding: var(--space-3) var(--gutter) var(--space-4); background: var(--ink); border-bottom: 1px solid var(--line); }
     .credits-stack { margin-top: var(--space-3); }
     .ct { display: block; }
+    .note { display: none; } /* 붙은 판을 낮게: 수상·배급은 아래 「소개」에도 있다 */
     .index { margin-top: var(--space-4); }
-  }
-  @media (max-width: 599.98px) {
-    .note { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
   }
 </style>
 
