@@ -36,8 +36,9 @@ export default async function handler(req, res) {
     if (!['prepare', 'publish'].includes(body.action)) fail('알 수 없는 작업입니다.');
     if (!process.env.PORTFOLIO_GITHUB_TOKEN) fail('게시 연결이 아직 완료되지 않았습니다.', 503);
     const gh = async (path, data, method = 'POST') => {
-      const r = await fetch(`${REPO}${path}`, { method: data === undefined ? 'GET' : method, headers: { Authorization: `Bearer ${process.env.PORTFOLIO_GITHUB_TOKEN}`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', 'Content-Type': 'application/json' }, ...(data !== undefined && { body: JSON.stringify(data) }), signal: AbortSignal.timeout(20000), redirect: 'manual' });
-      if (!r.ok) fail('GitHub 요청을 완료하지 못했습니다. 사이트 상태를 확인한 뒤 다시 미리보기하세요.', [409, 422].includes(r.status) ? 409 : 502);
+      const r = await fetch(`${REPO}${path}`, { method: data === undefined ? 'GET' : method, headers: { Authorization: `Bearer ${process.env.PORTFOLIO_GITHUB_TOKEN}`, Accept: 'application/vnd.github+json', 'User-Agent': 'unifolio-admin (yeongungod.com)', 'X-GitHub-Api-Version': '2022-11-28', 'Content-Type': 'application/json' }, ...(data !== undefined && { body: JSON.stringify(data) }), signal: AbortSignal.timeout(20000), redirect: 'manual' });
+      // GitHub은 User-Agent 없는 요청을 거절한다(Cloudflare fetch는 자동으로 안 붙임). 502는 Cloudflare가 HTML 오류 페이지로 바꿔 503을 쓴다
+      if (!r.ok) { console.error('github', data === undefined ? 'GET' : method, path.split('?')[0], r.status); fail('GitHub 요청을 완료하지 못했습니다. 사이트 상태를 확인한 뒤 다시 미리보기하세요.', [409, 422].includes(r.status) ? 409 : 503); }
       return r.json();
     };
     const draft = await readDraft();
@@ -46,7 +47,7 @@ export default async function handler(req, res) {
     const head = (await gh('/git/ref/heads/main')).object.sha;
     const readSource = async (path) => {
       const file = await gh(`/contents/${path}?ref=${head}`);
-      if (file.type !== 'file' || file.encoding !== 'base64') fail('공개 파일을 확인하지 못했습니다.', 502);
+      if (file.type !== 'file' || file.encoding !== 'base64') fail('공개 파일을 확인하지 못했습니다.', 503);
       return Buffer.from(file.content, 'base64').toString('utf8');
     };
     const [oldArchive, oldFeatured, agents] = await Promise.all([readSource('src/data/archive.json'), readSource('src/data/featured.ts'), readSource('AGENTS.md')]);

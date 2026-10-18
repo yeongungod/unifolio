@@ -111,6 +111,8 @@ async function withProviders(options, check) {
   globalThis.fetch = async (input, init = {}) => {
     const u = new URL(input), method = init.method || 'GET';
     const body = init.body ? JSON.parse(init.body) : undefined;
+    // GitHub은 User-Agent 없는 요청을 거절한다(Cloudflare Workers fetch는 자동으로 안 붙임, 10-19 운영 502)
+    if (u.hostname === 'api.github.com' && !init.headers?.['User-Agent']) throw Error('GitHub 요청에 User-Agent 없음');
     calls.push({ path: u.pathname, method, body });
     const json = (value, status = 200) => new Response(JSON.stringify(value), { status, headers: { 'Content-Type': 'application/json' } });
     if (u.pathname === '/auth/v1/user') return json({ id: owner, email: 'unistudio@yeongungod.com', email_confirmed_at: '2026-09-22', app_metadata: { provider: 'google' }, identities: [{ provider: 'google', identity_data: { email: 'unistudio@yeongungod.com', email_verified: true } }] });
