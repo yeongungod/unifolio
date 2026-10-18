@@ -1,12 +1,11 @@
 ---
-// 마지막 「문의」(v5): 왼쪽 축 = 장 제목, 오른쪽 = 상호 → 메일 크게 → 한 줄 안내 → 버튼 하나. 메일이면 충분(사용자 10-18)
+// 마지막 「문의」(v5·v6): 왼쪽 축 = 장 제목, 오른쪽 = 메일 크게 → 한 줄 안내 → 버튼 하나. 메일이면 충분, 상호 큰 글씨는 뺌(사용자 10-18)
 import { site } from '../data/site';
 ---
 <section id="contact" class="section" aria-labelledby="contact-title">
   <div class="wrap split">
     <h2 id="contact-title">문의</h2>
     <div class="card">
-      <p class="t-statement" translate="no">{site.name}</p>
       <p class="direct"><a href={`mailto:${site.email}`}>{site.email}</a></p>
       <p class="t-small muted">작업 범위와 일정을 알려주시면 견적을 드립니다.</p>
       <a class="btn primary" href={`mailto:${site.email}`}>메일 보내기</a>
@@ -15,9 +14,13 @@ import { site } from '../data/site';
 </section>
 <style>
   .card { display: grid; justify-items: start; }
-  .direct { margin-top: var(--space-4); font-size: var(--type-web-headline-size); font-weight: var(--type-web-credit-value-weight); line-height: var(--type-web-headline-leading); letter-spacing: var(--type-web-headline-tracking); }
+  /* 메일이 이 장의 주인공: 장 제목(32)보다 한 단계 크게(Work Lead 28~40), 휴대폰은 한 줄에 들어가게 Headline */
+  .direct { font-size: var(--type-web-work-lead-size); font-weight: var(--type-web-credit-value-weight); line-height: var(--type-web-work-lead-leading); letter-spacing: var(--type-web-work-lead-tracking); }
   .direct a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 6px; overflow-wrap: anywhere; transition: text-decoration-color var(--hover); }
   .direct a:hover { text-decoration-color: var(--paper); }
   .muted { margin-top: var(--space-2); }
   .btn { margin-top: var(--space-8); }
+  @media (max-width: 599.98px) {
+    .direct { font-size: var(--type-web-headline-size); line-height: var(--type-web-headline-leading); }
+  }
 </style>
