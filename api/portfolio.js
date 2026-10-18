@@ -1,4 +1,4 @@
-import { assertOwner, assertReview, digest, fail, featuredSource, imageType, publicPortfolio, sourceHash, UUID } from '../src/lib/admin-portfolio.mjs';
+import { assertOwner, assertReview, digest, fail, featuredCards, featuredSource, imageType, publicPortfolio, sourceHash, UUID } from '../src/lib/admin-portfolio.mjs';
 
 const REPO = 'https://api.github.com/repos/yeongungod/unifolio';
 export default async function handler(req, res) {
@@ -42,8 +42,7 @@ export default async function handler(req, res) {
     };
     const draft = await readDraft();
     if (!draft) fail('초안을 먼저 저장하세요.');
-    const out = publicPortfolio(draft.document.items, user.id);
-    if (out.featured.length !== 9) fail('대표작 1~9번을 하나씩 선택하세요.');
+    if (publicPortfolio(draft.document.items, user.id).featured.length !== 9) fail('대표작 1~9번을 하나씩 선택하세요.');
     const head = (await gh('/git/ref/heads/main')).object.sha;
     const readSource = async (path) => {
       const file = await gh(`/contents/${path}?ref=${head}`);
@@ -52,6 +51,7 @@ export default async function handler(req, res) {
     };
     const [oldArchive, oldFeatured, agents] = await Promise.all([readSource('src/data/archive.json'), readSource('src/data/featured.ts'), readSource('AGENTS.md')]);
     if (sourceHash(oldArchive, oldFeatured) !== draft.document.base) fail('사이트의 원본이 변경됐습니다. 초안을 내려받아 보관하고 최신 공개본으로 다시 시작하세요.', 409);
+    const out = publicPortfolio(draft.document.items, user.id, featuredCards(oldFeatured));
     const review = { revision: draft.revision, hash: digest(JSON.stringify(draft.document)), head };
     const publishedIds = new Set(out.archive.map((r) => r.id));
     const removed = JSON.parse(oldArchive).filter((r) => !publishedIds.has(r.id)).map((r) => r.name);

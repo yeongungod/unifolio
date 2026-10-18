@@ -8,6 +8,8 @@
   --header-bg: rgba(20, 18, 16, 0.9);
   --video-shade: rgba(20, 18, 16, 0.25);
   --video-hover: rgba(156, 195, 213, 0.35);
+  /* 화면 가장자리(무대 v7, 10-18 사용자): 1280 32 · 1440 40 · 1920 48 · 390 20. 머리글 로고·무대 제목·크레딧이 이 선에 붙는다 */
+  --edge: clamp(20px, calc(5vw - 32px), 48px);
 }
 
 * { box-sizing: border-box; }
