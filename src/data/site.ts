@@ -24,7 +24,6 @@ export const site = {
     { label: '현장', title: '라이브 PA', desc: '팬미팅·콘서트·행사 현장 오퍼레이팅.' },
   ],
   process: ['문의', '견적', '작업', '납품'],
-  processNote: '일반과세 사업자라 세금계산서 발행이 됩니다. 견적은 작업 범위를 듣고 드립니다.',
   // 웹 확인 기록: docs/festival-sources.md. 제작 연도와 행사 연도는 구분한다.
   screenings: [
     // 2026-09-29 추가분의 year는 archive.json 작업 연도. 행사 연도는 detail과 출처에 기록.

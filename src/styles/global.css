@@ -17,7 +17,7 @@
   --gutter: var(--space-web-gutter);
   --section: var(--space-36);
   --work-gap: var(--space-24);
-  --axis-gap: var(--space-14);
+  --label-w: var(--space-36); /* 아래 장 라벨 칸 144(「PD님이 책임지세요」가 한 줄), 600px 미만 104(DESIGN.md 웹 크레딧 축의 104px 칸) */
   --band-h: var(--space-36); /* 홈 로고 띠 높이 144(900px 이상): 무대는 첫 화면에서 이만큼 뺀다 */
   /* DESIGN.md에 값이 없어 토큰을 더해 만든 크기: 머리글 60, 버튼 좌우 20 */
   --header-h: calc(var(--space-14) + var(--space-1));
@@ -26,7 +26,7 @@
   --hover: 180ms;
 }
 @media (max-width: 599.98px) {
-  :root { --gutter: var(--space-web-gutter-sm); --section: var(--space-22); --work-gap: var(--space-14); }
+  :root { --label-w: 104px; --gutter: var(--space-web-gutter-sm); --section: var(--space-22); --work-gap: var(--space-14); }
 }
 
 * { box-sizing: border-box; }
@@ -78,18 +78,23 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 .wrap { max-width: var(--space-web-max); margin-inline: auto; padding-inline: var(--gutter); }
 .section { padding-top: var(--section); }
-.section-title { text-align: center; }
 
-/* 크레딧 축(The Credit Axis Rule): 왼쪽 역할 오른쪽 정렬 · 오른쪽 값 왼쪽 정렬, 가운데 축 하나 */
-.credits { margin: 0; }
-.credit-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--axis-gap); padding-top: var(--space-2); padding-bottom: var(--space-2); }
-.credit-row > dt { text-align: right; color: var(--muted); font-size: var(--type-web-small-size); font-weight: var(--type-web-small-weight); line-height: var(--type-web-credit-value-leading); padding-top: calc((var(--type-web-credit-value-size) - var(--type-web-small-size)) / 2); }
-.credit-row > dd { margin: 0; font-size: var(--type-web-credit-value-size); font-weight: var(--type-web-credit-value-weight); line-height: var(--type-web-credit-value-leading); letter-spacing: var(--type-web-credit-value-tracking); }
-.credit-row > dd a { text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 4px; transition: text-decoration-color var(--hover); }
-.credit-row > dd a:hover { text-decoration-color: var(--paper); }
+/* 아래 장(작업 범위·소개·문의) = 왼쪽 축 하나(v5, 가운데 크레딧 축 대신). 무대 이름과 같은 왼쪽 끝(wrap)에서 시작해
+   12칸 중 왼쪽 4칸 = 장·묶음 제목, 오른쪽 8칸 = 내용. 900px 미만은 한 줄로 쌓는다 */
+.split { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); column-gap: var(--space-8); row-gap: var(--space-18); align-items: start; }
+.split > * { min-width: 0; }
+/* 라벨 + 값 줄: 라벨 칸 폭을 고정해 줄마다 값이 같은 선에서 시작한다 */
+.facts { margin: 0; }
+.fact { display: grid; grid-template-columns: var(--label-w) minmax(0, 1fr); column-gap: var(--space-6); padding-top: var(--space-2); padding-bottom: var(--space-2); }
+.fact > dt { color: var(--muted); font-size: var(--type-web-small-size); font-weight: var(--type-web-small-weight); line-height: var(--type-web-credit-value-leading); padding-top: calc((var(--type-web-credit-value-size) - var(--type-web-small-size)) / 2); word-break: keep-all; }
+.fact > dd { margin: 0; font-size: var(--type-web-credit-value-size); font-weight: var(--type-web-credit-value-weight); line-height: var(--type-web-credit-value-leading); letter-spacing: var(--type-web-credit-value-tracking); }
+.fact > dd a { text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 4px; transition: text-decoration-color var(--hover); }
+.fact > dd a:hover { text-decoration-color: var(--paper); }
+@media (max-width: 899.98px) {
+  .split { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-6); }
+}
 @media (max-width: 599.98px) {
-  .credit-row { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-1); padding-top: var(--space-3); padding-bottom: var(--space-3); }
-  .credit-row > dt { text-align: left; padding-top: 0; }
+  .fact { column-gap: var(--space-4); }
 }
 
 .btn {
@@ -107,7 +112,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 /* 크레딧 줄 떠오르기: 스크롤 타임라인이 되는 브라우저에서만, 기본은 정지 상태 */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) and (animation-range: entry 0% cover 35%) {
-    .credit-row, .rise-on-view {
+    .fact, .rise-on-view {
       animation: credit-lift 1ms linear both;
       animation-timeline: view();
       animation-range: entry 0% cover 35%;

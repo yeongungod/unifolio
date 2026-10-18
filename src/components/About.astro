@@ -1,18 +1,21 @@
 ---
-// 소개 = 「Sound by 박영운」 크레딧 블록. 수상·상영은 처음 5줄만, 나머지는 <details>(JS 없음).
+// 소개(v5): 왼쪽 축 = 장·묶음 제목, 오른쪽 = 소개 문장·사실·수상·상영. 줄은 라벨 칸 고정(104px)이라 값이 한 선에서 시작.
+// 수상·상영은 처음 5줄만, 나머지는 <details>(JS 없음).
 import { site } from '../data/site';
 import rows from '../data/archive.json';
 import { featured } from '../data/featured';
 const a = site.about;
 const SHOWN = 5;
+// 「 · 」 앞을 붙는 공백으로: 좁은 화면에서 줄이 「·」로 시작하지 않는다
+const glue = (t: string) => t.replaceAll(' · ', ' · ');
 const dateKey = (text: string) => { const [y, m = 0] = text.split('.').map(Number); return y * 100 + m; };
 const awards = [...a.awards].sort((x, y) => dateKey(y.year) - dateKey(x.year)).map((award) => {
   const [, work, prize] = award.body.match(/^「([^」]+)」\s*(.*)$/) ?? [];
-  return { label: award.year, text: work ? `${award.title} · 「${work}」 · ${prize}` : `${award.title} · ${award.body}` };
+  return { label: award.year, text: glue(work ? `${award.title} · 「${work}」 · ${prize}` : `${award.title} · ${award.body}`) };
 });
 const workName = (id: string) => featured.find((f) => f.slug === id)?.title ?? rows.find((r) => r.id === id)?.name ?? '';
 // 상영·공개는 작품별로 묶어 작품명을 한 번만 단다(크레딧의 역할명처럼)
-const screenings = site.screenings.map((s) => ({ work: workName(s.workId), text: `${s.title} · ${s.detail}`, source: s.source }))
+const screenings = site.screenings.map((s) => ({ work: workName(s.workId), text: glue(`${s.title} · ${s.detail}`), source: s.source }))
   .sort((x, y) => site.screenings.findIndex((s) => workName(s.workId) === x.work) - site.screenings.findIndex((s) => workName(s.workId) === y.work));
 const label = (list: typeof screenings, i: number) => (i === 0 || list[i - 1].work !== list[i].work ? list[i].work : '');
 const parts = <T,>(list: T[]) => [list.slice(0, SHOWN), list.slice(SHOWN)] as const;
@@ -20,53 +23,61 @@ const [awardsShown, awardsMore] = parts(awards);
 const [screeningsShown, screeningsMore] = parts(screenings);
 ---
 <section id="about" class="section" aria-labelledby="about-title">
-  <div class="wrap">
-    <h2 id="about-title" class="section-title">소개</h2>
-    <p class="intro t-credit">{a.intro.split('\n').map((line) => <span class="line">{line}</span>)}</p>
-
-    <dl class="credits block">
-      <div class="credit-row"><dt>대표</dt><dd>{site.owner}</dd></div>
-      <div class="credit-row"><dt>학력</dt><dd>{a.edu}</dd></div>
-      <div class="credit-row"><dt>자격</dt><dd>{a.certs.map((c) => <span class="line">{c}</span>)}</dd></div>
-      <div class="credit-row"><dt>툴</dt><dd>{a.tools.join(' · ')}</dd></div>
-    </dl>
+  <div class="wrap split">
+    <h2 id="about-title">소개</h2>
+    <div>
+      <p class="statement t-work">{a.intro.split('\n').map((line) => <span class="line">{line} </span>)}</p>
+      <dl class="facts block">
+        <div class="fact"><dt>대표</dt><dd>{site.owner}</dd></div>
+        <div class="fact"><dt>학력</dt><dd>{a.edu}</dd></div>
+        <div class="fact"><dt>자격</dt><dd>{a.certs.map((c) => <span class="line">{c}</span>)}</dd></div>
+        <div class="fact"><dt>툴</dt><dd>{a.tools.map((t, i) => <><span class="nb">{t}{i < a.tools.length - 1 && ' ·'}</span> </>)}</dd></div>
+      </dl>
+    </div>
 
     <h3 class="group-title">수상</h3>
-    <dl class="credits">
-      {awardsShown.map((r) => <div class="credit-row"><dt>{r.label}</dt><dd>{r.text}</dd></div>)}
-    </dl>
-    {awardsMore.length > 0 && (
-      <details class="more">
-        <summary class="t-small">수상 {awardsMore.length}건 더 보기</summary>
-        <dl class="credits">{awardsMore.map((r) => <div class="credit-row"><dt>{r.label}</dt><dd>{r.text}</dd></div>)}</dl>
-      </details>
-    )}
+    <div>
+      <dl class="facts">
+        {awardsShown.map((r) => <div class="fact"><dt>{r.label}</dt><dd>{r.text}</dd></div>)}
+      </dl>
+      {awardsMore.length > 0 && (
+        <details class="more">
+          <summary class="t-small">수상 {awardsMore.length}건 더 보기</summary>
+          <dl class="facts">{awardsMore.map((r) => <div class="fact"><dt>{r.label}</dt><dd>{r.text}</dd></div>)}</dl>
+        </details>
+      )}
+    </div>
 
     <h3 class="group-title">상영·공개</h3>
-    <dl class="credits">
-      {screeningsShown.map((r, i) => <div class="credit-row"><dt>{label(screeningsShown, i) || <span class="visually-hidden">{r.work}</span>}</dt><dd><a href={r.source} target="_blank" rel="noopener noreferrer">{r.text}</a></dd></div>)}
-    </dl>
-    {screeningsMore.length > 0 && (
-      <details class="more">
-        <summary class="t-small">상영·공개 {screeningsMore.length}건 더 보기</summary>
-        <dl class="credits">{screeningsMore.map((r, i) => <div class="credit-row"><dt>{label(screeningsMore, i) || <span class="visually-hidden">{r.work}</span>}</dt><dd><a href={r.source} target="_blank" rel="noopener noreferrer">{r.text}</a></dd></div>)}</dl>
-      </details>
-    )}
+    <div>
+      <dl class="facts">
+        {screeningsShown.map((r, i) => <div class="fact"><dt>{label(screeningsShown, i) || <span class="visually-hidden">{r.work}</span>}</dt><dd><a href={r.source} target="_blank" rel="noopener noreferrer">{r.text}</a></dd></div>)}
+      </dl>
+      {screeningsMore.length > 0 && (
+        <details class="more">
+          <summary class="t-small">상영·공개 {screeningsMore.length}건 더 보기</summary>
+          <dl class="facts">{screeningsMore.map((r, i) => <div class="fact"><dt>{label(screeningsMore, i) || <span class="visually-hidden">{r.work}</span>}</dt><dd><a href={r.source} target="_blank" rel="noopener noreferrer">{r.text}</a></dd></div>)}</dl>
+        </details>
+      )}
+    </div>
   </div>
 </section>
 <style>
-  .intro { max-width: var(--space-web-read); margin: var(--space-8) auto 0; text-align: center; }
+  .statement { max-width: var(--space-web-read); }
   .line { display: block; }
-  .block { margin-top: var(--space-12); }
-  .group-title { margin-top: var(--space-18); margin-bottom: var(--space-4); text-align: center; }
-  .more { margin-top: var(--space-4); }
-  .more summary { display: flex; justify-content: center; color: var(--muted); list-style: none; transition: color var(--hover); }
+  .nb { white-space: nowrap; } /* 툴 이름 뒤에 「·」를 붙여 줄 머리에 「·」가 오지 않게 */
+  .block { margin-top: var(--space-8); }
+  /* 묶음 제목은 왼쪽 축에서 목록 첫 줄과 높이를 맞춘다 */
+  .group-title { padding-top: var(--space-2); color: var(--muted); }
+  .more { margin-top: var(--space-2); }
+  .more summary { display: flex; padding-left: calc(var(--label-w) + var(--space-6)); color: var(--muted); list-style: none; transition: color var(--hover); }
   .more summary::-webkit-details-marker { display: none; }
   .more summary:hover, .more[open] summary { color: var(--paper); }
+  @media (max-width: 899.98px) {
+    .group-title { margin-top: var(--space-12); padding-top: 0; }
+  }
   @media (max-width: 599.98px) {
-    .intro { text-align: left; }
-    .group-title, .more summary { text-align: left; justify-content: flex-start; }
-    .block { margin-top: var(--space-8); }
-    .group-title { margin-top: var(--space-12); }
+    .statement .line { display: inline; } /* 휴대폰은 억지 줄바꿈 없이 흐르게 */
+    .more summary { padding-left: calc(var(--label-w) + var(--space-4)); }
   }
 </style>
