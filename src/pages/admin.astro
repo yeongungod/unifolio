@@ -60,7 +60,7 @@ const categories = { Film: '영화', Live: '라이브', Music: '음악', Web: '�
   import '../scripts/admin.js';
 </script>
 <style>
-  .admin { padding-top: 48px; padding-bottom: 48px; }
+  .admin { padding-top: 48px; padding-bottom: 48px; max-width: 1112px; margin-inline: auto; } /* 관리 화면은 공개 사이트 전체 폭과 별개로 예전 폭 유지 */
   .heading, .actions, .checks { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
   .heading { justify-content: space-between; }
   #status { margin: 20px 0; padding: 12px; border: 1px solid var(--line); overflow-wrap: anywhere; }

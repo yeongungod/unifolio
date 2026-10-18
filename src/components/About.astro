@@ -19,21 +19,25 @@ const toolLogos: Record<string, { file: string; url: string }> = {
 };
 ---
 <section id="studio">
-  <div class="wrap">
-    <p class="label">Studio</p>
-    <h2>{site.name}</h2>
-    <p class="intro">{a.intro.split('\n').map((l, i) => <>{i > 0 && <br />}{l}</>)}</p>
+  <div class="wrap split">
+    <div class="head">
+      <p class="label">Studio</p>
+      <h2>{site.name}</h2>
+    </div>
+    <p class="intro body">{a.intro.split('\n').map((l, i) => <>{i > 0 && <br />}{l}</>)}</p>
     <div class="cols">
-      <div>
+      <div class="rec">
         <h3>이력</h3>
         <RecognitionList groups={groups.slice(0, 3)} />
         {groups.length > 3 && <details class="more-records"><summary>이력 더 보기</summary><RecognitionList groups={groups.slice(3)} /></details>}
       </div>
-      <div>
+      <div class="edu">
         <h3>학력 · 자격</h3>
         <p>{a.edu}</p>
         <ul class="plain">{a.certs.map((c) => <li>{c}</li>)}</ul>
-        <h3 style="margin-top:24px">사용 툴</h3>
+      </div>
+      <div class="tool">
+        <h3>사용 툴</h3>
         <ul class="tools">{a.tools.map((tool) => (
           <li><a href={toolLogos[tool].url} target="_blank" rel="noopener noreferrer">
             <img src={`/images/tools/${toolLogos[tool].file}`} alt="" width="28" height="28" loading="lazy" />
@@ -45,8 +49,10 @@ const toolLogos: Record<string, { file: string; url: string }> = {
   </div>
 </section>
 <style>
-  .intro { margin-top: 18px; max-width: 38em; font-size: 17px; font-weight: var(--type-web-lead-weight); line-height: var(--type-web-lead-leading); letter-spacing: var(--type-web-lead-tracking); } /* 약 40자. ch는 서체마다 달라 em으로 */
-  .cols { display: grid; gap: 40px; grid-template-columns: 1.4fr 1fr; margin-top: 40px; }
+  .intro { max-width: 38em; font-size: 17px; font-weight: var(--type-web-lead-weight); line-height: var(--type-web-lead-leading); letter-spacing: var(--type-web-lead-tracking); } /* 약 40자. ch는 서체마다 달라 em으로 */
+  /* 이력 | 학력·자격 + 사용 툴: 1024 이상은 이력 = 왼쪽 4열, 학력·툴 = 오른쪽 8열(왼쪽 칸이 비지 않게), 그 아래는 이력 | (학력 위, 툴 아래), 700 미만은 한 줄 */
+  .cols { display: grid; gap: 28px 40px; grid-template-columns: 1.4fr 1fr; grid-template-areas: 'rec edu' 'rec tool'; grid-template-rows: auto 1fr; align-items: start; margin-top: 12px; }
+  .rec { grid-area: rec; } .edu { grid-area: edu; } .tool { grid-area: tool; }
   .plain { list-style: none; padding: 0; margin: 12px 0 0; }
   .more-records { border-top: 1px solid var(--line); margin-top: 16px; padding-top: 16px; font-size: 14px; }
   .more-records summary { cursor: pointer; padding: 8px 0; }
@@ -56,5 +62,10 @@ const toolLogos: Record<string, { file: string; url: string }> = {
   .tools a { display: flex; align-items: center; gap: 12px; min-height: 40px; width: fit-content; color: inherit; text-decoration: none; }
   .tools a:hover { color: var(--accent); }
   .tools img { width: 28px; height: 28px; object-fit: contain; flex: none; }
-  @media (max-width: 700px) { .cols { grid-template-columns: 1fr; gap: 28px; } }
+  @media (min-width: 1024px) {
+    .cols { grid-column: 1 / -1; column-gap: 32px; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-areas: 'rec edu edu' 'rec tool tool'; }
+    .tools { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 32px; } /* 툴 9개를 3열로: 오른쪽 8열을 채우고 높이를 이력과 맞춘다 */
+    .tools li + li { margin-top: 0; }
+  }
+  @media (max-width: 700px) { .cols { grid-template-columns: 1fr; grid-template-areas: 'rec' 'edu' 'tool'; grid-template-rows: none; } }
 </style>

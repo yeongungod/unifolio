@@ -1,7 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
 import WorkIndex from '../components/WorkIndex.astro';
-import WorkGrid from '../components/WorkGrid.astro';
 import Services from '../components/Services.astro';
 import Clients from '../components/Clients.astro';
 import About from '../components/About.astro';
@@ -10,7 +9,6 @@ import { site } from '../data/site';
 ---
 <Base title={`${site.name} — 영상 제작 · 사운드 디자인`} description={site.hero.sub}>
   <WorkIndex />
-  <WorkGrid />
   <Services />
   <Clients />
   <About />

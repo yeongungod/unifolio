@@ -6,9 +6,7 @@
 :root {
   --line: var(--rule-on-ink);
   --header-bg: rgba(20, 18, 16, 0.9);
-  --video-shade: rgba(20, 18, 16, 0.25);
-  --video-hover: rgba(156, 195, 213, 0.35);
-  /* 화면 가장자리(무대 v7, 10-18 사용자): 1280 32 · 1440 40 · 1920 48 · 390 20. 머리글 로고·무대 제목·크레딧이 이 선에 붙는다 */
+  /* 화면 가장자리(무대 v7, 10-18 사용자): 1280 32 · 1440 40 · 1920 48 · 390 20. 머리글 로고·무대·아래 모든 섹션·바닥글이 이 선에 붙는다 */
   --edge: clamp(20px, calc(5vw - 32px), 48px);
 }
 
@@ -42,20 +40,25 @@ h3 { font-size: var(--type-web-title-size); font-weight: var(--type-web-title-we
 p, li { margin: 0; word-break: keep-all; overflow-wrap: anywhere; text-wrap: pretty; } /* 한글 단어 중간에서 끊지 않는다 */
 strong { font-weight: 600; }
 
-.wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+/* 전체 폭(10-18 사용자): 가운데 1080 상자 대신 머리글 로고·무대와 같은 가장자리(--edge)에서 시작해 화면 끝까지 쓴다 */
+.wrap { padding: 0 var(--edge); }
+/* 섹션 틀: 1024px 이상은 12열, 왼쪽 4열 = 라벨·제목, 오른쪽 8열 = 내용. 그 아래는 위아래로 쌓는다 */
+.split { display: grid; row-gap: 28px; }
+@media (min-width: 1024px) {
+  .split { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 32px; }
+  .split > .head { grid-column: 1 / span 4; }
+  .split > .body { grid-column: 5 / -1; }
+}
 section { padding: 72px 0; border-top: 1px solid var(--line); scroll-margin-top: 72px; }
-.label { font-size: var(--type-web-label-size); line-height: var(--type-web-label-leading); letter-spacing: var(--type-web-label-tracking); text-transform: uppercase; color: var(--paper); font-weight: var(--type-web-label-weight); }
-.wrap > .label { color: var(--accent); } /* 섹션 라벨만 아쿠아 글자. 작업 카드의 의뢰처 라벨은 종이색 */
+.label { font-size: var(--type-web-label-size); line-height: var(--type-web-label-leading); letter-spacing: var(--type-web-label-tracking); text-transform: uppercase; color: var(--accent); font-weight: var(--type-web-label-weight); } /* 강조색 B: 섹션 라벨 아쿠아 글자 */
 main a:not(.btn):hover { color: var(--accent); }
 .muted { color: var(--muted); }
-.accent-bar { width: 56px; height: 4px; background: var(--accent); margin: 20px 0; }
 .btn {
   display: inline-block; padding: 12px 20px; border: 1px solid var(--paper);
   border-radius: var(--radius-sm); font-weight: 600; font-size: var(--type-web-small-size); line-height: var(--type-web-small-leading); letter-spacing: 0;
 }
 .btn:hover { background: var(--paper); color: var(--ink); }
-.btn.accent, #work .btn { background: var(--accent); border-color: var(--accent); color: var(--ink); }
-.grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.btn.accent { background: var(--accent); border-color: var(--accent); color: var(--ink); }
 
 @media (max-width: 600px) {
   section { padding: 48px 0; }

@@ -2,16 +2,19 @@
 import { site } from '../data/site';
 ---
 <section id="contact">
-  <div class="wrap">
-    <p class="label">Contact</p>
-    <h2>문의</h2>
-    <p class="muted" style="margin-top:12px">작업 범위와 일정을 알려주시면 견적을 드립니다.</p>
-    <div class="links">
-      <a class="btn accent" href={`mailto:${site.email}`}>{site.email}</a>
+  <div class="wrap split">
+    <div class="head">
+      <p class="label">Contact</p>
+      <h2>문의</h2>
     </div>
-
+    <div class="body">
+      <p class="ask">작업 범위와 일정을 알려주시면 견적을 드립니다.</p>
+      <a class="btn accent mail" href={`mailto:${site.email}`}>{site.email}</a>
+    </div>
   </div>
 </section>
 <style>
-  .links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+  /* 페이지 끝 행동 하나를 크게: 메일 버튼이 화면 폭에 맞춰 커진다 */
+  .ask { font-size: 18px; font-weight: var(--type-web-lead-weight); line-height: var(--type-web-lead-leading); letter-spacing: var(--type-web-lead-tracking); color: var(--muted); }
+  .mail { margin-top: 24px; padding: 0.55em 0.9em; font-size: clamp(18px, calc(8px + 1.6vw), 36px); letter-spacing: -0.01em; overflow-wrap: anywhere; }
 </style>
