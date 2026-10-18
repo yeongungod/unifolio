@@ -49,9 +49,9 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
       <article class:list={['slide', { on: i === start }]} aria-roledescription="작품" aria-label={`${i + 1} / ${items.length}`}>
         <h2 class="title">
           {it.youtube ? (
-            <button type="button" class="pick" data-yt={it.youtube}><span class="cue" aria-hidden="true">▶ 재생</span><span class="tx">{it.name}</span><span class="vh"> 재생</span></button>
+            <button type="button" class="pick" data-yt={it.youtube}><span class="tx">{it.name}</span><span class="vh"> 재생</span></button>
           ) : it.url ? (
-            <a class="pick" href={it.url} target="_blank" rel="noopener noreferrer"><span class="cue" aria-hidden="true">↗ 영상 보기</span><span class="tx">{it.name}</span><span class="vh"> 영상 보기 (새 창)</span></a>
+            <a class="pick" href={it.url} target="_blank" rel="noopener noreferrer"><span class="tx">{it.name}</span><span class="vh"> 영상 보기 (새 창)</span></a>
           ) : (
             <span class="tx">{it.name}</span>
           )}
@@ -129,11 +129,6 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
   .pick:is(:hover, :focus-visible) :global(.ln > span) { text-decoration: underline; text-decoration-thickness: 0.04em; text-underline-offset: 0.12em; }
   .pick:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
   .tx { display: block; }
-  /* 재생되는 작품만 제목 위에 작은 표시(10-19 사용자). 크레딧 값과 같은 13px, paper, hover·포커스 아쿠아. 와이프 대신 판과 함께 나타남 */
-  .cue { display: block; margin-bottom: 10px; font-size: 13px; font-weight: 500; line-height: 1.4; letter-spacing: 0.02em; color: var(--paper); opacity: 0; transition: opacity 300ms var(--e-out) 380ms; }
-  .slide.on .cue { opacity: 1; }
-  .slide.out .cue { opacity: 0; transition: opacity 200ms var(--e-in); }
-  .pick:is(:hover, :focus-visible) .cue { color: var(--accent); }
   .title :global(.ln) { display: block; }
   .title :global(.ln > span) { display: inline-block; clip-path: inset(-0.1em 100% -0.1em 0); }
   .slide.on .title :global(.ln > span) { clip-path: inset(-0.1em 0 -0.1em 0); transition: clip-path 900ms var(--e-io) calc(100ms + var(--i) * 120ms); }
