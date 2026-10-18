@@ -16,6 +16,6 @@ import { site } from '../data/site';
   /* 10-07: 2×2(회사소개서와 같은 배치). 4열은 칸이 247px이라 설명이 3줄로 접혔다 */
   .services { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 20px 40px; grid-template-columns: repeat(2, 1fr); }
   .services li { border-top: 1px solid var(--line); padding-top: 14px; }
-  .services p { margin-top: 6px; font-size: 14px; }
+  .services p { margin-top: 6px; font-size: var(--type-web-small-size); line-height: var(--type-web-small-leading); letter-spacing: var(--type-web-small-tracking); }
   @media (max-width: 600px) { .services { grid-template-columns: 1fr; } }
 </style>

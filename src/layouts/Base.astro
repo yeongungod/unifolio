@@ -59,9 +59,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   .logo { display: flex; align-items: center; min-width: 44px; min-height: 44px; }
   .logo svg { display: none; }
   .wordmark { width: 142px; height: auto; }
-  nav { display: flex; gap: 20px; font-size: 14px; font-weight: 600; }
+  nav { display: flex; gap: 20px; font-size: var(--type-web-small-size); font-weight: 500; line-height: var(--type-web-small-leading); letter-spacing: var(--type-web-small-tracking); }
   nav a { display: inline-flex; align-items: center; min-height: 44px; opacity: 0.8; }
-  nav a:hover { opacity: 1; color: var(--accent); }
-  .site-footer { border-top: 1px solid var(--line); padding: 32px 0; font-size: 13px; }
+  nav a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 5px; }
+  .site-footer { border-top: 1px solid var(--line); padding: 32px 0; font-size: var(--type-web-caption-size); line-height: var(--type-web-caption-leading); letter-spacing: var(--type-web-caption-tracking); }
   @media (max-width: 600px) { nav { gap: 12px; font-size: 13px; } .wordmark { display: none; } .logo svg { display: block; } }
 </style>

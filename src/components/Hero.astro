@@ -9,7 +9,8 @@ import { site } from '../data/site';
 </section>
 <style>
   .hero { border-top: 0; padding: 64px 0 48px; }
-  h1 { max-width: 18ch; }
-  .sub { margin-top: 18px; font-size: 18px; color: var(--muted); max-width: 46ch; }
+  /* SUITE의 18ch/46ch를 em으로 환산해 글꼴 교체 전 실제 폭을 유지한다. */
+  h1 { max-width: 13.014em; }
+  .sub { margin-top: 18px; font-size: 18px; font-weight: 500; line-height: 1.6; letter-spacing: -0.01em; text-wrap: wrap; color: var(--muted); max-width: 32.568em; }
   @media (max-width: 600px) { .hero { padding: 44px 0 32px; } .sub { font-size: 16px; } }
 </style>
