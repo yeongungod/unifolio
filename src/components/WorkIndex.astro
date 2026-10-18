@@ -18,8 +18,8 @@ const file = (path: string) => join(process.cwd(), 'public', path);
 const sizes = '(min-width: 900px) 100vw, 96vw';
 // 큰 제목용 짧은 이름: [LIVE CLIP] 머리표·(Feat. …) 꼬리표만 걷는다(점 이름·원본 데이터는 전체 제목)
 const short = (t: string) => t.replace(/^\[[^\]]+\]\s*/, '').replace(/\s*\(Feat\.[^)]*\)/, '').trim();
-// 크레딧 값의 「 · 」 앞을 붙는 공백으로: 줄이 「·」로 시작하지 않게
-const glue = (t: string) => t.replaceAll(' · ', '\u00a0· ');
+// 「 · 」「 | 」「 - 」「 – 」 앞을 붙는 공백으로: 줄이 구분 기호로 시작하지 않게(크레딧 값·큰 제목)
+const glue = (t: string) => t.replace(/ ([·|\-–—]) /g, '\u00a0$1 ');
 const items = await Promise.all(featured.map(async (item) => {
   // 유튜브 썸네일은 optimize-assets.py가 받아 둔 maxres(1280×720)가 있으면 그것, 새로 게시된 작품은 늘 있는 hqdefault
   const maxres = `https://i.ytimg.com/vi/${item.youtube}/maxresdefault.jpg`;
@@ -29,7 +29,7 @@ const items = await Promise.all(featured.map(async (item) => {
   const loop = item.loop && existsSync(file(item.loop)) ? item.loop : undefined;
   const webm = loop?.replace(/\.mp4$/, '.webm');
   return {
-    ...item, title: text(item.title), name: short(text(item.title)), rows: creditRows(item),
+    ...item, title: text(item.title), name: glue(short(text(item.title))), rows: creditRows(item),
     src, width, height, portrait: height > width, focus: item.focus ?? '50% 40%', scrim: (scrims as Record<string, number>)[item.slug] ?? 0.65, // 새 작품은 흰 바탕도 통과하는 0.65
     loop, webm: webm && existsSync(file(webm)) ? webm : undefined,
   };
@@ -124,7 +124,7 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
   .slide > * { pointer-events: auto; }
 
   /* 제목: 왼쪽 아래, 가장자리(--edge)에 붙임. 줄마다 왼→오 와이프(무대 페이드와 같은 100ms 출발) */
-  .title { position: absolute; left: var(--edge); bottom: calc(var(--edge) + 36px); margin: 0; max-width: min(74vw, 11.5em); font-size: var(--fs); font-weight: 700; line-height: 1.06; letter-spacing: -0.035em; word-break: keep-all; overflow-wrap: normal; text-wrap: wrap; }
+  .title { position: absolute; left: var(--edge); bottom: calc(var(--edge) + 36px); margin: 0; max-width: min(74vw, 11.5em); font-size: var(--fs); font-weight: 600; line-height: 1.06; letter-spacing: -0.03em; /* Pretendard: SUITE 700·−0.035 → 한 단계 가볍게 600·−0.03(같은 먹) */ word-break: keep-all; overflow-wrap: normal; text-wrap: balance; } /* Pretendard에서 「카잔 | 전설을 / 만들다」처럼 끝줄이 짧아져 균형 줄바꿈 */
   .pick { display: block; padding: 0; border: 0; background: none; color: inherit; font: inherit; letter-spacing: inherit; line-height: inherit; text-align: left; }
   .pick:hover .tx { text-decoration: underline; text-decoration-thickness: 0.04em; text-underline-offset: 0.12em; }
   .pick:focus-visible { outline: 2px solid var(--paper); outline-offset: 4px; }
@@ -135,11 +135,11 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
   .slide.out .title :global(.ln > span) { clip-path: inset(-0.1em 0 -0.1em 100%); transition: clip-path 360ms var(--e-in); }
 
   /* 크레딧: 오른쪽 아래, 라벨 11px · 값 13px 두 칸(웹 크레딧 축의 축소판) */
-  .credit { position: absolute; right: var(--edge); bottom: var(--edge); width: 300px; margin: 0; display: grid; grid-template-columns: auto 1fr; column-gap: 14px; row-gap: 5px; font-size: 13px; line-height: 1.55; letter-spacing: -0.005em; word-break: keep-all; text-wrap: pretty; }
+  .credit { position: absolute; right: var(--edge); bottom: var(--edge); width: 300px; margin: 0; display: grid; grid-template-columns: auto 1fr; column-gap: 14px; row-gap: 5px; font-size: 13px; line-height: 1.55; letter-spacing: 0.01em; word-break: keep-all; text-wrap: pretty; }
   .credit > div { display: contents; }
-  .credit dt { grid-column: 1; font-size: 11px; font-weight: 500; padding-top: 1.5px; color: var(--soft); letter-spacing: 0.02em; }
+  .credit dt { grid-column: 1; font-size: 11px; font-weight: 400; padding-top: 1.5px; color: var(--soft); letter-spacing: 0.02em; }
   .credit dd { grid-column: 2; margin: 0; font-weight: 400; color: color-mix(in srgb, var(--paper) 88%, transparent); }
-  .credit > div:first-child dd { color: var(--paper); font-weight: 600; }
+  .credit > div:first-child dd { color: var(--paper); font-weight: 550; }
   .credit dt, .credit dd { --d: calc(var(--r) * 70ms); clip-path: inset(0 100% 0 0); }
   .slide.on .credit :is(dt, dd) { clip-path: inset(0 0 0 0); transition: clip-path 640ms var(--e-io) calc(380ms + var(--d)); }
   .slide.out .credit :is(dt, dd) { clip-path: inset(0 0 0 100%); transition: clip-path 300ms var(--e-in); }
