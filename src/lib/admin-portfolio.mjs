@@ -3,11 +3,11 @@ import { createHash } from 'node:crypto';
 export const OWNER_EMAIL = 'unistudio@yeongungod.com';
 export const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 export const FEATURED_TYPE = 'export type Featured = { slug: string; title: string; role: string; year: string; client: string; youtube?: string; image?: string; url?: string; note: string; tier?: \'lead\' | \'major\'; loop?: string; focus?: string };';
-// 메인 화면 크기 위계: lead = 큰 1건, major = 중간 2건, 없으면 줄 목록.
+// 대표작 등급: lead = 무대에서 처음 켜지는 작품(1건). major(2건)는 예전 격자의 중간 크기로, 지금 화면엔 효과가 없지만 저장된 값과 초안이 깨지지 않게 받아 둔다.
 export const TIERS = { lead: 1, major: 2 };
 // 무대 무음 루프: 저장소에 직접 넣은 public/video/loops/ 파일만(scripts/make-loop.mjs). 같은 이름 .webm은 있으면 함께 쓴다.
 export const LOOP = /^\/video\/loops\/[a-z0-9-]+\.mp4$/;
-// 무대 스틸 초점(CSS object-position, 가로% 세로%): 이름이 얹히는 왼쪽 아래를 피해 얼굴·주제를 둔다.
+// 무대 스틸 초점(CSS object-position, 가로% 세로%): 제목이 얹히는 왼쪽 아래를 피해 얼굴·주제를 둔다. 막 농도를 잰 이미지에서만 쓴다(src/lib/stage.mjs).
 export const FOCUS = /^(?:\d|[1-9]\d|100)% (?:\d|[1-9]\d|100)%$/;
 // 공개 featured.ts 원문에서 카드 배열만 읽는다(형식이 다르면 빈 배열 = 크기 지정 없음).
 export function featuredCards(source) {

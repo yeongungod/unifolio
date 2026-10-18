@@ -1,13 +1,7 @@
 export const site = {
   name: '우니스튜디오',
   nameEn: 'uniStudio',
-  owner: '박영운',
-  bizNo: '898-11-03021',
   email: 'unistudio@yeongungod.com',
-  phone: '010-5925-6367',
-  phoneHref: 'tel:+821059256367',
-  address: '경기도 양평군 용문면 용문로371번길 6, 202호',
-  licenses: '방송영상독립제작사 신고 제12809호 · 비디오물제작업 신고 제2026-000005호',
   hero: {
     title: '장면의 흐름부터\n소리의 호흡까지', // 10-07 사용자: 문장부호 없이 두 줄
     sub: '다양한 영상 제작부터 영화·웹콘텐츠 사운드까지. 보고 듣는 경험을 다듬습니다.',
@@ -20,8 +14,6 @@ export const site = {
     { title: '음악 녹음·믹싱·마스터링', desc: '라이브 클립, 커버곡, 싱글, 앨범 등 모든 음원 제작 과정.' },
     { title: '라이브 PA', desc: '팬미팅·콘서트·행사 현장 오퍼레이팅.' },
   ],
-  process: ['문의', '견적', '작업', '납품'],
-  processNote: '일반과세 사업자라 세금계산서 발행이 됩니다. 견적은 작업 범위를 듣고 드립니다.',
   // 웹 확인 기록: docs/festival-sources.md. 제작 연도와 행사 연도는 구분한다.
   screenings: [
     // 2026-09-29 추가분의 year는 archive.json 작업 연도. 행사 연도는 detail과 출처에 기록.

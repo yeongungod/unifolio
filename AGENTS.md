@@ -13,32 +13,34 @@
 | 스택 | **Astro 5 정적 사이트.** 의존성은 `astro` 하나. 프레임워크·UI 라이브러리·Tailwind 없음 |
 | 저장소 | `github.com/yeongungod/unifolio` · 기본 브랜치 `main` |
 | 배포 | Vercel 프로젝트 `unifolio`. **`main`에 push하면 자동 배포** |
-| 페이지 | `/` 원페이지(Hero·Services·Work 9건·About·Contact) · `/work` 전체 아카이브 표 117건 · `/intro` 소개서(A4 한 장, 인쇄용) · `/admin` Google 로그인 관리 |
+| 페이지 | `/` 원페이지(대표작 무대·Services·함께한 곳·Studio·Contact) · `/work/` 전체 작업 표 · `/admin` Google 로그인 관리 · 404 |
 
 2026-09-17에 기존 Next.js(once-ui) 템플릿을 통째로 걷어내고 교체했다(커밋 `dda47aa`). 작업 브랜치 `rebuild-astro`는 역사 보관용이다. 새 작업을 거기에 올리지 말 것.
 
 ## 2. 파일 지도
 
 ```
-src/data/site.ts        연락처·히어로 문구·하는 일 4개·약력·수상·상영·툴   ← 문구 수정은 대부분 여기
-src/data/featured.ts    대표작 9건 (유튜브 ID 또는 /images/work/ 이미지)
-src/data/archive.json   전체 작업 117건 (노션 DB 내보내기. 손으로 고치지 않는다)
-src/components/         Hero · Services · WorkGrid · VideoCard · About · Contact · ArchiveTable
-src/pages/              index · work · intro · sitemap.xml.ts
+src/data/site.ts        연락처(메일)·히어로 문구(h1·설명)·하는 일 4개·약력·수상·상영·툴   ← 문구 수정은 대부분 여기
+src/data/featured.ts    대표작 9건 = 첫 화면 무대(유튜브 ID 또는 /images/work/ 이미지, tier lead = 처음 켜지는 작품, loop·focus)
+src/data/archive.json   전체 작업 (노션 DB 내보내기. 손으로 고치지 않는다)
+src/data/stage-scrim.json · optimized-images.json   무대 막 농도(잰 이미지 src 포함)·스틸 webp 변형 (scripts가 생성)
+src/components/         WorkIndex(무대) · ResponsiveImage · Services · Clients · About(엔드 크레딧 이력) · Contact · ArchiveTable
+src/lib/                display(글자·연도·줄머리 정리) · stage(스틸·막 고르기) · recognition(수상·상영 묶기) · admin-portfolio
+src/pages/              index · work · 404 · sitemap.xml.ts
 src/pages/admin.astro · src/scripts/admin.js    Google 로그인·비공개 편집·미리보기
 src/pages/admin/initial.json.ts    현재 공개 소스에서 관리자 초기 목록 생성
 api/portfolio.js · src/lib/admin-portfolio.mjs  관리자 API·게시 검증
 supabase/portfolio.sql · docs/admin-management.md  권한 정책·관리자 연결 안내
-src/layouts/Base.astro  <head>·OG·폰트
-src/styles/global.css   색 토큰 · 타이포 · 인쇄용 @media print
-scripts/check.mjs       빌드 산출물 검사 (금지 문자열·내부 링크·description·OG)
+src/layouts/Base.astro  <head>·OG·JSON-LD·머리글·바닥글
+src/styles/global.css   사이트 전용 값·서체 변수 · tokens.css(DESIGN.md 생성, 직접 고치지 않음) · fonts-pretendard.css(Pretendard dynamic-subset)
+astro.config.mjs        __PUBLIC_DIR__ = 설정 파일 옆 public(노션 미리보기 사본도 자기 public을 읽게)
+scripts/check.mjs       빌드 산출물 검사 (금지 문자열·내부 링크·srcset·루프 경로·description·OG)
 scripts/portfolio.mjs   노션 로컬 미리보기·검토한 사본의 공개용 반영 (Git 동작 없음)
 scripts/notion-portfolio.mjs   Notion API 읽기·변환·이미지 검증
 docs/portfolio-management.md  노션 연결과 사용자 조작 안내
-scripts/make-pdf.mjs    /intro → PDF. 출력 G:\91_uniStudio\소개서\
+scripts/optimize-assets.py  무대 스틸 webp 변형 · scripts/stage-scrim.py 무대 막 농도 실측 · scripts/make-loop.mjs 무음 루프
 scripts/make-og.py      og.png 생성 · scripts/resize-work.py 작업 이미지 리사이즈
-docs/superpowers/specs/2026-09-16-unistudio-site-design.md   설계 정본 (맨 끝 「구현 중 확정된 편차」 필독)
-docs/superpowers/plans/2026-09-16-unistudio-site.md          구현 계획 (완료됨, 참고용)
+docs/superpowers/specs/2026-09-16-unistudio-site-design.md   첫 설계(2026-09). 지금 디자인 정본은 G:\91_uniStudio\브랜드\디자인시스템\DESIGN.md
 ```
 
 ## 3. 명령
@@ -70,10 +72,10 @@ npm test                           # 포트폴리오 동기화·격리·반영 �
 - 수상·경력·수치는 `site.ts`·`archive.json`에 있는 것만 쓴다. 지어내지 않는다. 가격은 사이트에 적지 않는다(「견적은 작업 범위를 듣고」).
 
 **디자인**
-- 서체 **SUITE**(TTF 3종, `public/fonts/`). 강조색 **Aquamarine `#9CC3D5`** + 먹색. 브랜드 원본은 `G:\91_uniStudio\브랜드\`.
+- 서체 **Pretendard Variable**(dynamic-subset, `public/fonts/pretendard/`, 웹만. 인쇄·A4는 SUITE). 강조색 **Aquamarine `#9CC3D5`** + 먹색, 강조색 B(면 + 현재 메뉴·hover·섹션 라벨 글자·2px 포커스). 브랜드 원본은 `G:\91_uniStudio\브랜드\`, 디자인 정본은 그 아래 `디자인시스템\DESIGN.md`.
 - 종이(밝은) 배경의 제목은 `--ink`, 보조 글자는 `--muted-text #605C56`을 쓴다(대비 6.32:1, 2026-10-03 디자인시스템 통일. 값 원본은 `DESIGN.md` → `src/styles/tokens.css`, 직접 고치지 말 것). 아쿠아마린은 구분선·마크에 쓴다. 기존 `#4f8aa3` 작은 제목은 대비 부족으로 09-20 교체.
 - 색은 `global.css`의 토큰만 쓴다. 컴포넌트에 색을 직접 박지 않는다.
-- `/intro`는 A4 한 장이다. 여백이 8mm/3mm로 빠듯해서 **내용을 더하면 두 장으로 넘어간다.** 더할 땐 썸네일 수를 줄이거나 항목을 뺀다. 고친 뒤 `npm run pdf`로 한 장인지 확인.
+- 대표 이미지를 바꾸면 `python scripts/optimize-assets.py`(webp 변형)와 `python scripts/stage-scrim.py`(막 농도)를 다시 돌린다. 안 돌리면 무대는 원본 이미지 + 안전한 막 0.65·기본 초점으로 그린다.
 - `/work`는 영상 URL이 있는 데이터에만 링크 열을 표시한다. 09-22 사용자 배포 요청으로 검토한 사본을 반영해 공개용 archive.json에도 영상 링크 3개가 있다.
 
 **코드**

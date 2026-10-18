@@ -1,7 +1,9 @@
-"""Regenerate full-glyph WOFF2 and responsive WebP assets; keep originals.
+"""무대 스틸의 반응형 WebP 변형을 만든다(원본은 그대로 둔다).
 
-Run locally with Python, fontTools[woff], and Pillow installed. Generated files
-are committed, so the deployment build does not require Python.
+Pillow가 있는 로컬에서 실행하고 결과(webp·src/data/optimized-images.json)를 커밋한다. 배포 빌드엔 파이썬이 필요 없다.
+대표 이미지가 있으면 그것, 유튜브만 있으면 maxres(1280×720)를 받아 둔다. 원본보다 넓은 변형은 만들지 않는다
+(지금 원본은 모두 1280px 이하라 1920·2560은 더 큰 원본이 들어올 때만 생긴다).
+    PYTHONUTF8=1 python scripts/optimize-assets.py
 """
 import hashlib
 import json
@@ -9,11 +11,11 @@ import re
 from pathlib import Path
 from urllib.request import urlopen
 
-from fontTools.ttLib import TTFont
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ROOT / 'public'
+WIDTHS = [360, 720, 960, 1080, 1280, 1920, 2560]  # 960 = 휴대폰 2배, 1280 = 데스크톱 전면 무대, 1920·2560 = 큰·고해상도 화면
 
 
 def digest(file):
@@ -21,22 +23,10 @@ def digest(file):
 
 
 def main():
-    for original in sorted((PUBLIC / 'fonts').glob('SUITE-*.ttf')):
-        original_hash = digest(original)
-        font = TTFont(original, recalcTimestamp=False)
-        font.flavor = 'woff2'
-        converted = original.with_suffix('.woff2')
-        font.save(converted)
-        restored = TTFont(converted)
-        assert font.getGlyphOrder() == restored.getGlyphOrder(), original.name
-        assert font.getBestCmap() == restored.getBestCmap(), original.name
-        assert original_hash == digest(original), original.name
-        print(f'{original.name}: {original.stat().st_size} -> {converted.stat().st_size}')
-
     sources = {}
     featured = (ROOT / 'src/data/featured.ts').read_text(encoding='utf-8')
     for url in re.findall(r'"image":\s*"(/images/[^"?]+)"', featured):
-        sources[url] = [360, 720, 960, 1080, 1280]  # 960 = 휴대폰 2배 화면, 1280 = 전면 무대(100vw)
+        sources[url] = WIDTHS
     items = json.loads(re.search(r'export const featured[^=]*=\s*(\[[\s\S]*\]);', featured)[1])
     thumbnails = {}
     for item in items:
@@ -51,16 +41,8 @@ def main():
                 with urlopen(remote, timeout=20) as response:
                     data = response.read()
                 original.write_bytes(data)
-            sources[local] = [360, 720, 960, 1080, 1280]
+            sources[local] = WIDTHS
             thumbnails[local] = remote
-    for file, folder, widths in [
-        ('src/data/clients.ts', 'clients', [180, 360, 720]),
-        ('src/components/About.astro', 'tools', [28, 56, 84]),
-    ]:
-        text = (ROOT / file).read_text(encoding='utf-8')
-        for name in re.findall(r"file:\s*'([^']+)'", text):
-            sources[f'/images/{folder}/{name}'] = widths
-
     manifest = {}
     for url, widths in sorted(sources.items()):
         original = PUBLIC / url.lstrip('/')
@@ -78,8 +60,7 @@ def main():
                 dest_url = url.replace('/images/', '/images/optimized/', 1) + f'.{width}.webp'
                 dest = PUBLIC / dest_url.lstrip('/')
                 dest.parent.mkdir(parents=True, exist_ok=True)
-                # Client marks keep lossless color/alpha; video stills favor size.
-                resized.save(dest, 'WEBP', quality=82, lossless='/clients/' in url, method=6)
+                resized.save(dest, 'WEBP', quality=82, method=6)
                 with Image.open(dest) as decoded:
                     assert decoded.size == (width, height), dest_url
                 variants.append({'src': dest_url, 'width': width})

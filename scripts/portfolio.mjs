@@ -4,6 +4,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseEnv } from 'node:util';
 import { fetchPortfolio, downloadImage } from './notion-portfolio.mjs';
+import { featuredSource } from '../src/lib/admin-portfolio.mjs'; // /admin 게시와 같은 featured.ts 원문(원본 해시가 어긋나지 않게)
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = ['src/data/archive.json', 'src/data/featured.ts'];
@@ -11,7 +12,6 @@ const SNAPSHOTS = 'tmp/portfolio-previews';
 const MANAGED_IMAGE = /^public\/images\/notion\/[a-f0-9]{64}\.(jpg|png|webp)$/;
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const json = (value) => JSON.stringify(value, null, 2) + '\n';
-const featuredSource = (items) => `export type Featured = { slug: string; title: string; role: string; year: string; client: string; youtube?: string; image?: string; url?: string; note: string; tier?: 'lead' | 'major'; loop?: string; focus?: string };\nexport const featured: Featured[] = ${json(items).trim()};\n`;
 
 function snapshotPath(root, id) {
   if (!/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/.test(id ?? '')) throw new Error('미리보기 번호가 올바르지 않습니다.');

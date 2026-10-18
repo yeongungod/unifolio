@@ -1,4 +1,5 @@
 // Notion 응답 중 사이트에 필요한 속성만 사용한다. 원본 응답은 저장하지 않는다.
+import { TIERS, LOOP, FOCUS } from '../src/lib/admin-portfolio.mjs'; // /admin 게시와 같은 허용 형식
 const PLATFORM = { Flim: 'Film', Film: 'Film', 'Live Sound': 'Live', Live: 'Live', Music: 'Music', 'Web Content': 'Web', Web: 'Web', Edit: 'Edit', 'Game Sound': 'Game', Game: 'Game', Filming: 'Filming', '촬영': 'Filming' };
 const PROCESS = { Mixing: '믹싱', 'Sound Design': '사운드디자인', ADR: 'ADR', Foley: '폴리', Record: '녹음', Mastering: '마스터링', 'Sound Assistant': '사운드 어시스트', PA: 'PA', Cinamatic: '시네마틱', Skill: '스킬', UI: 'UI' };
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
@@ -51,9 +52,9 @@ export function convertPages(pages, existingFeatured = []) {
     const existing = existingFeatured.find((item) => (item.notionId ?? item.slug) === page.id);
     const legacy = existing?.image;
     // 노션엔 크기 지정 칸이 없다: 공개본의 tier를 그대로 둔다.
-    const tier = ['lead', 'major'].includes(existing?.tier) ? existing.tier : undefined;
-    const loop = /^\/video\/loops\/[a-z0-9-]+\.mp4$/.test(existing?.loop ?? '') ? existing.loop : undefined; // 루프도 노션 칸 없음
-    const focus = /^(?:\d|[1-9]\d|100)% (?:\d|[1-9]\d|100)%$/.test(existing?.focus ?? '') ? existing.focus : undefined; // 초점도
+    const tier = Object.hasOwn(TIERS, existing?.tier ?? '') ? existing.tier : undefined;
+    const loop = LOOP.test(existing?.loop ?? '') ? existing.loop : undefined; // 루프도 노션 칸 없음
+    const focus = FOCUS.test(existing?.focus ?? '') ? existing.focus : undefined; // 초점도
 
     const image = fileUrl ? `/images/notion/${page.id}.jpg` : !link.youtube && /^\/images\/work\/[\w-]+\.(jpg|png|webp)$/.test(legacy ?? '') ? legacy : undefined;
     if (!link.youtube && !image) throw new Error('대표작에는 유튜브 영상 또는 썸네일이 필요합니다.');
