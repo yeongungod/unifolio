@@ -40,8 +40,10 @@ const releases = records.filter(record => record.kind !== 'event');
   .play { position: absolute; inset: 0; display: grid; place-items: center; color: var(--paper); font-size: 28px; background: var(--video-shade); transition: background .15s; }
   .yt:hover .play { background: var(--video-hover); }
   .media :global(iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  .role { font-size: 14px; color: var(--accent); margin-top: 4px; }
-  .note { font-size: 14px; margin-top: 6px; }
+  .body .label { letter-spacing: 0.03em; } /* 클라이언트 이름은 한글·라틴 섞임: 라벨 기본 0.08em은 한글에 너무 벌어진다 */
+  .role { font-size: var(--type-web-small-size); font-weight: 500; color: var(--paper); margin-top: 4px; }
+  .note { font-size: var(--type-web-small-size); margin-top: 6px; }
+  .role, .note { line-height: var(--type-web-small-leading); letter-spacing: var(--type-web-small-tracking); }
   .role, .note { word-break: keep-all; overflow-wrap: anywhere; }
   .note p + p { margin-top: 4px; }
   .note details { margin-top: 6px; }
