@@ -6,7 +6,6 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { imageMetadata } from 'astro/assets/utils';
 import { featured } from '../data/featured';
-import rows from '../data/archive.json';
 import images from '../data/optimized-images.json';
 import scrims from '../data/stage-scrim.json'; // scripts/stage-scrim.py가 작품마다 실측한 막 농도
 import { site } from '../data/site';
@@ -14,10 +13,12 @@ import ResponsiveImage from './ResponsiveImage.astro';
 import { displayText as text, displayYear as year } from '../lib/display.mjs';
 
 const file = (path: string) => join(process.cwd(), 'public', path);
-// 무대(v4): 머리글 아래 첫 화면 전체가 스틸·루프. 큰 이름은 그 위 왼쪽 아래, 작은 글자는 먹색 단색 조각 위.
+// 무대(v4·v5): 머리글 아래 첫 화면 전체가 스틸·루프. 큰 이름은 그 위 왼쪽 아래, 크레딧은 오른쪽 아래(상자 없음).
 // 휴대폰은 96vw로 적어 412px·1.75배 화면이 960 대신 720을 고르게 한다(필요 721px, 1px 차이)
 const sizes = '(min-width: 900px) 100vw, 96vw';
 // 큰 목록용 짧은 이름: [LIVE CLIP] 머리표·(Feat. …) 꼬리표만 걷는다(크레딧·원본 데이터는 전체 제목)
+// 크레딧의 「 · 」 앞을 붙는 공백으로: 줄이 「·」로 시작하지 않는다(오른쪽 정렬·balance에서 생김)
+const glue = (t: string) => t.replaceAll(' · ', ' · ');
 const short = (t: string) => t.replace(/^\[[^\]]+\]\s*/, '').replace(/\s*\(Feat\.[^)]*\)/, '').trim();
 const items = await Promise.all(featured.map(async (item) => {
   // 유튜브 썸네일은 optimize-assets.py가 받아 둔 maxres(1280×720)가 있으면 그것, 새로 게시된 작품은 늘 있는 hqdefault
@@ -62,18 +63,15 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
       {items.map((it, i) => (
         <div id={`credit-${i}`} class:list={['credit', { on: i === start }]}>
           <p class="ct t-title">{it.title}</p>
-          <p class="t-small">{it.by} · <span class="soft">{it.role}</span></p>
-          {it.note && <p class="note t-caption soft">{it.note}</p>}
+          <p class="t-small">{glue(it.by)}&nbsp;· <span class="soft">{glue(it.role)}</span></p>
+          {it.note && <p class="note t-caption soft">{glue(it.note)}</p>}
         </div>
       ))}
     </div>
   </div>
 
-  <div class="intro plate">
-    <h1 id="hero-title" class="t-title">{site.hero.title.split('\n').join(' ')}</h1>
-    <p class="sub t-caption soft">{site.hero.sub}</p>
-    <a class="all t-small" href="/work">전체 작업 {rows.length}건 보기</a>
-  </div>
+  <!-- 표어 조각은 화면에서 걷었다(v5, 사용자). 무대의 이름표(aria-labelledby)로만 남긴다 -->
+  <h1 id="hero-title" class="visually-hidden">{site.hero.title.split('\n').join(' ')}</h1>
 
   <ol class="index" aria-label="대표작">
     {items.map((it, i) => {
@@ -97,25 +95,25 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
 
 <style>
   /* 대비(DESIGN.md 웹 무대): 큰 이름은 3:1, 작은 글자는 4.5:1을 스틸 9장의 실제 글자 자리에서 실측(scripts는 13_A인덱스무대_구현.md v4 절).
-     --scrim = 작품마다 스틸 전체에 고르게 까는 먹색 막(고정, scripts/stage-scrim.py 실측), --dim = 꺼진 이름의 종이색 비율(스크립트 DIM과 같게). 작은 글자는 먹색 100% 조각 위 */
+     --scrim = 작품마다 스틸 전체에 고르게 까는 먹색 막(고정, scripts/stage-scrim.py 실측), --dim = 꺼진 이름의 종이색 비율(스크립트 DIM과 같게).
+     데스크톱 크레딧은 상자 없이 오른쪽 아래 귀퉁이 먹색 번짐(.screen::after) 위(v5, 4.5:1 실측). 휴대폰 크레딧은 먹색 100% 조각 위 */
   .index-stage { --dim: 65%; --soft: color-mix(in srgb, var(--paper) 50%, transparent); --plate: var(--ink); }
   .soft { color: var(--soft); }
-  .plate { background: var(--plate); }
 
-  /* 900px 이상: 첫 화면 = 무대. 네 귀퉁이 격자: 왼쪽 위 표어 · 오른쪽 위 크레딧 · 왼쪽 아래 큰 이름 · 오른쪽 아래 재생 */
+  /* 900px 이상: 첫 화면 = 무대. 왼쪽 아래 큰 이름 · 오른쪽 아래 크레딧, 그 밑 재생 칩 */
   .index-stage {
     --side: max(var(--gutter), calc((100% - var(--space-web-max)) / 2 + var(--gutter)));
-    position: relative; display: grid; grid-template-columns: var(--side) minmax(0, 1fr) auto var(--side); grid-template-rows: auto minmax(0, 1fr);
+    position: relative; display: grid; grid-template-columns: var(--side) minmax(0, 1fr) auto var(--side); grid-template-rows: minmax(0, 1fr);
     column-gap: var(--space-8); height: calc(100svh - var(--header-h) - 1px); min-height: 600px; padding-block: var(--space-8) var(--space-12); overflow: hidden;
   }
   .stage-col { display: contents; }
   .stage { position: absolute; inset: 0; }
   .screen { position: absolute; inset: 0; overflow: hidden; background: var(--ink-2); }
-  .intro { position: relative; z-index: 2; grid-area: 1 / 2; justify-self: start; display: grid; gap: var(--space-1); max-width: 420px; padding: var(--space-3) var(--space-4); }
-  .all { justify-self: start; display: inline-flex; align-items: center; min-height: 32px; color: var(--paper); text-decoration: underline; text-decoration-color: var(--soft); text-underline-offset: 4px; transition: text-decoration-color var(--hover); }
-  .all:hover { text-decoration-color: var(--paper); }
-  .credits-stack { position: relative; z-index: 2; grid-area: 1 / 3; align-self: start; display: grid; width: min(380px, 30vw); padding: var(--space-3) var(--space-4); background: var(--plate); }
-  .index { position: relative; z-index: 2; grid-area: 2 / 2 / 3 / 4; align-self: end; }
+  /* 오른쪽 아래 귀퉁이만 먹색으로 번지게(크레딧 작은 글자 4.5:1). 막 위에 겹치고 재생 중엔 걷는다 */
+  .screen::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse 62% 78% at 100% 100%, color-mix(in srgb, var(--ink) 88%, transparent), color-mix(in srgb, var(--ink) 66%, transparent) 38%, color-mix(in srgb, var(--ink) 24%, transparent) 72%, transparent); }
+  /* 크레딧: 상자 없이 오른쪽 아래, 재생 칩(32px) 위로 16px */
+  .credits-stack { --soft: color-mix(in srgb, var(--paper) 72%, transparent); position: relative; z-index: 2; grid-area: 1 / 3; align-self: end; display: grid; width: min(360px, 28vw); margin-bottom: calc(32px + var(--space-4)); text-align: right; }
+  .index { position: relative; z-index: 2; grid-area: 1 / 2; align-self: end; }
   .tools { position: absolute; z-index: 3; right: var(--side); bottom: var(--space-12); display: flex; gap: var(--space-2); }
 
   /* 층은 겹쳐 두고 켜진 것만 보인다(꺼진 층은 lazy 스틸을 받지 않는다) */
@@ -132,7 +130,7 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
   .layer :global(video.ready) { opacity: 1; }
   /* 재생 중: 막·글자를 걷고 유튜브가 무대 전체(닫기 = 같은 칩) */
   .layer :global(iframe) { z-index: 2; background: var(--ink); }
-  .playing .layer::after, .playing .intro, .playing .credits-stack, .playing .index { display: none; }
+  .playing .layer::after, .playing .screen::after, .playing .credits-stack, .playing .index { display: none; }
   .playing .tools { top: var(--space-3); right: 50%; bottom: auto; transform: translateX(50%); } /* 유튜브 조작부를 피해 위 가운데 */
   /* 루프 없는 스틸만 8초에 1.00 → 1.04 한 번(transform만, 반복 없음). 데스크톱·감속 없음·데이터 절약 아님일 때만 */
   @media (hover: hover) and (pointer: fine) and (min-width: 391px) and (prefers-reduced-motion: no-preference) {
@@ -143,13 +141,16 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
   .chip:hover { background: var(--paper); color: var(--ink); }
   .chip[hidden] { display: none; }
 
-  /* 크레딧(오른쪽 위): 9개를 한 칸에 겹쳐 높이 고정 */
-  .credit { grid-area: 1 / 1; display: grid; gap: 2px; align-content: start; visibility: hidden; }
+  /* 크레딧(오른쪽 아래): 9개를 한 칸에 겹쳐 높이 고정, 아래 끝을 맞춘다 */
+  .credit { grid-area: 1 / 1; display: grid; gap: 2px; align-content: end; visibility: hidden; }
   .credit.on { visibility: visible; }
+  .credit p { text-wrap: balance; } /* 오른쪽 정렬 줄 끝에 한 낱말만 남지 않게 */
   .note { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
 
   /* 큰 이름: 왼쪽 아래부터 쌓인 한 줄씩. 켜진 이름 종이색 100% + 번호 아쿠아 면, 꺼진 이름은 종이 --dim */
-  .index { font-size: clamp(40px, min(4.6vw, 6.6svh), 80px); font-weight: 700; line-height: 1.04; letter-spacing: -0.035em; }
+  /* 오른쪽 아래 크레딧 칸(360px)을 비켜 이름 칸이 688px로 묶인다(1336px 이상). 가장 긴 이름(약 11.2em)이 잘리지 않게 60px·폭 비례로 상한.
+     shortcut: 지금 9개 이름 기준 상한이다. 더 긴 이름이 들어오면 .long 비율이나 이 상한을 다시 잰다(13_A인덱스무대_구현.md v5) */
+  .index { font-size: clamp(40px, min(4.6vw, 6.6svh, 6.3vw - 17px), 60px); font-weight: 700; line-height: 1.04; letter-spacing: -0.035em; }
   .row { position: relative; }
   .row.long { font-size: 0.74em; line-height: 1.4; } /* 긴 이름은 줄임표 대신 한 단계 작게 */
   .pick { display: inline-flex; align-items: baseline; max-width: 100%; padding: 0; border: 0; background: none; color: color-mix(in srgb, var(--paper) var(--dim), transparent); text-align: left; letter-spacing: inherit; line-height: inherit; white-space: nowrap; transition: color var(--hover); }
@@ -165,17 +166,14 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
     /* 1단: 첫 화면 대부분(78svh)이 머리글 아래에 붙은 무대, 이름 줄이 그 아래쪽부터 무대 위로 지나간다 */
     .index-stage { display: block; height: auto; min-height: 0; padding: 0; overflow: visible; }
     .stage-col { display: block; position: sticky; top: var(--header-h); z-index: 0; height: 78svh; }
-    .credits-stack { display: none; } /* 휴대폰은 켜진 줄 밑 크레딧 조각 */
-    .intro { position: absolute; top: var(--space-4); left: var(--gutter); max-width: calc(100% - var(--gutter) * 2 - 120px); justify-self: auto; }
-    .sub { display: none; }
+    .credits-stack, .screen::after { display: none; } /* 휴대폰은 켜진 줄 밑 크레딧 조각 */
     .tools { top: var(--space-3); right: var(--gutter); bottom: auto; }
-    .intro ~ .index { margin-top: -34svh; }
-    .index { padding: 0 var(--gutter) var(--space-12); font-size: 34px; line-height: 1.12; }
+    .index { margin-top: -34svh; padding: 0 var(--gutter) var(--space-12); font-size: 34px; line-height: 1.12; }
     .row { margin-bottom: var(--space-3); }
     .row.long { font-size: 0.82em; }
     .pick { white-space: normal; word-break: keep-all; min-height: 44px; }
     .row-credit { display: block; margin-top: var(--space-1); visibility: hidden; letter-spacing: 0; }
-    .row-credit span { padding: 2px var(--space-2); background: var(--plate); }
+    .row-credit span { padding: 2px var(--space-2); background: var(--plate); } /* 휴대폰 크레딧 조각(먹색 100%) */
     .row.on .row-credit { visibility: visible; }
     .tools { z-index: 3; }
     .playing .stage-col { z-index: 5; }
