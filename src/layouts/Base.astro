@@ -29,7 +29,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 <body class={bodyClass}>
   <a class="skip-link no-print" href="#main">본문 바로가기</a>
   <header class="site-header">
-    <div class="wrap row">
+    <div class="row">
       <a href="/" class="logo" aria-label="uniStudio 홈">
         <svg width="26" height="23" viewBox="0 0 133.8 120" aria-hidden="true"><g transform="scale(1.53846)"><g transform="translate(7.5,-11)" fill="none" stroke-width="15" stroke-linecap="round"><path d="M0 38.5V61.5M48 31.5V68.5M72 25.5V74.5" stroke="#FBF9F6"/><path d="M24 18.5V81.5" stroke="#9CC3D5"/></g></g></svg>
         <img class="wordmark" src="/lockup-white.svg" alt="" width="142" height="29" />
@@ -55,7 +55,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 
 <style>
   .site-header { position: sticky; top: 0; z-index: 10; background: var(--header-bg); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
-  .row { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .row { display: flex; align-items: center; justify-content: space-between; height: 60px; padding: 0 var(--edge); } /* 로고 시작선 = 무대 가장자리(10-18 사용자) */
   .logo { display: flex; align-items: center; min-width: 44px; min-height: 44px; }
   .logo svg { display: none; }
   .wordmark { width: 142px; height: auto; }

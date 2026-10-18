@@ -40,3 +40,13 @@ test('화면 표시 정리: 대시는 하이픈, 이모지는 제거, 다른 글
   assert.equal(displayYear('2025 -'), '2025~');
   assert.equal(displayYear('2023 - 25'), '2023 - 25');
 });
+
+test('무대 크레딧 줄: 연출·의뢰·연도, 사운드·역할, 수상·배급·비고로 나눈다', async () => {
+  const { creditRows } = await import('../src/lib/display.mjs');
+  assert.deepEqual(creditRows({ title: '침묵', client: '배준원 감독', role: '믹싱 · 폴리', year: '2022', note: '제18회 대한민국대학영화제 최우수작품상 · 여자연기상. ㈜인디스토리 배급.' }),
+    [['연출', '배준원 · 2022'], ['사운드', '믹싱 · 폴리'], ['수상', '제18회 대한민국대학영화제 최우수작품상 · 여자연기상'], ['배급', '㈜인디스토리']]);
+  assert.deepEqual(creditRows({ title: '해보자시리즈', client: '해보자시리즈', role: '유튜브 롱폼·쇼츠 편집', year: '2025 -', note: '' }),
+    [['연도', '2025~'], ['역할', '유튜브 롱폼·쇼츠 편집']]);
+  assert.deepEqual(creditRows({ title: '온사이드 팬미팅', client: 'ONSIDE COMPANY', role: '라이브 PA', year: '2023 - 25', note: '팬미팅·콘서트 현장 오퍼레이팅.' }),
+    [['의뢰', 'ONSIDE COMPANY · 2023 - 25'], ['역할', '라이브 PA'], ['비고', '팬미팅·콘서트 현장 오퍼레이팅']]);
+});
