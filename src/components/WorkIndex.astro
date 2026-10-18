@@ -127,7 +127,7 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
   .title { position: absolute; left: var(--edge); bottom: calc(var(--edge) + 36px); margin: 0; max-width: min(74vw, 11.5em); font-size: var(--fs); font-weight: 600; line-height: 1.06; letter-spacing: -0.03em; /* Pretendard: SUITE 700·−0.035 → 한 단계 가볍게 600·−0.03(같은 먹) */ word-break: keep-all; overflow-wrap: normal; text-wrap: balance; } /* Pretendard에서 「카잔 | 전설을 / 만들다」처럼 끝줄이 짧아져 균형 줄바꿈 */
   .pick { display: block; padding: 0; border: 0; background: none; color: inherit; font: inherit; letter-spacing: inherit; line-height: inherit; text-align: left; }
   .pick:hover .tx { text-decoration: underline; text-decoration-thickness: 0.04em; text-underline-offset: 0.12em; }
-  .pick:focus-visible { outline: 2px solid var(--paper); outline-offset: 4px; }
+  .pick:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
   .tx { display: block; }
   .title :global(.ln) { display: block; }
   .title :global(.ln > span) { display: inline-block; clip-path: inset(-0.1em 100% -0.1em 0); }
@@ -156,7 +156,7 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
   @keyframes stage-fill { to { transform: none; } }
   .stage.held .dot.on b { animation-play-state: paused; }
   .stage:not(.auto) .dot.on b { animation: none; transform: none; } /* 자동 넘김을 껐으면 켜진 점은 꽉 찬 표시만 */
-  .dot:focus-visible, .pp:focus-visible { outline: 2px solid var(--paper); outline-offset: -8px; }
+  .dot:focus-visible, .pp:focus-visible { outline: 2px solid var(--accent); outline-offset: -8px; }
   .pp::before, .pp::after { content: ''; grid-area: 1 / 1; width: 3px; height: 10px; background: var(--soft); }
   .pp::before { transform: translateX(-3px); }
   .pp::after { transform: translateX(3px); }
