@@ -20,14 +20,19 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ko_KR" />
   <meta property="og:site_name" content={site.nameEn} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonical} />
   <meta property="og:image" content={new URL('/og.png', Astro.site)} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="uniStudio 로고와 「장면의 흐름부터 소리의 호흡까지」" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
-  {Astro.url.pathname === '/' && <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@type': 'Organization', name: site.nameEn, alternateName: site.name, url: Astro.site, email: site.email })} />}
+  <meta name="twitter:description" content={description} />
+  {Astro.url.pathname === '/' && <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@type': 'Organization', name: site.nameEn, alternateName: site.name, url: Astro.site, logo: new URL('/apple-touch-icon.png', Astro.site), email: site.email })} />}
 </head>
 <body class={bodyClass}>
   <a class="skip-link no-print" href="#main">본문 바로가기</a>
@@ -41,7 +46,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         <a href="/#top">작업</a>
         <a href="/#studio">스튜디오</a>
         <a href="/#contact">문의</a>
-        <a href="/work" aria-current={/^\/work\/?$/.test(Astro.url.pathname) ? 'page' : undefined}>전체 작업</a>
+        <a href="/work/" aria-current={/^\/work\/?$/.test(Astro.url.pathname) ? 'page' : undefined}>전체 작업</a>
       </nav>
     </div>
   </header>

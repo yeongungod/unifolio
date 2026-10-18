@@ -6,14 +6,14 @@ import { clients } from '../data/clients';
     <p class="label">Client</p>
     <h2 id="clients-title">함께한 곳</h2>
   </div>
-  <div class="clients-window" tabindex="0" aria-label="참여 브랜드 로고. 키보드로 선택하면 이동이 멈춥니다.">
+  <div class="clients-window" tabindex="0" aria-label="참여 브랜드 로고. 마우스를 올리거나 누르거나 키보드로 선택하면 이동이 멈춥니다.">
     <div id="clients-track" style={`--duration: ${clients.length * 5}s`}>
       {[false, true].map((duplicate) => (
         <ul class="clients-list" aria-label={duplicate ? undefined : '참여 브랜드·기관'} aria-hidden={duplicate ? 'true' : undefined}>
           {clients.map((client, index) => (
             <li>
               <span class="client-logo" style={`--s: ${client.scale ?? 1}`}>
-              <img src={`/images/clients/${client.file}`} alt={duplicate ? '' : client.name} class:list={{ compact: client.compact, cover: client.cover, small: client.small }} width="180" height="80" decoding="async" />
+              <img src={`/images/clients/${client.file}`} alt={duplicate ? '' : client.name} class:list={{ compact: client.compact, cover: client.cover, small: client.small }} width="180" height="80" loading="lazy" decoding="async" />
               {client.lightText && (
                 <svg class="light-text" viewBox={`0 0 ${client.lightText.width} ${client.lightText.height}`} aria-hidden="true">
                   <defs>
@@ -32,6 +32,10 @@ import { clients } from '../data/clients';
     </div>
   </div>
 </section>
+<script>
+  // 터치·클릭으로 로고 띠 멈춤/흐름 전환(마우스는 올리기만 해도 멈춤)
+  document.querySelector('.clients-window')?.addEventListener('click', (e) => (e.currentTarget as HTMLElement).classList.toggle('held'));
+</script>
 <style>
   #clients { background: var(--ink); color: var(--paper); overflow: hidden; }
   .clients-window { margin: 28px 0 0; } /* 로고 띠는 화면 끝에서 끝까지(10-18 전체 폭) */
@@ -50,7 +54,8 @@ import { clients } from '../data/clients';
   .animated .clients-window { overflow: hidden; mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent); }
   .animated #clients-track { display: flex; width: max-content; animation: clients-flow var(--duration) linear infinite; }
   .animated .clients-list { display: flex; flex-wrap: nowrap; flex-shrink: 0; }
-  .clients-window:focus-visible #clients-track { animation-play-state: paused; }
+  /* 멈춤(WCAG 2.2.2): 키보드 포커스 · 마우스 올림 · 누르면 멈추고 다시 누르면 흐름(터치) */
+  .clients-window:is(:focus-visible, :hover, .held) #clients-track { animation-play-state: paused; }
   .two-rows #clients-track { animation-duration: calc(var(--duration) / 2); }
   .two-rows .clients-list { display: grid; grid-template-rows: repeat(2, 120px); grid-auto-flow: column; grid-auto-columns: 280px; }
   @keyframes clients-flow { to { transform: translateX(-50%); } }

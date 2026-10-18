@@ -16,9 +16,9 @@ const recognition = (row: (typeof sorted)[number]) => row.recognition
   ];
 ---
 <div class="filters" role="group" aria-label="분야 필터">
-  {filters.map((f, i) => <button class:list={['chip', { on: i === 0 }]} data-f={f} aria-pressed={i === 0 ? 'true' : 'false'}>{f}</button>)}
+  {filters.map((f, i) => <button type="button" class:list={['chip', { on: i === 0 }]} data-f={f} aria-pressed={i === 0 ? 'true' : 'false'}>{f}</button>)}
 </div>
-<p class="muted count" aria-live="polite"><span id="count">{sorted.length}</span>건</p>
+<!-- 작업 건수는 보이지 않는다(10-19 사용자). 고른 분야는 칩의 aria-pressed로 알린다 -->
 <table class="archive">
   <thead><tr><th scope="col">연도</th><th scope="col">작업</th><th scope="col">분야</th><th scope="col">역할</th><th scope="col">클라이언트</th><th scope="col" class="recognition-heading">수상·상영</th>{hasLinks && <th scope="col">링크</th>}</tr></thead>
   <tbody>
@@ -38,9 +38,9 @@ const recognition = (row: (typeof sorted)[number]) => row.recognition
 
 <style>
   .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 24px; }
-  .chip { background: none; border: 1px solid var(--line); color: var(--paper); border-radius: var(--radius-sm); padding: 6px 14px; font: inherit; font-size: var(--type-web-small-size); line-height: var(--type-web-small-leading); letter-spacing: var(--type-web-small-tracking); cursor: pointer; }
+  .chip { background: none; border: 1px solid var(--line); color: var(--paper); border-radius: var(--radius-sm); padding: 6px 14px; font: inherit; font-size: var(--type-web-small-size); line-height: var(--type-web-small-leading); letter-spacing: var(--type-web-small-tracking); cursor: pointer; min-height: 44px; } /* 맞히는 높이 44px */
   .chip.on { background: var(--accent); border-color: var(--accent); color: var(--ink); font-weight: 600; }
-  .count { margin: 16px 0 8px; font-size: var(--type-web-small-size); font-variant-numeric: tabular-nums; }
+  table.archive { margin-top: 20px; }
   .archive { width: 100%; border-collapse: collapse; font-size: var(--type-web-small-size); line-height: var(--type-web-small-leading); letter-spacing: var(--type-web-small-tracking); }
   .archive th { text-align: left; font-weight: 500; color: var(--muted); padding: 8px 10px 8px 0; border-bottom: 1px solid var(--line); font-size: 12px; letter-spacing: 0.02em; line-height: 1.5; }
   .archive td { padding: 10px 10px 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; word-break: keep-all; overflow-wrap: anywhere; }
@@ -71,12 +71,9 @@ const recognition = (row: (typeof sorted)[number]) => row.recognition
 <script>
   const chips = document.querySelectorAll<HTMLButtonElement>('.chip');
   const rows = document.querySelectorAll<HTMLTableRowElement>('tr[data-p]');
-  const count = document.getElementById('count')!;
   chips.forEach((c) => c.addEventListener('click', () => {
     chips.forEach((x) => { x.classList.toggle('on', x === c); x.setAttribute('aria-pressed', String(x === c)); });
     const f = c.dataset.f!;
-    let n = 0;
-    rows.forEach((r) => { const show = f === '전체' || r.dataset.p!.split(' ').includes(f); r.hidden = !show; if (show) n++; });
-    count.textContent = String(n);
+    rows.forEach((r) => { r.hidden = !(f === '전체' || r.dataset.p!.split(' ').includes(f)); });
   }));
 </script>
