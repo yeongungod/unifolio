@@ -2,35 +2,32 @@
 // 첫 화면 = 대표작 무대 v7 B 「와이프」(2026-10-18 사용자 선택, 근거 G:\91_uniStudio\261016_디자인개선\웹사이트\19_무대v7_모션\00_조사_명세.md).
 // 화면 전체가 스틸·무음 루프, 제목은 한 번에 하나(왼쪽 아래, 왼→오 와이프), 점은 늘 보임(왼쪽 맨 아래, 진짜 버튼),
 // 크레딧은 오른쪽 아래 라벨·값 두 칸. 8초마다 자동으로 넘어가고 켜진 점 안을 아쿠아가 채운다(채움이 끝나면 다음).
-// 서체는 지정하지 않는다(사이트 서체 결정 대기, body에서 물려받음).
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { imageMetadata } from 'astro/assets/utils';
 import { featured } from '../data/featured';
 import images from '../data/optimized-images.json';
-import scrims from '../data/stage-scrim.json'; // scripts/stage-scrim.py가 작품마다 실측한 막 농도
+import scrims from '../data/stage-scrim.json'; // scripts/stage-scrim.py가 작품·이미지마다 실측한 막 농도
 import { site } from '../data/site';
 import ResponsiveImage from './ResponsiveImage.astro';
-import { displayText as text, creditRows } from '../lib/display.mjs';
+import { displayText as text, creditRows, glue } from '../lib/display.mjs';
+import { stageStill, stageLook } from '../lib/stage.mjs';
 
-const file = (path: string) => join(process.cwd(), 'public', path);
-// 휴대폰은 96vw로 적어 412px·1.75배 화면이 960 대신 720을 고르게 한다
-const sizes = '(min-width: 900px) 100vw, 96vw';
+declare const __PUBLIC_DIR__: string; // astro.config.mjs: 설정 파일 옆 public(노션 미리보기 사본에서도 사본의 public)
+const file = (path: string) => join(__PUBLIC_DIR__, path);
+// 무대는 화면 전체를 cover로 덮는다: 화면이 16:9보다 넓으면 폭(100vw), 좁으면(세로 휴대폰 등) 높이 × 16/9가 그림 폭
+const sizes = '(min-aspect-ratio: 16/9) 100vw, calc((100vh - 61px) * 1.78)';
 // 큰 제목용 짧은 이름: [LIVE CLIP] 머리표·(Feat. …) 꼬리표만 걷는다(점 이름·원본 데이터는 전체 제목)
 const short = (t: string) => t.replace(/^\[[^\]]+\]\s*/, '').replace(/\s*\(Feat\.[^)]*\)/, '').trim();
-// 「 · 」「 | 」「 - 」「 – 」 앞을 붙는 공백으로: 줄이 구분 기호로 시작하지 않게(크레딧 값·큰 제목)
-const glue = (t: string) => t.replace(/ ([·|\-–—]) /g, '\u00a0$1 ');
 const items = await Promise.all(featured.map(async (item) => {
-  // 유튜브 썸네일은 optimize-assets.py가 받아 둔 maxres(1280×720)가 있으면 그것, 새로 게시된 작품은 늘 있는 hqdefault
-  const maxres = `https://i.ytimg.com/vi/${item.youtube}/maxresdefault.jpg`;
-  const src = item.image ?? (maxres in images ? maxres : `https://i.ytimg.com/vi/${item.youtube}/hqdefault.jpg`);
-  const size = item.image ? await imageMetadata(readFileSync(file(item.image))) : src === maxres ? { width: 1280, height: 720 } : { width: 480, height: 360 };
+  const still = stageStill(item, images);
+  const size: { width?: number; height?: number } | undefined = item.image ? await imageMetadata(readFileSync(file(item.image))) : still;
   const width = size?.width ?? 1280, height = size?.height ?? 720;
   const loop = item.loop && existsSync(file(item.loop)) ? item.loop : undefined;
   const webm = loop?.replace(/\.mp4$/, '.webm');
   return {
     ...item, title: text(item.title), name: glue(short(text(item.title))), rows: creditRows(item),
-    src, width, height, portrait: height > width, focus: item.focus ?? '50% 40%', scrim: (scrims as Record<string, number>)[item.slug] ?? 0.65, // 새 작품은 흰 바탕도 통과하는 0.65
+    src: still.src, fallback: still.fallback, width, height, portrait: height > width, ...stageLook(item, still.src, scrims),
     loop, webm: webm && existsSync(file(webm)) ? webm : undefined,
   };
 }));
@@ -42,7 +39,7 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
   <div class="screen">
     {items.map((it, i) => (
       <figure class:list={['layer', { on: i === start, portrait: it.portrait, still: !it.loop }]} style={`--focus: ${it.focus}; --scrim: ${it.scrim}`} data-loop={it.loop} data-webm={it.webm}>
-        <ResponsiveImage src={it.src} alt="" width={it.width} height={it.height} sizes={sizes} loading={i === start ? 'eager' : 'lazy'} fetchpriority={i === start ? 'high' : undefined} />
+        <ResponsiveImage src={it.src} fallback={it.fallback} alt="" width={it.width} height={it.height} sizes={sizes} loading={i === start ? 'eager' : 'lazy'} fetchpriority={i === start ? 'high' : undefined} />
       </figure>
     ))}
   </div>
@@ -52,9 +49,9 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
       <article class:list={['slide', { on: i === start }]} aria-roledescription="작품" aria-label={`${i + 1} / ${items.length}`}>
         <h2 class="title">
           {it.youtube ? (
-            <button type="button" class="pick" data-yt={it.youtube}><span class="tx">{it.name}</span><span class="vh"> 재생</span></button>
+            <button type="button" class="pick" data-yt={it.youtube}><span class="cue" aria-hidden="true">▶ 재생</span><span class="tx">{it.name}</span><span class="vh"> 재생</span></button>
           ) : it.url ? (
-            <a class="pick" href={it.url} target="_blank" rel="noopener noreferrer"><span class="tx">{it.name}</span><span class="vh"> 영상 보기 (새 창)</span></a>
+            <a class="pick" href={it.url} target="_blank" rel="noopener noreferrer"><span class="cue" aria-hidden="true">↗ 영상 보기</span><span class="tx">{it.name}</span><span class="vh"> 영상 보기 (새 창)</span></a>
           ) : (
             <span class="tx">{it.name}</span>
           )}
@@ -70,12 +67,12 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
 
   <div class="ctl" role="group" aria-label="작품 고르기">
     {items.map((it, i) => (
-      <button type="button" class:list={['dot', { on: i === start }]} aria-label={`${i + 1}. ${it.title}`} aria-current={i === start ? 'true' : undefined}><i><b></b></i></button>
+      <button type="button" class:list={['dot', { on: i === start }]} tabindex={i === start ? 0 : -1} aria-label={`${i + 1}. ${it.title}`} aria-current={i === start ? 'true' : undefined}><i><b></b></i></button>
     ))}
     <!-- 자동 넘김·무음 루프를 함께 멈춘다(WCAG 2.2.2). 10-18 사용자: 점 줄 끝 작은 아이콘으로 늘 보이게 -->
     <button type="button" class="pp" aria-label="자동 넘김 멈춤"></button>
   </div>
-  <!-- 재생 중에만: 위 가운데 닫기(Esc도 닫음) -->
+  <!-- 재생 중에만: 위 가운데 닫기. 열면 포커스가 여기로 와서 Esc도 닫는다(iframe 안에선 키가 부모로 안 옴) -->
   <button type="button" class="close" hidden aria-label="재생 닫기">닫기</button>
 </section>
 
@@ -95,10 +92,12 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
 
   /* 스틸 층: 켜진 것과 나가는 것만 그린다(꺼진 층은 lazy 스틸을 받지 않음, 다음 작품 하나만 미리 받음) */
   .screen { position: absolute; inset: 0; }
-  .layer { position: absolute; inset: 0; margin: 0; display: none; opacity: 0; transition: opacity 200ms ease-in, display 200ms allow-discrete; }
+  .layer { position: absolute; inset: 0; margin: 0; display: none; opacity: 0; }
   .layer::after { content: ''; position: absolute; inset: 0; z-index: 1; background: var(--ink); opacity: var(--scrim, 0.65); pointer-events: none; } /* 균일한 막 */
-  /* 교차 페이드(v6 그대로): 먹색으로 한 번 눌렀다(100ms) 300ms에 밝힌다. opacity만 */
-  .layer.on { display: block; opacity: 1; transition: opacity 300ms var(--e-out) 100ms, display 0s; }
+  /* 교차 페이드(v6 그대로): 나가는 층은 out으로 200ms 보이게 남겨 어둡게(display 이산 전환은 Firefox가 안 해서 타이머로 뗀다), 들어오는 층은 100ms 뒤 300ms에 밝힌다. opacity만 */
+  .layer.on, .layer.out { display: block; }
+  .layer.on { opacity: 1; transition: opacity 300ms var(--e-out) 100ms; }
+  .layer.out { opacity: 0; transition: opacity 200ms ease-in; }
   @starting-style { .layer.on { opacity: 0; } }
   .layer :global(picture), .layer :global(img), .layer :global(video), .layer :global(iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .layer :global(img), .layer :global(video) { object-fit: cover; object-position: var(--focus); }
@@ -110,9 +109,10 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
   .screen::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background:
     radial-gradient(ellipse 52% 70% at 100% 100%, color-mix(in srgb, var(--ink) 86%, transparent), color-mix(in srgb, var(--ink) 60%, transparent) 40%, transparent 78%),
     radial-gradient(ellipse 36% 30% at 0% 100%, color-mix(in srgb, var(--ink) 80%, transparent), color-mix(in srgb, var(--ink) 50%, transparent) 45%, transparent 85%); }
-  /* 루프 없는 스틸만 8초에 1.00 → 1.04 한 번(DESIGN.md 웹 무대 ④). 데스크톱·감속 없음·데이터 절약 아님 */
-  @media (hover: hover) and (pointer: fine) and (min-width: 391px) and (prefers-reduced-motion: no-preference) {
+  /* 루프 없는 스틸만 8초에 1.00 → 1.04 한 번(DESIGN.md 웹 무대 ④). 데스크톱(900px 이상)·감속 없음·데이터 절약 아님. 멈춤(held)이면 확대도 멈춘다 */
+  @media (hover: hover) and (pointer: fine) and (min-width: 900px) and (prefers-reduced-motion: no-preference) {
     :global(html:not(.save-data)) .still.on :global(img) { animation: stage-drift 8s linear both; }
+    .stage.held .still.on :global(img) { animation-play-state: paused; }
   }
   @keyframes stage-drift { from { transform: scale(1); } to { transform: scale(1.04); } }
 
@@ -125,16 +125,22 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
   /* 제목: 왼쪽 아래, 가장자리(--edge)에 붙임. 줄마다 왼→오 와이프(무대 페이드와 같은 100ms 출발) */
   .title { position: absolute; left: var(--edge); bottom: calc(var(--edge) + 36px); margin: 0; max-width: min(74vw, 11.5em); font-size: var(--fs); font-weight: 600; line-height: 1.06; letter-spacing: -0.03em; /* Pretendard: SUITE 700·−0.035 → 한 단계 가볍게 600·−0.03(같은 먹) */ word-break: keep-all; overflow-wrap: normal; text-wrap: balance; } /* Pretendard에서 「카잔 | 전설을 / 만들다」처럼 끝줄이 짧아져 균형 줄바꿈 */
   .pick { display: block; padding: 0; border: 0; background: none; color: inherit; font: inherit; letter-spacing: inherit; line-height: inherit; text-align: left; }
-  .pick:hover .tx { text-decoration: underline; text-decoration-thickness: 0.04em; text-underline-offset: 0.12em; }
+  /* 밑줄은 줄 안쪽 글자에(와이프용 inline-block엔 부모 밑줄이 전파되지 않음). 재생·링크가 있는 제목(.pick)만 */
+  .pick:is(:hover, :focus-visible) :global(.ln > span) { text-decoration: underline; text-decoration-thickness: 0.04em; text-underline-offset: 0.12em; }
   .pick:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
   .tx { display: block; }
+  /* 재생되는 작품만 제목 위에 작은 표시(10-19 사용자). 크레딧 값과 같은 13px, paper, hover·포커스 아쿠아. 와이프 대신 판과 함께 나타남 */
+  .cue { display: block; margin-bottom: 10px; font-size: 13px; font-weight: 500; line-height: 1.4; letter-spacing: 0.02em; color: var(--paper); opacity: 0; transition: opacity 300ms var(--e-out) 380ms; }
+  .slide.on .cue { opacity: 1; }
+  .slide.out .cue { opacity: 0; transition: opacity 200ms var(--e-in); }
+  .pick:is(:hover, :focus-visible) .cue { color: var(--accent); }
   .title :global(.ln) { display: block; }
   .title :global(.ln > span) { display: inline-block; clip-path: inset(-0.1em 100% -0.1em 0); }
   .slide.on .title :global(.ln > span) { clip-path: inset(-0.1em 0 -0.1em 0); transition: clip-path 900ms var(--e-io) calc(100ms + var(--i) * 120ms); }
   .slide.out .title :global(.ln > span) { clip-path: inset(-0.1em 0 -0.1em 100%); transition: clip-path 360ms var(--e-in); }
 
   /* 크레딧: 오른쪽 아래, 라벨 11px · 값 13px 두 칸(웹 크레딧 축의 축소판) */
-  .credit { position: absolute; right: var(--edge); bottom: var(--edge); width: 300px; margin: 0; display: grid; grid-template-columns: auto 1fr; column-gap: 14px; row-gap: 5px; font-size: 13px; line-height: 1.55; letter-spacing: 0.01em; word-break: keep-all; text-wrap: pretty; }
+  .credit { position: absolute; right: var(--edge); bottom: var(--edge); width: 300px; margin: 0; display: grid; grid-template-columns: auto 1fr; column-gap: 14px; row-gap: 5px; font-size: 13px; line-height: 1.55; letter-spacing: 0.01em; word-break: keep-all; text-wrap: balance; } /* pretty는 Firefox 미지원이라 「· / 여자연기상」처럼 끊겨 balance */
   .credit > div { display: contents; }
   .credit dt { grid-column: 1; font-size: 11px; font-weight: 400; padding-top: 1.5px; color: var(--soft); letter-spacing: 0.02em; }
   .credit dd { grid-column: 2; margin: 0; font-weight: 400; color: color-mix(in srgb, var(--paper) 88%, transparent); }
@@ -172,7 +178,7 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
 
   /* 휴대폰(900px 미만): 아래에서 위로 [점 줄] [크레딧 2줄] [제목 40px]. 가로로 밀어 넘김 */
   @media (max-width: 899.98px) {
-    .stage { --fs: 40px; height: calc(100svh - 61px); }
+    .stage { --fs: 40px; }
     .slide { inset: auto var(--edge) calc(24px + 44px + 4px) var(--edge); display: flex; flex-direction: column; gap: 14px; }
     .title, .credit { position: static; max-width: none; width: auto; }
     .credit .more { display: none; } /* 수상·배급·비고는 휴대폰에서 숨김(v6과 같음) */
@@ -182,12 +188,13 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
     .dot.on i { width: 16px; }
     .screen::after { background: linear-gradient(transparent 45%, color-mix(in srgb, var(--ink) 72%, transparent)); } /* 아래 글자 자리 번짐(크레딧 4.5:1 실측, 보고서) */
   }
+  /* 320px: 점 9개 + 멈춤이 32px씩이면 7px에서 시작해 327px까지 나가 멈춤이 잘린다 → 30px(WCAG 2.5.8 24px 이상) */
+  @media (max-width: 359.98px) { .dot, .pp { width: 30px; } }
 
-  /* 감속 설정: 자동 넘김 꺼짐(JS), 모든 전환 즉시, 확대 없음 */
+  /* 감속 설정: 자동 넘김 꺼짐(JS), 모든 전환 즉시(확대는 위 no-preference 조건이라 없음) */
   @media (prefers-reduced-motion: reduce) {
     .stage *, .stage *::before, .stage *::after { transition-duration: 0s !important; transition-delay: 0s !important; }
-    .stage .layer.on :global(img) { animation: none; }
-    .slide.out { visibility: hidden; }
+    .slide.out, .layer.out { visibility: hidden; }
   }
 </style>
 
@@ -204,7 +211,7 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
     const pp = root.querySelector<HTMLButtonElement>('.pp')!;
     const close = root.querySelector<HTMLButtonElement>('.close')!;
     const reduce = matchMedia('(prefers-reduced-motion: reduce)');
-    const loopOk = () => matchMedia('(hover: hover) and (pointer: fine) and (min-width: 391px) and (prefers-reduced-motion: no-preference)').matches && !saveData;
+    const loopOk = () => matchMedia('(hover: hover) and (pointer: fine) and (min-width: 900px) and (prefers-reduced-motion: no-preference)').matches && !saveData; // 900px 미만은 루프·확대 없음(DESIGN.md)
     const n = slides.length;
     let cur = Number(root.dataset.start) || 0, playing = -1, inView = true, loaded = document.readyState === 'complete';
     // 멈춤 조건: 사용자(멈춤 버튼, 감속 설정이면 처음부터) · 점/제목/크레딧 위 마우스 · 키보드 포커스 · 탭 숨김 · 화면 밖 · 유튜브 재생 중
@@ -266,21 +273,23 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
     // 다음 작품 스틸 하나만 미리 받는다(자동 넘김 때 빈 화면 방지). 꺼진 층은 display:none이라 lazy면 안 받음
     const prefetch = (i: number) => { const img = layers[i].querySelector('img'); if (img) img.loading = 'eager'; };
 
-    const outTimers = new Map<number, number>();
+    // 나가는 판·층은 out으로 잠깐 남겼다가 타이머로 뗀다(판 400ms = 와이프 360ms, 층 300ms = 페이드 200ms)
+    const outTimers = new Map<HTMLElement, number>();
+    const leave = (el: HTMLElement, ms: number) => { el.classList.replace('on', 'out'); outTimers.set(el, window.setTimeout(() => el.classList.remove('out'), ms)); };
+    const enter = (el: HTMLElement) => { clearTimeout(outTimers.get(el)); el.classList.remove('out'); el.classList.add('on'); };
     const go = (i: number) => {
       if (i === cur) return;
       const old = cur;
-      clearTimeout(outTimers.get(i));
-      slides[i].classList.remove('out');
-      slides[old].classList.replace('on', 'out');
-      outTimers.set(old, window.setTimeout(() => slides[old].classList.remove('out'), 400));
-      slides[i].classList.add('on');
-      layers[old].classList.remove('on');
-      layers[i].classList.add('on');
+      leave(slides[old], 400);
+      enter(slides[i]);
+      leave(layers[old], 300);
+      enter(layers[i]);
       dots[old].classList.remove('on');
       dots[old].removeAttribute('aria-current');
+      dots[old].tabIndex = -1; // 점은 켜진 것 하나만 Tab에 들어가고 나머지는 방향키(roving tabindex)
       dots[i].classList.add('on');
       dots[i].setAttribute('aria-current', 'true');
+      dots[i].tabIndex = 0;
       cur = i;
       prefetch((i + 1) % n);
       syncVideo();
@@ -291,6 +300,7 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
       if (playing < 0) return;
       layers[playing].querySelector('iframe')?.remove();
       playing = -1;
+      hold.hover = 0; // 재생 전환 중엔 pointerleave가 안 올 수 있어 hover 멈춤 카운터를 새로 센다
       root.classList.remove('playing');
       close.hidden = true;
       sync();
@@ -304,11 +314,12 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
       f.allowFullscreen = true;
       f.title = `${label} 재생`;
       playing = i;
+      hold.hover = 0;
       layers[i].append(f);
       root.classList.add('playing');
       close.hidden = false;
       sync();
-      f.focus();
+      close.focus(); // iframe에 포커스를 주면 Esc가 부모 문서에 안 온다. Tab 한 번이면 플레이어
     };
     slides.forEach((s, i) => {
       const pick = s.querySelector<HTMLElement>('.pick');

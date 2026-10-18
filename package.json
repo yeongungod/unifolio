@@ -11,7 +11,7 @@
     "preflight:check": "node scripts/preflight-publish.mjs --check-only",
     "portfolio:preview": "node scripts/portfolio.mjs preview",
     "portfolio:apply": "node scripts/portfolio.mjs apply",
-    "test": "node --test scripts/portfolio.test.mjs scripts/admin.test.mjs scripts/recognition.test.mjs scripts/preflight-publish.test.mjs"
+    "test": "node --test scripts/portfolio.test.mjs scripts/admin.test.mjs scripts/recognition.test.mjs scripts/preflight-publish.test.mjs scripts/stage.test.mjs"
   },
   "dependencies": {
     "astro": "^5.13.0"

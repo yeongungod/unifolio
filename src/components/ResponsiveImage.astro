@@ -9,11 +9,13 @@ interface Props {
   loading?: 'lazy' | 'eager';
   fetchpriority?: 'high' | 'low' | 'auto';
   class?: string;
+  fallback?: string; // src가 없거나(404) 유튜브 「썸네일 없음」 회색 그림(폭 120)이면 이것으로
 }
-const { src, alt, width, height, sizes, loading = 'lazy', fetchpriority, class: className } = Astro.props;
+const { src, alt, width, height, sizes, loading = 'lazy', fetchpriority, class: className, fallback } = Astro.props;
 const variants = images[src as keyof typeof images];
+const swap = fallback && `this.onerror=this.onload=null;this.src=${JSON.stringify(fallback)}`;
 ---
 <picture>
   {variants && <source type="image/webp" srcset={variants.map(v => `${v.src} ${v.width}w`).join(', ')} sizes={sizes} />}
-  <img src={src} alt={alt} width={width} height={height} loading={loading} fetchpriority={fetchpriority} decoding="async" class={className} />
+  <img src={src} alt={alt} width={width} height={height} loading={loading} fetchpriority={fetchpriority} decoding="async" class={className} onerror={swap} onload={swap && `if(this.naturalWidth<200){${swap}}`} />
 </picture>

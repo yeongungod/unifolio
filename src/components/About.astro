@@ -2,7 +2,8 @@
 import { site } from '../data/site';
 import rows from '../data/archive.json';
 import { featured } from '../data/featured';
-import { groupedRecognition } from '../lib/recognition.mjs';
+import { groupedRecognition, recordParts } from '../lib/recognition.mjs';
+import { glue } from '../lib/display.mjs';
 const a = site.about;
 const groups = groupedRecognition(rows, a.awards, site.screenings, featured);
 const toolLogos: Record<string, { file: string; url: string }> = {
@@ -16,9 +17,17 @@ const toolLogos: Record<string, { file: string; url: string }> = {
   'Waves': { file: 'waves.png', url: 'https://www.waves.com/plugins' },
   'UAD': { file: 'uad.png', url: 'https://www.uaudio.com/' },
 };
-const tools = a.tools.map((name) => ({ name, ...toolLogos[name] }));
+const tools = a.tools.map((name) => {
+  if (!toolLogos[name]) throw new Error(`사용 툴 아이콘이 없습니다: ${name} (About.astro toolLogos)`);
+  return { name, ...toolLogos[name] };
+});
 const intro = a.intro.split('\n');
 const shown = 4; // 처음에 보이는 작품 수: 왼쪽 블록(이름·소개·학력·툴) 높이와 맞춘다. 나머지는 「이력 더 보기」
+type Group = (typeof groups)[number];
+type Rec = Group['records'][number];
+// 작품 없는 수상(공모전)은 왼쪽에 대회명, 오른쪽에 상만(10-19 사용자). 기록의 title·detail을 그대로 쓴다
+const label = (g: Group) => g.workId ? g.work : g.records[0].title;
+const parts = (g: Group, r: Rec) => g.workId ? recordParts(r) : [{ text: r.detail || r.text, href: r.source || undefined }];
 ---
 <section id="studio">
   <div class="wrap">
@@ -32,34 +41,38 @@ const shown = 4; // 처음에 보이는 작품 수: 왼쪽 블록(이름·소개
           <div><dt>학력</dt><dd>{a.edu}</dd></div>
           <div><dt>자격</dt><dd>{a.certs.map((c) => <span class="ln">{c}</span>)}</dd></div>
         </dl>
-        <ul class="icons" aria-label="사용 툴">{tools.map((t) => <li><a href={t.url} target="_blank" rel="noopener noreferrer" title={t.name} aria-label={t.name}><img src={`/images/tools/${t.file}`} alt="" width="28" height="28" loading="lazy" /></a></li>)}</ul>
+        <ul class="icons" aria-label="사용 툴">{tools.map((t) => <li><a href={t.url} target="_blank" rel="noopener noreferrer" title={t.name} aria-label={t.name}><img src={`/images/tools/${t.file}`} alt="" width="28" height="28" loading="lazy" decoding="async" /></a></li>)}</ul>
       </div>
       <div class="body">
         <h3 class="cap">이력</h3>
-        <div class="credits">
-          {groups.map((g, i) => (
-            <div class:list={['cr', { late: i >= shown }]}>
-              {/* 작품 없는 수상(공모전)은 「대회명 | 상」으로 나눠 왼쪽에 대회명, 오른쪽에 상만(10-19 사용자) */}
-              <p class="k"><strong>{g.work || g.records[0].text.split(' · ')[0]}</strong><span>{g.year}</span></p>
-              <ul class="v">{g.records.map((r) => { const text = g.work ? r.text : r.text.split(' · ').slice(1).join(' · '); return <li>{r.source ? <a href={r.source} target="_blank" rel="noopener noreferrer">{text}</a> : text}</li>; })}</ul>
+        {[groups.slice(0, shown), groups.slice(shown)].map((list, k) => {
+          const items = list.map((g) => (
+            <div class="cr">
+              <p class="k"><strong>{glue(label(g))}</strong><span>{g.year}</span></p>
+              <ul class="v">{g.records.map((r: Rec) => <li>{parts(g, r).map((p) => p.href ? <a href={p.href} target="_blank" rel="noopener noreferrer">{glue(p.text)}</a> : glue(p.text))}</li>)}</ul>
             </div>
-          ))}
-        </div>
-        {groups.length > shown && <button type="button" class="open" aria-expanded="false">이력 더 보기</button>}
+          ));
+          // 나머지는 details: JS 없이도 펼쳐진다
+          return k === 0 ? <div class="credits">{items}</div> : list.length > 0 && (
+            <details class="more"><summary><span class="closed">이력 더 보기</span><span class="opened">이력 접기</span></summary><div class="credits">{items}</div></details>
+          );
+        })}
       </div>
     </div>
   </div>
 </section>
 <style>
-  .lead { margin-top: 18px; font-size: 17px; font-weight: var(--type-web-lead-weight); line-height: var(--type-web-lead-leading); letter-spacing: var(--type-web-lead-tracking); max-width: 38em; }
-  @media (max-width: 600px) { .lead br { display: none; } } /* 좁은 화면은 줄을 강제로 끊지 않고 흐르게 */
+  /* 소개 두 줄은 1280 이상에서만 지정한 자리에서 끊고, 그보다 좁으면 균형 있게 흐르게(1024~1279 4줄 들쭉날쭉 방지) */
+  .lead { margin-top: 18px; font-size: 17px; font-weight: var(--type-web-lead-weight); line-height: var(--type-web-lead-leading); letter-spacing: var(--type-web-lead-tracking); max-width: 38em; text-wrap: balance; }
+  @media (max-width: 1279.98px) { .lead br { display: none; } }
   .facts { margin: 28px 0 0; font-size: var(--type-web-small-size); line-height: var(--type-web-small-leading); letter-spacing: var(--type-web-small-tracking); }
   .facts div { display: grid; grid-template-columns: 3em minmax(0, 1fr); gap: 12px; padding: 8px 0; border-top: 1px solid var(--line); }
   .facts dt { color: var(--muted); }
   .facts dd { margin: 0; }
   .facts .ln { display: block; }
-  .icons { list-style: none; display: flex; flex-wrap: wrap; gap: 4px; padding: 0; margin: 20px 0 0; }
-  .icons a { display: grid; place-items: center; width: 44px; height: 44px; border-radius: var(--radius-sm); opacity: 0.85; }
+  /* 툴 아이콘은 모든 폭에서 한 줄(DESIGN.md): 9칸을 나눠 칸 34~48px(WCAG 2.5.8 24px 이상) */
+  .icons { list-style: none; display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); max-width: calc(9 * 48px); padding: 0; margin: 20px 0 0; }
+  .icons a { display: grid; place-items: center; width: 100%; height: 44px; border-radius: var(--radius-sm); opacity: 0.85; }
   .icons a:hover { opacity: 1; background: var(--ink-2); }
   .icons img { width: 28px; height: 28px; object-fit: contain; }
   .cap { font-size: var(--type-web-label-size); font-weight: var(--type-web-label-weight); letter-spacing: var(--type-web-label-tracking); color: var(--muted); }
@@ -68,21 +81,15 @@ const shown = 4; // 처음에 보이는 작품 수: 왼쪽 블록(이름·소개
   .k { display: flex; justify-content: space-between; gap: 16px; }
   .k span { color: var(--muted); font-variant-numeric: tabular-nums; }
   .v { list-style: none; padding: 0; margin: 0; color: var(--muted); }
+  .v li { text-wrap: balance; } /* pretty는 Firefox 미지원 → 「·」로 끝나 끊기지 않게 balance */
   .v li + li { margin-top: 2px; }
   .v a { text-decoration: underline; text-underline-offset: 3px; }
-  .cr.late { display: none; }
-  .credits.all .cr.late { display: grid; }
-  .open { display: block; width: 100%; text-align: left; margin-top: 4px; padding: 12px 0; background: none; border: 0; border-top: 1px solid var(--line); color: var(--paper); font-size: 14px; cursor: pointer; }
+  .more { margin-top: 4px; border-top: 1px solid var(--line); }
+  .more summary { display: block; padding: 12px 0; font-size: 14px; color: var(--paper); cursor: pointer; list-style: none; }
+  .more summary::-webkit-details-marker { display: none; }
+  .more summary:hover { color: var(--accent); }
+  .more .opened, .more[open] .closed { display: none; }
+  .more[open] .opened { display: inline; }
+  .more .credits { margin-top: 0; }
   @media (min-width: 1024px) { .cr { grid-template-columns: minmax(0, 3fr) minmax(0, 5fr); } }
 </style>
-<script>
-  // 「이력 더 보기」: 숨긴 크레딧 줄을 펼치고 접는다
-  document.querySelectorAll<HTMLButtonElement>('#studio .open').forEach((b) => {
-    const label = b.textContent;
-    b.addEventListener('click', () => {
-      const open = b.previousElementSibling!.classList.toggle('all');
-      b.setAttribute('aria-expanded', String(open));
-      b.textContent = open ? '이력 접기' : label;
-    });
-  });
-</script>

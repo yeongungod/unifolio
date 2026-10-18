@@ -38,6 +38,16 @@ export function groupedRecognition(rows, awards, screenings, featured = []) {
   return [...groups.values()].sort((a, b) => Number(b.year) - Number(a.year));
 }
 
+// 기록 한 줄을 [글자, 링크] 조각으로: 상영 플랫폼·배급 줄은 출처 이름이 든 「 · 」 조각(예: Apple TV, ㈜퍼니콘)에만 링크, 나머지는 줄 전체가 링크
+export function recordParts({ text, source = '', title = '', kind }) {
+  if (!source) return [{ text }];
+  const segs = text.split(' · ');
+  const at = kind !== 'event' && title ? segs.findLastIndex((seg) => seg.includes(title)) : -1;
+  if (at < 0) return [{ text, href: source }];
+  const before = segs.slice(0, at).join(' · '), after = segs.slice(at + 1).join(' · ');
+  return [{ text: before && `${before} · ` }, { text: segs[at], href: source }, { text: after && ` · ${after}` }].filter((p) => p.text);
+}
+
 export function mainRecognition(rows, awards, screenings) {
   const events = [];
   const releases = [];
@@ -53,7 +63,7 @@ export function mainRecognition(rows, awards, screenings) {
     for (const line of lines) {
       const match = known.find((k) => k.workId === row.id && normalized(line).includes(normalized(k.title)));
       const kind = /배급/.test(line) ? 'distribution' : /Google Play|Apple TV|왓챠|티빙|쿠팡플레이|넷플릭스/.test(line) ? 'platform' : 'event';
-      const item = { workId: row.id, work: row.name, text: line, year: dateIn(line) || match?.year || '', source: match?.source || '', kind };
+      const item = { workId: row.id, work: row.name, text: line, year: dateIn(line) || match?.year || '', source: match?.source || '', title: match?.title || '', kind };
       // Distribution / streaming credits stay visible without being called awards.
       if (kind !== 'event') {
         releases.push(item);
@@ -67,7 +77,8 @@ export function mainRecognition(rows, awards, screenings) {
   for (const k of known) {
     if (k.workId && overridden.has(k.workId)) continue;
     const work = rows.find((row) => row.id === k.workId)?.name || '';
-    events.push({ workId: k.workId || '', work, year: k.year || '', text: `${k.title} · ${k.detail.replace(/^「[^」]+」\s*/, '')}`, source: k.source || '', kind: 'event' });
+    const detail = k.detail.replace(/^「[^」]+」\s*/, '');
+    events.push({ workId: k.workId || '', work, year: k.year || '', text: `${k.title} · ${detail}`, title: k.title, detail, source: k.source || '', kind: 'event' });
   }
   events.sort((a, b) => dateKey(b.year) - dateKey(a.year));
   return { events, releases };

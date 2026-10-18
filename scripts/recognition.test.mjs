@@ -38,7 +38,10 @@ test('화면 표시 정리: 대시는 하이픈, 이모지는 제거, 다른 글
   assert.equal(displayText('유니폼 룩북⚽️'), '유니폼 룩북');
   assert.equal(displayText('Sounds 🌏 test'), 'Sounds test');
   assert.equal(displayYear('2025 -'), '2025~');
-  assert.equal(displayYear('2023 - 25'), '2023 - 25');
+  assert.equal(displayYear('2023 - 25'), '2023–2025'); // 10-19 사용자: 기간은 끝 연도까지 쓰고 – 로
+  assert.equal(displayYear('2019-2024'), '2019–2024');
+  assert.equal(displayYear('2025 –'), '2025~'); // 노션에서 en dash로 와도
+  assert.equal(displayYear('2022'), '2022');
 });
 
 test('무대 크레딧 줄: 연출·의뢰·연도, 사운드·역할, 수상·배급·비고로 나눈다', async () => {
@@ -48,5 +51,22 @@ test('무대 크레딧 줄: 연출·의뢰·연도, 사운드·역할, 수상·�
   assert.deepEqual(creditRows({ title: '해보자시리즈', client: '해보자시리즈', role: '유튜브 롱폼·쇼츠 편집', year: '2025 -', note: '' }),
     [['연도', '2025~'], ['역할', '유튜브 롱폼·쇼츠 편집']]);
   assert.deepEqual(creditRows({ title: '온사이드 팬미팅', client: 'ONSIDE COMPANY', role: '라이브 PA', year: '2023 - 25', note: '팬미팅·콘서트 현장 오퍼레이팅.' }),
-    [['의뢰', 'ONSIDE COMPANY · 2023 - 25'], ['역할', '라이브 PA'], ['비고', '팬미팅·콘서트 현장 오퍼레이팅']]);
+    [['의뢰', 'ONSIDE COMPANY · 2023–2025'], ['역할', '라이브 PA'], ['비고', '팬미팅·콘서트 현장 오퍼레이팅']]);
+});
+
+test('기록 링크 조각: 플랫폼·배급 줄은 출처 있는 이름에만, 나머지는 줄 전체, 출처 없으면 글자만', async () => {
+  const { recordParts } = await import('../src/lib/recognition.mjs');
+  assert.deepEqual(recordParts({ text: '상영 플랫폼 · Google Play 무비/TV · 왓챠 · Apple TV', source: 'https://tv.apple.com/x', title: 'Apple TV', kind: 'platform' }),
+    [{ text: '상영 플랫폼 · Google Play 무비/TV · 왓챠 · ' }, { text: 'Apple TV', href: 'https://tv.apple.com/x' }]);
+  assert.deepEqual(recordParts({ text: '제1회 서울한강국제영화제 본선경쟁작', source: 'https://s', title: '제1회 서울한강국제영화제', kind: 'event' }), [{ text: '제1회 서울한강국제영화제 본선경쟁작', href: 'https://s' }]);
+  assert.deepEqual(recordParts({ text: '배급 · 필름베리', kind: 'distribution' }), [{ text: '배급 · 필름베리' }]);
+  assert.deepEqual(recordParts({ text: '배급 · ㈜퍼니콘', source: 'https://k', title: '퍼니콘', kind: 'distribution' }), [{ text: '배급 · ' }, { text: '㈜퍼니콘', href: 'https://k' }]);
+});
+
+test('작품 없는 수상은 대회명(title)과 상(detail)을 따로 가진다', async () => {
+  const { mainRecognition } = await import('../src/lib/recognition.mjs');
+  const { events } = mainRecognition([], [{ year: '2021.05', title: '대한민국 육군 아미로그 공모전', body: '최우수상' }], []);
+  assert.equal(events[0].workId, '');
+  assert.equal(events[0].title, '대한민국 육군 아미로그 공모전');
+  assert.equal(events[0].detail, '최우수상');
 });

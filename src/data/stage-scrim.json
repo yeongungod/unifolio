@@ -1,11 +1,38 @@
 {
-  "22b50bd8-fe2d-8060-bd4b-fd70e0fae1ab": 0.65,
-  "13c50bd8-fe2d-8018-89db-f6d1e9dc6a61": 0.65,
-  "13c50bd8-fe2d-8088-a6c3-d5c4005aa5f1": 0.5,
-  "13c50bd8-fe2d-8051-bc48-cf0f28f42e1c": 0.6,
-  "13c50bd8-fe2d-803e-b044-dc4018d720dc": 0.6,
-  "3e150bd8-fe2d-81b7-8a63-f5c9b20e4443": 0.65,
-  "22b50bd8-fe2d-8069-87b0-f725d2e3236f": 0.6,
-  "3e150bd8-fe2d-8187-8c50-de7e2eab3936": 0.45,
-  "13c50bd8-fe2d-805f-876e-ffdcff4a47ce": 0.65
+  "22b50bd8-fe2d-8060-bd4b-fd70e0fae1ab": {
+    "src": "https://i.ytimg.com/vi/G7P6u0izwsk/maxresdefault.jpg",
+    "scrim": 0.65
+  },
+  "13c50bd8-fe2d-8018-89db-f6d1e9dc6a61": {
+    "src": "/images/work/saraji.jpg",
+    "scrim": 0.65
+  },
+  "13c50bd8-fe2d-8088-a6c3-d5c4005aa5f1": {
+    "src": "/images/work/nalchi_wide_tmp.jpg",
+    "scrim": 0.5
+  },
+  "13c50bd8-fe2d-8051-bc48-cf0f28f42e1c": {
+    "src": "/images/work/chimmuk.jpg",
+    "scrim": 0.6
+  },
+  "13c50bd8-fe2d-803e-b044-dc4018d720dc": {
+    "src": "/images/work/pd_wide_tmp.jpg",
+    "scrim": 0.6
+  },
+  "3e150bd8-fe2d-81b7-8a63-f5c9b20e4443": {
+    "src": "https://i.ytimg.com/vi/4j_y34frjNU/maxresdefault.jpg",
+    "scrim": 0.65
+  },
+  "22b50bd8-fe2d-8069-87b0-f725d2e3236f": {
+    "src": "https://i.ytimg.com/vi/TbFCH78wKlc/maxresdefault.jpg",
+    "scrim": 0.6
+  },
+  "3e150bd8-fe2d-8187-8c50-de7e2eab3936": {
+    "src": "/images/work/onside.jpg",
+    "scrim": 0.45
+  },
+  "13c50bd8-fe2d-805f-876e-ffdcff4a47ce": {
+    "src": "https://i.ytimg.com/vi/9DyECX8JTNg/maxresdefault.jpg",
+    "scrim": 0.65
+  }
 }

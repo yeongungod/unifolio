@@ -1,8 +1,9 @@
 """무대 막 농도를 작품마다 실측해 src/data/stage-scrim.json에 쓴다(DESIGN.md 웹 무대: 큰 글자 3:1).
 
-이름이 얹히는 자리(데스크톱 = 무대 왼쪽 80% x 위아래 전체(v6 이름 왼쪽 위), 휴대폰 = 무대 전체(v5 표어 조각 걷음))를 이름 한 줄 크기 타일
-(높이 60px x 폭 1/5)로 나눠 4개 화면 크기, 스틸과 루프 프레임(1초마다) 모두에서 잰다. 모든 타일에서 켜진 이름(종이색
-100%)과 꺼진 이름(종이색 DIM)이 픽셀 98%에서 3:1을 넘는 가장 옅은 막을 0.05 단위로 고른다. 목록에 없는 새 작품은 컴포넌트 기본값(SAFE, 흰 바탕도 통과)이 쓰인다.
+무대 왼쪽 80% x 위아래 전체(데스크톱), 무대 전체(휴대폰)를 제목 한 줄 크기 타일(높이 60px x 폭 1/5)로 나눠 4개 화면 크기,
+스틸과 루프 프레임(1초마다) 모두에서 잰다(v7 제목·크레딧 자리를 넉넉히 덮는 보수적 범위). 모든 타일에서 종이색 100% 글자와
+종이색 65% 글자가 픽셀 98%에서 3:1을 넘는 가장 옅은 막을 0.05 단위로 고른다. 결과는 {작품: {src: 잰 이미지, scrim}}이고,
+무대는 지금 이미지가 src와 같을 때만 이 값을 쓴다(이미지를 바꾸면 다시 잴 때까지 기본값 SAFE, src/lib/stage.mjs).
 Pillow·numpy가 있는 로컬에서 실행하고 결과 JSON을 커밋한다(배포 빌드엔 파이썬이 필요 없다).
     PYTHONUTF8=1 python scripts/stage-scrim.py
 """
@@ -12,7 +13,7 @@ import numpy as np
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
-DIM, SAFE = 0.65, 0.65  # WorkIndex.astro의 --dim·기본 --scrim과 같아야 한다
+DIM, SAFE = 0.65, 0.65  # DIM = 옅은 글자 기준, SAFE = src/lib/stage.mjs SAFE_SCRIM과 같아야 한다
 INK, PAPER = np.array([20, 18, 16.]), np.array([251, 249, 246.])
 VIEWS = [(1440, 839, 'd'), (1280, 739, 'd'), (1920, 1019, 'd'), (390, 658, 'm')]
 FFMPEG = shutil.which('ffmpeg') or r'C:\Users\yeongungod\AppData\Local\Programs\FFmpeg\bin\ffmpeg.exe'
@@ -73,7 +74,7 @@ def main():
                 if ok:
                     break
             assert ok, it['title']
-            out[it['slug']] = a
+            out[it['slug']] = {'src': it.get('image') or f"https://i.ytimg.com/vi/{it['youtube']}/maxresdefault.jpg", 'scrim': a}
             table.append((it['title'][:24], a, round(dim, 2), round(on, 2), len(frames)))
     (ROOT / 'src/data/stage-scrim.json').write_text(json.dumps(out, indent=2) + '\n', encoding='utf-8')
     print('작품 | 막 | 꺼진 이름 대비(2% 하위) | 켜진 이름 대비 | 잰 장면 수')
