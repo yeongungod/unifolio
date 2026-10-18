@@ -7,7 +7,7 @@
   --line: var(--rule-on-ink);
   --header-bg: rgba(20, 18, 16, 0.9);
   /* 화면 가장자리(무대 v7, 10-18 사용자): 1280 32 · 1440 40 · 1920 48 · 390 20. 머리글 로고·무대·아래 모든 섹션·바닥글이 이 선에 붙는다 */
-  --edge: clamp(20px, calc(5vw - 32px), 48px);
+  --edge: var(--space-web-edge); /* DESIGN.md web-edge = clamp(20px, 5vw - 32px, 48px) */
 }
 
 * { box-sizing: border-box; }
@@ -45,7 +45,7 @@ strong { font-weight: 600; }
 /* 섹션 틀: 1024px 이상은 12열, 왼쪽 4열 = 라벨·제목, 오른쪽 8열 = 내용. 그 아래는 위아래로 쌓는다 */
 .split { display: grid; row-gap: 28px; }
 @media (min-width: 1024px) {
-  .split { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 32px; }
+  .split { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--space-web-column-gap); }
   .split > .head { grid-column: 1 / span 4; }
   .split > .body { grid-column: 5 / -1; }
 }

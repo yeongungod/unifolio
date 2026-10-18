@@ -35,10 +35,9 @@
   --space-slide-margin-x: 96px;
   --space-slide-band: 15px;
   --space-slide-gutter: 36px;
-  --space-web-max: 1240px;
-  --space-web-gutter: 48px;
-  --space-web-gutter-sm: 20px;
-  --space-web-read: 640px;
+  --space-web-edge: clamp(20px, calc(5vw - 32px), 48px);
+  --space-web-column-gap: 32px;
+  --space-web-read: 38em;
   --type-a4-display-size: 34pt;
   --type-a4-display-weight: 700;
   --type-a4-display-leading: 1.16;
