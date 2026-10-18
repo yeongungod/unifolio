@@ -48,11 +48,17 @@ export function convertPages(pages, existingFeatured = []) {
     const files = p['썸네일']?.files ?? [];
     if (files.length > 1) throw new Error('대표작 썸네일은 한 개만 지정하세요.');
     const fileUrl = files[0]?.file?.url ?? files[0]?.external?.url;
-    const legacy = existingFeatured.find((item) => (item.notionId ?? item.slug) === page.id)?.image;
+    const existing = existingFeatured.find((item) => (item.notionId ?? item.slug) === page.id);
+    const legacy = existing?.image;
+    // 노션엔 크기 지정 칸이 없다: 공개본의 tier를 그대로 둔다.
+    const tier = ['lead', 'major'].includes(existing?.tier) ? existing.tier : undefined;
+    const loop = /^\/video\/loops\/[a-z0-9-]+\.mp4$/.test(existing?.loop ?? '') ? existing.loop : undefined; // 루프도 노션 칸 없음
+    const focus = /^(?:\d|[1-9]\d|100)% (?:\d|[1-9]\d|100)%$/.test(existing?.focus ?? '') ? existing.focus : undefined; // 초점도
+
     const image = fileUrl ? `/images/notion/${page.id}.jpg` : !link.youtube && /^\/images\/work\/[\w-]+\.(jpg|png|webp)$/.test(legacy ?? '') ? legacy : undefined;
     if (!link.youtube && !image) throw new Error('대표작에는 유튜브 영상 또는 썸네일이 필요합니다.');
     if (fileUrl) downloads.push({ url: fileUrl, image });
-    cards.push({ rank, slug: page.id, title: name, role: fieldText(p, '사이트 역할 표기') || process.map((x) => PROCESS[x] ?? x).join(' · '), year: fieldText(p, '사이트 연도 표기') || String(year), client, note: fieldText(p, '한 줄 소개'), ...link, ...(image ? { image } : {}) });
+    cards.push({ rank, slug: page.id, title: name, role: fieldText(p, '사이트 역할 표기') || process.map((x) => PROCESS[x] ?? x).join(' · '), year: fieldText(p, '사이트 연도 표기') || String(year), client, note: fieldText(p, '한 줄 소개'), ...link, ...(image ? { image } : {}), ...(tier ? { tier } : {}), ...(loop ? { loop } : {}), ...(focus ? { focus } : {}) });
   }
   if (!archive.length || !cards.length) throw new Error('전체 작업 또는 대표작이 비었습니다. 노션 공개/표시 설정을 확인하세요.');
   return { archive: archive.sort((a, b) => b.year - a.year || a.id.localeCompare(b.id)), featured: cards.sort((a, b) => a.rank - b.rank).map(({ rank, ...card }) => card), downloads };

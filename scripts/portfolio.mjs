@@ -11,7 +11,7 @@ const SNAPSHOTS = 'tmp/portfolio-previews';
 const MANAGED_IMAGE = /^public\/images\/notion\/[a-f0-9]{64}\.(jpg|png|webp)$/;
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const json = (value) => JSON.stringify(value, null, 2) + '\n';
-const featuredSource = (items) => `export type Featured = { slug: string; title: string; role: string; year: string; client: string; youtube?: string; image?: string; url?: string; note: string };\nexport const featured: Featured[] = ${json(items).trim()};\n`;
+const featuredSource = (items) => `export type Featured = { slug: string; title: string; role: string; year: string; client: string; youtube?: string; image?: string; url?: string; note: string; tier?: 'lead' | 'major'; loop?: string; focus?: string };\nexport const featured: Featured[] = ${json(items).trim()};\n`;
 
 function snapshotPath(root, id) {
   if (!/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/.test(id ?? '')) throw new Error('미리보기 번호가 올바르지 않습니다.');

@@ -191,3 +191,24 @@ test('기존 아카이브의 클라이언트·역할 공란은 그대로 보존�
   assert.equal(result.archive[0].client, '');
   assert.deepEqual(result.archive[0].process, []);
 });
+
+test('노션 변환은 공개본의 대표작 크기 지정(tier)을 유지하고 엉뚱한 값은 버린다', () => {
+  const result = convertPages([page(1, { rank: 1, url: 'https://youtu.be/G7P6u0izwsk' }), page(2, { rank: 2, url: 'https://youtu.be/9DyECX8JTNg' })],
+    [{ slug: page(1).id, tier: 'lead' }, { slug: page(2).id, tier: 'huge' }]);
+  assert.equal(result.featured[0].tier, 'lead');
+  assert.equal('tier' in result.featured[1], false);
+});
+
+test('노션 변환은 공개본의 루프 영상 경로를 유지하고 엉뚱한 값은 버린다', () => {
+  const result = convertPages([page(1, { rank: 1, url: 'https://youtu.be/G7P6u0izwsk' }), page(2, { rank: 2, url: 'https://youtu.be/9DyECX8JTNg' })],
+    [{ slug: page(1).id, loop: '/video/loops/a-tmp.mp4' }, { slug: page(2).id, loop: 'https://x.example/a.mp4' }]);
+  assert.equal(result.featured[0].loop, '/video/loops/a-tmp.mp4');
+  assert.equal('loop' in result.featured[1], false);
+});
+
+test('노션 변환은 공개본의 무대 초점을 유지하고 엉뚱한 값은 버린다', () => {
+  const result = convertPages([page(1, { rank: 1, url: 'https://youtu.be/G7P6u0izwsk' }), page(2, { rank: 2, url: 'https://youtu.be/9DyECX8JTNg' })],
+    [{ slug: page(1).id, focus: '60% 25%' }, { slug: page(2).id, focus: 'center' }]);
+  assert.equal(result.featured[0].focus, '60% 25%');
+  assert.equal('focus' in result.featured[1], false);
+});

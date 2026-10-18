@@ -1,0 +1,19 @@
+---
+import images from '../data/optimized-images.json';
+interface Props {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  sizes?: string;
+  loading?: 'lazy' | 'eager';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  class?: string;
+}
+const { src, alt, width, height, sizes, loading = 'lazy', fetchpriority, class: className } = Astro.props;
+const variants = images[src as keyof typeof images];
+---
+<picture>
+  {variants && <source type="image/webp" srcset={variants.map(v => `${v.src} ${v.width}w`).join(', ')} sizes={sizes} />}
+  <img src={src} alt={alt} width={width} height={height} loading={loading} fetchpriority={fetchpriority} decoding="async" class={className} />
+</picture>

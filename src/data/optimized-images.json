@@ -1,0 +1,188 @@
+{
+  "/images/work/chimmuk.jpg": [
+    {
+      "src": "/images/optimized/work/chimmuk.jpg.360.webp",
+      "width": 360
+    },
+    {
+      "src": "/images/optimized/work/chimmuk.jpg.720.webp",
+      "width": 720
+    },
+    {
+      "src": "/images/optimized/work/chimmuk.jpg.960.webp",
+      "width": 960
+    },
+    {
+      "src": "/images/optimized/work/chimmuk.jpg.1080.webp",
+      "width": 1080
+    },
+    {
+      "src": "/images/optimized/work/chimmuk.jpg.1280.webp",
+      "width": 1280
+    }
+  ],
+  "/images/work/nalchi_wide_tmp.jpg": [
+    {
+      "src": "/images/optimized/work/nalchi_wide_tmp.jpg.360.webp",
+      "width": 360
+    },
+    {
+      "src": "/images/optimized/work/nalchi_wide_tmp.jpg.720.webp",
+      "width": 720
+    },
+    {
+      "src": "/images/optimized/work/nalchi_wide_tmp.jpg.960.webp",
+      "width": 960
+    },
+    {
+      "src": "/images/optimized/work/nalchi_wide_tmp.jpg.1080.webp",
+      "width": 1080
+    },
+    {
+      "src": "/images/optimized/work/nalchi_wide_tmp.jpg.1250.webp",
+      "width": 1250
+    }
+  ],
+  "/images/work/onside.jpg": [
+    {
+      "src": "/images/optimized/work/onside.jpg.360.webp",
+      "width": 360
+    },
+    {
+      "src": "/images/optimized/work/onside.jpg.720.webp",
+      "width": 720
+    },
+    {
+      "src": "/images/optimized/work/onside.jpg.960.webp",
+      "width": 960
+    },
+    {
+      "src": "/images/optimized/work/onside.jpg.1080.webp",
+      "width": 1080
+    },
+    {
+      "src": "/images/optimized/work/onside.jpg.1280.webp",
+      "width": 1280
+    }
+  ],
+  "/images/work/pd_wide_tmp.jpg": [
+    {
+      "src": "/images/optimized/work/pd_wide_tmp.jpg.360.webp",
+      "width": 360
+    },
+    {
+      "src": "/images/optimized/work/pd_wide_tmp.jpg.720.webp",
+      "width": 720
+    },
+    {
+      "src": "/images/optimized/work/pd_wide_tmp.jpg.960.webp",
+      "width": 960
+    },
+    {
+      "src": "/images/optimized/work/pd_wide_tmp.jpg.1008.webp",
+      "width": 1008
+    }
+  ],
+  "/images/work/saraji.jpg": [
+    {
+      "src": "/images/optimized/work/saraji.jpg.360.webp",
+      "width": 360
+    },
+    {
+      "src": "/images/optimized/work/saraji.jpg.720.webp",
+      "width": 720
+    },
+    {
+      "src": "/images/optimized/work/saraji.jpg.919.webp",
+      "width": 919
+    }
+  ],
+  "https://i.ytimg.com/vi/4j_y34frjNU/maxresdefault.jpg": [
+    {
+      "src": "/images/optimized/work/youtube/4j_y34frjNU.jpg.360.webp",
+      "width": 360
+    },
+    {
+      "src": "/images/optimized/work/youtube/4j_y34frjNU.jpg.720.webp",
+      "width": 720
+    },
+    {
+      "src": "/images/optimized/work/youtube/4j_y34frjNU.jpg.960.webp",
+      "width": 960
+    },
+    {
+      "src": "/images/optimized/work/youtube/4j_y34frjNU.jpg.1080.webp",
+      "width": 1080
+    },
+    {
+      "src": "/images/optimized/work/youtube/4j_y34frjNU.jpg.1280.webp",
+      "width": 1280
+    }
+  ],
+  "https://i.ytimg.com/vi/9DyECX8JTNg/maxresdefault.jpg": [
+    {
+      "src": "/images/optimized/work/youtube/9DyECX8JTNg.jpg.360.webp",
+      "width": 360
+    },
+    {
+      "src": "/images/optimized/work/youtube/9DyECX8JTNg.jpg.720.webp",
+      "width": 720
+    },
+    {
+      "src": "/images/optimized/work/youtube/9DyECX8JTNg.jpg.960.webp",
+      "width": 960
+    },
+    {
+      "src": "/images/optimized/work/youtube/9DyECX8JTNg.jpg.1080.webp",
+      "width": 1080
+    },
+    {
+      "src": "/images/optimized/work/youtube/9DyECX8JTNg.jpg.1280.webp",
+      "width": 1280
+    }
+  ],
+  "https://i.ytimg.com/vi/G7P6u0izwsk/maxresdefault.jpg": [
+    {
+      "src": "/images/optimized/work/youtube/G7P6u0izwsk.jpg.360.webp",
+      "width": 360
+    },
+    {
+      "src": "/images/optimized/work/youtube/G7P6u0izwsk.jpg.720.webp",
+      "width": 720
+    },
+    {
+      "src": "/images/optimized/work/youtube/G7P6u0izwsk.jpg.960.webp",
+      "width": 960
+    },
+    {
+      "src": "/images/optimized/work/youtube/G7P6u0izwsk.jpg.1080.webp",
+      "width": 1080
+    },
+    {
+      "src": "/images/optimized/work/youtube/G7P6u0izwsk.jpg.1280.webp",
+      "width": 1280
+    }
+  ],
+  "https://i.ytimg.com/vi/TbFCH78wKlc/maxresdefault.jpg": [
+    {
+      "src": "/images/optimized/work/youtube/TbFCH78wKlc.jpg.360.webp",
+      "width": 360
+    },
+    {
+      "src": "/images/optimized/work/youtube/TbFCH78wKlc.jpg.720.webp",
+      "width": 720
+    },
+    {
+      "src": "/images/optimized/work/youtube/TbFCH78wKlc.jpg.960.webp",
+      "width": 960
+    },
+    {
+      "src": "/images/optimized/work/youtube/TbFCH78wKlc.jpg.1080.webp",
+      "width": 1080
+    },
+    {
+      "src": "/images/optimized/work/youtube/TbFCH78wKlc.jpg.1280.webp",
+      "width": 1280
+    }
+  ]
+}

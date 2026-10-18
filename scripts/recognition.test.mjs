@@ -30,3 +30,13 @@ test('standalone awards remain separate, release-only works are retained', () =>
   assert.deepEqual(result.map(x => x.year), ['2024', '2021', '2020']);
   assert.equal(result.length, 3);
 });
+
+test('화면 표시 정리: 대시는 하이픈, 이모지는 제거, 다른 글자(s 포함)는 그대로', async () => {
+  const { displayText, displayYear } = await import('../src/lib/display.mjs');
+  assert.equal(displayText('The First Descendant — UI 사운드'), 'The First Descendant - UI 사운드');
+  assert.equal(displayText('Gods – Sessions'), 'Gods - Sessions');
+  assert.equal(displayText('유니폼 룩북⚽️'), '유니폼 룩북');
+  assert.equal(displayText('Sounds 🌏 test'), 'Sounds test');
+  assert.equal(displayYear('2025 -'), '2025~');
+  assert.equal(displayYear('2023 - 25'), '2023 - 25');
+});

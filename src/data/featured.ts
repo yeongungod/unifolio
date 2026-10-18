@@ -1,14 +1,16 @@
-export type Featured = { slug: string; title: string; role: string; year: string; client: string; youtube?: string; image?: string; url?: string; note: string };
+export type Featured = { slug: string; title: string; role: string; year: string; client: string; youtube?: string; image?: string; url?: string; note: string; tier?: 'lead' | 'major'; loop?: string; focus?: string };
 export const featured: Featured[] = [
   {
     "slug": "22b50bd8-fe2d-8060-bd4b-fd70e0fae1ab",
     "title": "해보자시리즈",
     "role": "유튜브 롱폼·쇼츠 편집",
-    "year": "2025 –",
+    "year": "2025 -",
     "client": "해보자시리즈",
     "note": "",
     "url": "https://www.youtube.com/watch?v=G7P6u0izwsk",
-    "youtube": "G7P6u0izwsk"
+    "youtube": "G7P6u0izwsk",
+    "loop": "/video/loops/haboja-tmp.mp4",
+    "focus": "65% 40%"
   },
   {
     "slug": "13c50bd8-fe2d-8018-89db-f6d1e9dc6a61",
@@ -19,7 +21,9 @@ export const featured: Featured[] = [
     "note": "서울아트비디오페스티벌 음향상. ㈜씨엠닉스 배급.",
     "url": "https://youtu.be/jCAnh8ssnn8",
     "youtube": "jCAnh8ssnn8",
-    "image": "/images/work/saraji.jpg"
+    "image": "/images/work/saraji.jpg",
+    "loop": "/video/loops/saraji-tmp.mp4",
+    "focus": "70% 30%"
   },
   {
     "slug": "13c50bd8-fe2d-8088-a6c3-d5c4005aa5f1",
@@ -28,7 +32,9 @@ export const featured: Featured[] = [
     "year": "2023",
     "client": "정도영 감독",
     "note": "제24회 대한민국국제청소년영화제 작품상 대학부 은상. 필름베리 배급.",
-    "image": "/images/work/nalchi.jpg"
+    "image": "/images/work/nalchi_wide_tmp.jpg",
+    "tier": "major",
+    "focus": "80% 40%"
   },
   {
     "slug": "13c50bd8-fe2d-8051-bc48-cf0f28f42e1c",
@@ -37,7 +43,9 @@ export const featured: Featured[] = [
     "year": "2022",
     "client": "배준원 감독",
     "note": "제18회 대한민국대학영화제 최우수작품상 · 여자연기상. ㈜인디스토리 배급.",
-    "image": "/images/work/chimmuk.jpg"
+    "image": "/images/work/chimmuk.jpg",
+    "tier": "lead",
+    "focus": "55% 35%"
   },
   {
     "slug": "13c50bd8-fe2d-803e-b044-dc4018d720dc",
@@ -46,17 +54,21 @@ export const featured: Featured[] = [
     "year": "2022",
     "client": "김선연 감독",
     "note": "제1회 싸이파이안페스타 관객상. ㈜인디스토리 배급.",
-    "image": "/images/work/pd.jpg"
+    "image": "/images/work/pd_wide_tmp.jpg",
+    "tier": "major",
+    "focus": "55% 35%"
   },
   {
     "slug": "3e150bd8-fe2d-81b7-8a63-f5c9b20e4443",
     "title": "대한민국 해군 · 공군 웹콘텐츠",
     "role": "믹싱 · 사운드디자인 · 마스터링",
-    "year": "2023 – 25",
+    "year": "2023 - 25",
     "client": "대한민국 해군 · 공군",
     "note": "창설 기념 광고·훈련소 다큐·정신전력 교육 영상 등.",
     "url": "https://www.youtube.com/watch?v=4j_y34frjNU",
-    "youtube": "4j_y34frjNU"
+    "youtube": "4j_y34frjNU",
+    "loop": "/video/loops/navy-tmp.mp4",
+    "focus": "85% 40%"
   },
   {
     "slug": "22b50bd8-fe2d-8069-87b0-f725d2e3236f",
@@ -66,16 +78,18 @@ export const featured: Featured[] = [
     "client": "NEXON",
     "note": "게임 출시 웹콘텐츠 현장 녹음.",
     "url": "https://www.youtube.com/watch?v=TbFCH78wKlc",
-    "youtube": "TbFCH78wKlc"
+    "youtube": "TbFCH78wKlc",
+    "focus": "65% 35%"
   },
   {
     "slug": "3e150bd8-fe2d-8187-8c50-de7e2eab3936",
     "title": "온사이드 팬미팅",
     "role": "라이브 PA",
-    "year": "2023 – 25",
+    "year": "2023 - 25",
     "client": "ONSIDE COMPANY",
     "note": "마젠타·수련수련·임마초·최솜이 등 팬미팅·콘서트 현장 오퍼레이팅.",
-    "image": "/images/work/onside.jpg"
+    "image": "/images/work/onside.jpg",
+    "focus": "40% 40%"
   },
   {
     "slug": "13c50bd8-fe2d-805f-876e-ffdcff4a47ce",
@@ -85,6 +99,7 @@ export const featured: Featured[] = [
     "client": "Deepshower · 펀치넬로",
     "note": "라이브 클립 녹음.",
     "url": "https://youtu.be/9DyECX8JTNg",
-    "youtube": "9DyECX8JTNg"
+    "youtube": "9DyECX8JTNg",
+    "focus": "50% 50%"
   }
 ];
