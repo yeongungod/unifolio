@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import '../styles/accent-variants.css'; // 강조색 시안 비교용 임시
 import { site } from '../data/site';
 interface Props { title: string; description: string; bodyClass?: string; noindex?: boolean }
 const { title, description, bodyClass = '', noindex = false } = Astro.props;
@@ -11,6 +12,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#141210" />
+  <!-- 강조색 시안 비교용 임시 스위치(?accent=a|b|c, 기본 a). 칠하기 전에 정해 깜빡임 없음. 하나로 정하면 accent-variants.css와 함께 지운다 -->
+  <script is:inline>(function(){var v=new URLSearchParams(location.search).get('accent');try{if(v)sessionStorage.setItem('accent',v);else v=sessionStorage.getItem('accent')}catch(e){}document.documentElement.setAttribute('data-accent',/^[abc]$/.test(v||'')?v:'a')})();</script>
   <title>{title}</title>
   <meta name="description" content={description} />
   {noindex && <meta name="robots" content="noindex, nofollow" />}
@@ -37,7 +40,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       <nav aria-label="주요 메뉴">
         <a href="/#work">작업</a>
         <a href="/#studio">스튜디오</a>
-        <a href="/work">전체 작업</a>
+        <a href="/work" aria-current={/^\/work\/?$/.test(Astro.url.pathname) ? 'page' : undefined}>전체 작업</a>
         <a href="/#contact">문의</a>
       </nav>
     </div>

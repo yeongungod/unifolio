@@ -1,0 +1,20 @@
+/* ── 강조색 시안 비교용 임시 파일(10-18) ──────────────────────────────
+   ?accent=a|b|c (기본 a) → Base.astro 인라인 스크립트가 <html data-accent>를 칠하기 전에 정한다.
+   A 면만 = 지금 코드 그대로(전체 작업 보기·메일 버튼·/work 선택 칩·무대 켜진 점 채움). 이 파일에 A 규칙은 없다.
+   하나로 정하면: 고른 블록의 [data-accent] 접두만 떼어 global.css로 옮기고, 이 파일·import·인라인 스크립트를 한 커밋에 지운다.
+   아쿠아 #9CC3D5 on 먹 #141210 = 9.95:1, 먹 on 아쿠아도 같음(글자 4.5:1·UI 3:1 모두 통과). */
+
+/* ── B 면 + 글자색: A + 현재 메뉴·링크 hover·섹션 라벨 글자·포커스 외곽선(2px) ── */
+html[data-accent="b"] .site-header nav a[aria-current="page"] { color: var(--accent); opacity: 1; }
+html[data-accent="b"] .site-header nav a:hover { color: var(--accent); text-decoration: none; }
+html[data-accent="b"] main a:not(.btn):hover { color: var(--accent); }
+html[data-accent="b"] .wrap > .label { color: var(--accent); } /* 섹션 라벨(Work·Services·Client·Studio·Contact·Archive). 작업 카드의 의뢰처 라벨은 제외 */
+html[data-accent="b"] :is(a, button, iframe, [tabindex]):focus-visible { outline-color: var(--accent); }
+
+/* ── C 면 넓게: A + 섹션 제목 앞 막대(6px × 0.8em) · 글자 선택 면 · 현재 메뉴 3px 막대 ── */
+html[data-accent="c"] .label + :is(h2, h1)::before {
+  content: ''; display: inline-block; width: 6px; height: 0.8em; margin-right: 0.4em;
+  background: var(--accent); vertical-align: -0.04em;
+}
+html[data-accent="c"] ::selection { background: var(--accent); color: var(--ink); }
+html[data-accent="c"] .site-header nav a[aria-current="page"] { opacity: 1; box-shadow: inset 0 -3px 0 var(--accent); }
