@@ -74,7 +74,6 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
     ))}
     <!-- 자동 넘김·무음 루프를 함께 멈춘다(WCAG 2.2.2). 10-18 사용자: 점 줄 끝 작은 아이콘으로 늘 보이게 -->
     <button type="button" class="pp" aria-label="자동 넘김 멈춤"></button>
-    <span class="peek" aria-hidden="true"></span>
   </div>
   <!-- 재생 중에만: 위 가운데 닫기(Esc도 닫음) -->
   <button type="button" class="close" hidden aria-label="재생 닫기">닫기</button>
@@ -164,8 +163,6 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
   .pp.play::after { display: none; }
   .pp:hover::before, .pp:hover::after { background: var(--paper); }
   .pp.play:hover::before { background: none; border-left-color: var(--paper); }
-  .peek { position: absolute; left: calc(100% + 4px); top: 11px; padding: 2px 8px; background: var(--ink); font-size: 13px; font-weight: 500; white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity 160ms; }
-  .peek.show { opacity: 1; }
 
   /* 재생 중: 막·글자·점을 걷고 유튜브가 무대 전체(위 가운데 닫기) */
   .close { position: absolute; z-index: 4; top: var(--space-3); left: 50%; transform: translateX(-50%); min-height: 44px; padding: 0 var(--space-4); border: 0; border-radius: var(--radius-sm); background: var(--ink); color: var(--paper); font-size: 13px; font-weight: 600; }
@@ -183,7 +180,6 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
     .dot, .pp { width: 32px; } /* 9개 + 멈춤 = 320px. 높이 44 그대로(가로 32는 WCAG 2.5.8 24px 이상) */
     .dot { padding-left: 13px; }
     .dot.on i { width: 16px; }
-    .peek { display: none; }
     .screen::after { background: linear-gradient(transparent 45%, color-mix(in srgb, var(--ink) 72%, transparent)); } /* 아래 글자 자리 번짐(크레딧 4.5:1 실측, 보고서) */
   }
 
@@ -206,7 +202,6 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
     const slidesEl = root.querySelector<HTMLElement>('.slides')!;
     const ctl = root.querySelector<HTMLElement>('.ctl')!;
     const pp = root.querySelector<HTMLButtonElement>('.pp')!;
-    const peek = root.querySelector<HTMLElement>('.peek')!;
     const close = root.querySelector<HTMLButtonElement>('.close')!;
     const reduce = matchMedia('(prefers-reduced-motion: reduce)');
     const loopOk = () => matchMedia('(hover: hover) and (pointer: fine) and (min-width: 391px) and (prefers-reduced-motion: no-preference)').matches && !saveData;
@@ -334,13 +329,6 @@ const start = Math.max(0, featured.findIndex((f) => f.tier === 'lead'));
         stop();
         go(j);
       });
-      // 점을 가리키면 작품 이름 미리 보기(다른 제목은 화면에 늘 숨김)
-      const show = () => { peek.textContent = raw[i]; peek.classList.add('show'); };
-      const hide = () => peek.classList.remove('show');
-      d.addEventListener('pointerenter', show);
-      d.addEventListener('pointerleave', hide);
-      d.addEventListener('focus', () => { if (d.matches(':focus-visible')) show(); });
-      d.addEventListener('blur', hide);
     });
     pp.addEventListener('click', () => { hold.user = !hold.user; sync(); });
     for (const el of [ctl, slidesEl]) {
