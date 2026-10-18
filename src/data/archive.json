@@ -546,7 +546,6 @@
     "id": "18350bd8-fe2d-80ad-8629-cd48100b612d",
     "year": 2024,
     "name": "안녕한 우리",
-    "recognition": "2025.11 제20회 대한민국 대학영화제 서울경제진흥원상",
     "platform": [
       "Film"
     ],
@@ -557,7 +556,8 @@
       "Foley",
       "Mastering"
     ],
-    "client": "장은영 감독"
+    "client": "장은영 감독",
+    "recognition": "2025.11 제20회 대한민국 대학영화제 서울경제진흥원상"
   },
   {
     "id": "18350bd8-fe2d-80f8-a646-cc43b1270d85",
@@ -573,8 +573,6 @@
     "id": "13c50bd8-fe2d-8018-89db-f6d1e9dc6a61",
     "year": 2023,
     "name": "살아지다",
-    "recognition": "서울아트비디오페스티벌 음향상\nGoogle Play 영화, 무비, 왓챠, 티빙, 쿠팡플레이, Apple TV\n㈜씨엠닉스 배급",
-    "url": "https://youtu.be/jCAnh8ssnn8",
     "platform": [
       "Film"
     ],
@@ -586,7 +584,9 @@
       "Record",
       "Mastering"
     ],
-    "client": "정도영 감독"
+    "client": "정도영 감독",
+    "url": "https://youtu.be/jCAnh8ssnn8",
+    "recognition": "서울아트비디오페스티벌 음향상\nGoogle Play 영화, 무비, 왓챠, 티빙, 쿠팡플레이, Apple TV\n㈜씨엠닉스 배급"
   },
   {
     "id": "13c50bd8-fe2d-8031-90fc-fbe4760dcd9f",
@@ -644,7 +644,6 @@
     "id": "13c50bd8-fe2d-8052-a289-e36530d0bb96",
     "year": 2023,
     "name": "목요일",
-    "recognition": "Apple TV, 티빙 상영 중\n㈜퍼니콘 배급",
     "platform": [
       "Film"
     ],
@@ -657,7 +656,8 @@
       "Mastering",
       "Sound Assistant"
     ],
-    "client": "유범수 감독"
+    "client": "유범수 감독",
+    "recognition": "Apple TV, 티빙 상영 중\n㈜퍼니콘 배급"
   },
   {
     "id": "13c50bd8-fe2d-8071-8537-fab1b98af1ef",
@@ -731,7 +731,6 @@
     "id": "13c50bd8-fe2d-8088-a6c3-d5c4005aa5f1",
     "year": 2023,
     "name": "날치",
-    "recognition": "제1회 서울한강국제영화제 본선경쟁작\n2024 조치원 필름 로맨스 상영작\n제26회 도시영화제 경쟁부문 일반공모 섹션 5 본선경쟁작\n제23회 전북독립영화제 국내경쟁 단편부문 섹션 3 본선경쟁작\n제24회 대한민국국제청소년영화제 대학부 작품상 은상",
     "platform": [
       "Film"
     ],
@@ -743,7 +742,8 @@
       "Record",
       "Mastering"
     ],
-    "client": "정도영 감독"
+    "client": "정도영 감독",
+    "recognition": "제1회 서울한강국제영화제 본선경쟁작\n2024 조치원 필름 로맨스 상영작\n제26회 도시영화제 경쟁부문 일반공모 섹션 5 본선경쟁작\n제23회 전북독립영화제 국내경쟁 단편부문 섹션 3 본선경쟁작\n제24회 대한민국국제청소년영화제 대학부 작품상 은상"
   },
   {
     "id": "13c50bd8-fe2d-8098-a273-e0fef2e27bf1",
@@ -905,7 +905,6 @@
     "id": "13c50bd8-fe2d-800c-882f-f67576c85887",
     "year": 2022,
     "name": "열반",
-    "recognition": "성남문화재단 제작지원 선정작",
     "platform": [
       "Film"
     ],
@@ -915,7 +914,8 @@
       "Foley",
       "Mastering"
     ],
-    "client": "김선연 감독"
+    "client": "김선연 감독",
+    "recognition": "성남문화재단 제작지원 선정작"
   },
   {
     "id": "13c50bd8-fe2d-8029-9f1b-df94b375d51e",
@@ -960,7 +960,6 @@
     "id": "13c50bd8-fe2d-803e-b044-dc4018d720dc",
     "year": 2022,
     "name": "PD님이 책임지세요",
-    "recognition": "제41회 브뤼셀국제판타스틱영화제, They're the future (2023, 벨기에)\n제22회 뉴욕아시안영화제 (2023, 미국)\n제1회 싸이파이안페스타 관객상 (2023, 대한민국)\nApple TV, 왓챠 상영 중\n㈜인디스토리 배급",
     "platform": [
       "Film"
     ],
@@ -972,7 +971,8 @@
       "Foley",
       "Mastering"
     ],
-    "client": "김선연 감독"
+    "client": "김선연 감독",
+    "recognition": "제41회 브뤼셀국제판타스틱영화제, They're the future (2023, 벨기에)\n제22회 뉴욕아시안영화제 (2023, 미국)\n제1회 싸이파이안페스타 관객상 (2023, 대한민국)\nApple TV, 왓챠 상영 중\n㈜인디스토리 배급"
   },
   {
     "id": "13c50bd8-fe2d-804d-9f7a-d50a4a6ee9a0",
@@ -991,7 +991,6 @@
     "id": "13c50bd8-fe2d-8051-bc48-cf0f28f42e1c",
     "year": 2022,
     "name": "침묵",
-    "recognition": "제18회 대한민국 대학영화제(2023) 최우수작품상, 여자연기상\n제13회 서울국제프라이드영화제, 코리아 프라이드\n제27회 부천국제판타스틱영화제 초청작 엑스라지\n제14회 광주여성영화제, 귄 단편공모\n제11회 목포국도1호선독립영화제\n제6회 김포국제청소년영화제\n㈜인디스토리 배급",
     "platform": [
       "Film"
     ],
@@ -1001,7 +1000,8 @@
       "Foley",
       "Mastering"
     ],
-    "client": "배준원 감독"
+    "client": "배준원 감독",
+    "recognition": "제18회 대한민국 대학영화제(2023) 최우수작품상, 여자연기상\n제13회 서울국제프라이드영화제, 코리아 프라이드\n제27회 부천국제판타스틱영화제 초청작 엑스라지\n제14회 광주여성영화제, 귄 단편공모\n제11회 목포국도1호선독립영화제\n제6회 김포국제청소년영화제\n㈜인디스토리 배급"
   },
   {
     "id": "13c50bd8-fe2d-8069-99f5-c04aa6cdacf6",
