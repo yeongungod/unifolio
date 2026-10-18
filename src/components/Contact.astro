@@ -9,12 +9,13 @@ import { site } from '../data/site';
     </div>
     <div class="body">
       <p class="ask">작업 범위와 일정을 알려주시면 견적을 드립니다.</p>
-      <a class="btn accent mail" href={`mailto:${site.email}`}>{site.email}</a>
+      <a class="mail" href={`mailto:${site.email}`}>{site.email}</a>
     </div>
   </div>
 </section>
 <style>
-  /* 10-19 사용자 「문의 박스 너무 커」: 보통 크기 주요 버튼(17px, 기본 안쪽 여백) */
+  /* 10-19 사용자 「버튼이 무겁다」: 메일은 면 없는 글자 링크(paper, hover·포커스 아쿠아 = 강조색 B) */
   .ask { font-size: 18px; font-weight: var(--type-web-lead-weight); line-height: var(--type-web-lead-leading); letter-spacing: var(--type-web-lead-tracking); color: var(--muted); }
-  .mail { margin-top: 20px; font-size: 17px; overflow-wrap: anywhere; }
+  .mail { display: inline-block; margin-top: 12px; font-size: 18px; font-weight: 500; line-height: 1.5; text-decoration: underline; text-decoration-color: var(--line); text-decoration-thickness: 1px; text-underline-offset: 6px; overflow-wrap: anywhere; }
+  .mail:is(:hover, :focus-visible) { color: var(--accent); text-decoration-color: currentColor; }
 </style>
