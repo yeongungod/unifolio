@@ -39,8 +39,9 @@ const shown = 4; // 처음에 보이는 작품 수: 왼쪽 블록(이름·소개
         <div class="credits">
           {groups.map((g, i) => (
             <div class:list={['cr', { late: i >= shown }]}>
-              <p class="k">{g.work ? <strong>{g.work}</strong> : <strong>공모전</strong>}<span>{g.year}</span></p>
-              <ul class="v">{g.records.map((r) => <li>{r.source ? <a href={r.source} target="_blank" rel="noopener noreferrer">{r.text}</a> : r.text}</li>)}</ul>
+              {/* 작품 없는 수상(공모전)은 「대회명 | 상」으로 나눠 왼쪽에 대회명, 오른쪽에 상만(10-19 사용자) */}
+              <p class="k"><strong>{g.work || g.records[0].text.split(' · ')[0]}</strong><span>{g.year}</span></p>
+              <ul class="v">{g.records.map((r) => { const text = g.work ? r.text : r.text.split(' · ').slice(1).join(' · '); return <li>{r.source ? <a href={r.source} target="_blank" rel="noopener noreferrer">{text}</a> : text}</li>; })}</ul>
             </div>
           ))}
         </div>
