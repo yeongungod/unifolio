@@ -11,6 +11,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#141210" />
+  <!-- 스튜디오 시안 비교용 임시 스위치(?studio=1|2|3, 없으면 기본 시안). 칠하기 전에 정해 깜빡임 없음. 하나로 정하면 About.astro 나머지 블록과 함께 지운다 -->
+  <script is:inline>(function(){var v=new URLSearchParams(location.search).get('studio');try{if(v)sessionStorage.setItem('studio',v);else v=sessionStorage.getItem('studio')}catch(e){}if(/^[123]$/.test(v||''))document.documentElement.setAttribute('data-studio',v)})();</script>
   <title>{title}</title>
   <meta name="description" content={description} />
   {noindex && <meta name="robots" content="noindex, nofollow" />}
@@ -37,7 +39,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       <nav aria-label="주요 메뉴">
         <a href="/#top">작업</a>
         <a href="/#studio">스튜디오</a>
-        <a href="/work" aria-current={/^\/work\/?$/.test(Astro.url.pathname) ? 'page' : undefined}>전체 작업</a>
         <a href="/#contact">문의</a>
       </nav>
     </div>
@@ -46,8 +47,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <footer class="site-footer">
     <div class="wrap">
       <p class="muted">© {new Date().getFullYear()} {site.nameEn}. All rights reserved.</p>
-      <p class="muted">{site.name} · {site.owner} · 사업자등록번호 {site.bizNo}</p>
-      <p class="muted">{site.licenses}</p>
     </div>
   </footer>
 </body>
@@ -62,7 +61,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   nav { display: flex; gap: 20px; font-size: var(--type-web-small-size); font-weight: 500; letter-spacing: 0; }
   nav a { display: inline-flex; align-items: center; min-height: 44px; opacity: 0.8; }
   nav a:hover, nav a[aria-current='page'] { opacity: 1; color: var(--accent); } /* 강조색 B: 현재 메뉴·hover 아쿠아 글자(10-18 사용자) */
-  .site-footer .wrap { display: flex; flex-wrap: wrap; gap: 4px 32px; } /* 한 줄로 늘어놓고 좁으면 접는다 */
-  .site-footer { border-top: 1px solid var(--line); padding: 32px 0; font-size: var(--type-web-caption-size); line-height: var(--type-web-caption-leading); letter-spacing: var(--type-web-caption-tracking); }
+  .site-footer { border-top: 1px solid var(--line); padding: 24px 0; font-size: var(--type-web-caption-size); line-height: var(--type-web-caption-leading); letter-spacing: var(--type-web-caption-tracking); }
   @media (max-width: 600px) { nav { gap: 12px; font-size: 13px; } .wordmark { display: none; } .logo svg { display: block; } }
 </style>

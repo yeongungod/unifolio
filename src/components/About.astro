@@ -17,55 +17,174 @@ const toolLogos: Record<string, { file: string; url: string }> = {
   'Waves': { file: 'waves.png', url: 'https://www.waves.com/plugins' },
   'UAD': { file: 'uad.png', url: 'https://www.uaudio.com/' },
 };
+const tools = a.tools.map((name) => ({ name, ...toolLogos[name] }));
+const intro = a.intro.split('\n');
+// 연도별 묶음(시안 2): 작품 연도 순, 한 작품은 이력 2줄 + 「외 n건」
+const years = [...new Set(groups.map((g) => g.year))];
+// 스튜디오 시안 비교용 임시(10-19): ?studio=1|2|3. 하나로 정하면 나머지 블록·CSS·Base.astro 스위치를 한 커밋에 지운다
+const pick = '3';
+const opts = ['1', '2', '3'];
 ---
 <section id="studio">
-  <div class="wrap split">
-    <div class="head">
-      <p class="label">Studio</p>
-      <h2>{site.name}</h2>
-    </div>
-    <p class="intro body">{a.intro.split('\n').map((l, i) => <>{i > 0 && <br />}{l}</>)}</p>
-    <div class="cols">
-      <div class="rec">
-        <h3>이력</h3>
-        <RecognitionList groups={groups.slice(0, 3)} />
-        {groups.length > 3 && <details class="more-records"><summary>이력 더 보기</summary><RecognitionList groups={groups.slice(3)} /></details>}
+  <div class="wrap">
+    {opts.map((o) => (
+      <div class:list={['opt', `o${o}`, { def: o === pick }]} data-o={o}>
+        {o === '1' && <>
+          {/* 시안 1 「선언 + 띠」: 넓은 소개 문장, 아래 띠 = 이력(두 단으로 흐름) | 학력·자격 + 사용 툴 */}
+          <div class="split">
+            <div class="head"><p class="label">Studio</p><h2>{site.name}</h2></div>
+            <p class="body statement">{intro.map((l, i) => <>{i > 0 && <br />}{l}</>)}</p>
+          </div>
+          <div class="band">
+            <div class="b-rec">
+              <h3>이력</h3>
+              <div class="flow"><RecognitionList groups={groups.slice(0, 6)} /></div>
+              {groups.length > 6 && <details class="more"><summary>이력 더 보기</summary><div class="flow"><RecognitionList groups={groups.slice(6)} /></div></details>}
+            </div>
+            <div class="b-side">
+              <h3>학력 · 자격</h3>
+              <p>{a.edu}</p>
+              <ul class="plain">{a.certs.map((c) => <li>{c}</li>)}</ul>
+              <h3 class="gap">사용 툴</h3>
+              <ul class="tools grid2">{tools.map((t) => <li><a href={t.url} target="_blank" rel="noopener noreferrer"><img src={`/images/tools/${t.file}`} alt="" width="28" height="28" loading="lazy" /><span>{t.name}</span></a></li>)}</ul>
+            </div>
+          </div>
+        </>}
+        {o === '2' && <>
+          {/* 시안 2 「연도 줄」: 연도를 큰 숫자로 가로에 늘어놓고 작품을 그 아래에, 학력·툴은 아래 한 줄 띠 */}
+          <div class="split">
+            <div class="head"><p class="label">Studio</p><h2>{site.name}</h2></div>
+            <p class="body lead">{intro.map((l, i) => <>{i > 0 && <br />}{l}</>)}</p>
+          </div>
+          <ol class="years">
+            {years.map((y) => (
+              <li>
+                <p class="yr">{y}</p>
+                {groups.filter((g) => g.year === y).map((g) => (
+                  <div class="w">
+                    {g.work && <strong>{g.work}</strong>}
+                    {g.records.slice(0, 2).map((r) => <p>{r.source ? <a href={r.source} target="_blank" rel="noopener noreferrer">{r.text}</a> : r.text}</p>)}
+                    {g.records.length > 2 && <p class="extra">외 {g.records.length - 2}건</p>}
+                  </div>
+                ))}
+              </li>
+            ))}
+          </ol>
+          <details class="more"><summary>이력 전체 보기</summary><RecognitionList groups={groups} /></details>
+          <div class="strip">
+            <div><h3>학력 · 자격</h3><p>{a.edu}</p><ul class="plain">{a.certs.map((c) => <li>{c}</li>)}</ul></div>
+            <div><h3>사용 툴</h3><ul class="tools row">{tools.map((t) => <li><a href={t.url} target="_blank" rel="noopener noreferrer"><img src={`/images/tools/${t.file}`} alt="" width="28" height="28" loading="lazy" /><span>{t.name}</span></a></li>)}</ul></div>
+          </div>
+        </>}
+        {o === '3' && (
+          /* 시안 3 「엔드 크레딧」: 왼쪽 4열 고정(이름·소개·학력·툴 아이콘 한 줄), 오른쪽 8열 = 작품 · 연도 | 이력 두 칸 크레딧 */
+          <div class="split ed">
+            <div class="head pin">
+              <p class="label">Studio</p>
+              <h2>{site.name}</h2>
+              <p class="lead">{intro.map((l, i) => <>{i > 0 && <br />}{l}</>)}</p>
+              <dl class="facts">
+                <div><dt>학력</dt><dd>{a.edu}</dd></div>
+                <div><dt>자격</dt><dd>{a.certs.map((c) => <span class="ln">{c}</span>)}</dd></div>
+              </dl>
+              <ul class="icons" aria-label="사용 툴">{tools.map((t) => <li><a href={t.url} target="_blank" rel="noopener noreferrer" title={t.name} aria-label={t.name}><img src={`/images/tools/${t.file}`} alt="" width="28" height="28" loading="lazy" /></a></li>)}</ul>
+            </div>
+            <div class="body">
+              <h3 class="cap">이력</h3>
+              <div class="credits">
+                {groups.map((g, i) => (
+                  <div class:list={['cr', { late: i >= 6 }]}>
+                    <p class="k">{g.work ? <strong>{g.work}</strong> : <strong>공모전</strong>}<span>{g.year}</span></p>
+                    <ul class="v">{g.records.map((r) => <li>{r.source ? <a href={r.source} target="_blank" rel="noopener noreferrer">{r.text}</a> : r.text}</li>)}</ul>
+                  </div>
+                ))}
+              </div>
+              {groups.length > 6 && <button type="button" class="open" aria-expanded="false">이력 더 보기 ({groups.length - 6})</button>}
+            </div>
+          </div>
+        )}
       </div>
-      <div class="edu">
-        <h3>학력 · 자격</h3>
-        <p>{a.edu}</p>
-        <ul class="plain">{a.certs.map((c) => <li>{c}</li>)}</ul>
-      </div>
-      <div class="tool">
-        <h3>사용 툴</h3>
-        <ul class="tools">{a.tools.map((tool) => (
-          <li><a href={toolLogos[tool].url} target="_blank" rel="noopener noreferrer">
-            <img src={`/images/tools/${toolLogos[tool].file}`} alt="" width="28" height="28" loading="lazy" />
-            <span>{tool}</span>
-          </a></li>
-        ))}</ul>
-      </div>
-    </div>
+    ))}
   </div>
 </section>
 <style>
-  .intro { max-width: 38em; font-size: 17px; font-weight: var(--type-web-lead-weight); line-height: var(--type-web-lead-leading); letter-spacing: var(--type-web-lead-tracking); } /* 약 40자. ch는 서체마다 달라 em으로 */
-  /* 이력 | 학력·자격 + 사용 툴: 1024 이상은 이력 = 왼쪽 4열, 학력·툴 = 오른쪽 8열(왼쪽 칸이 비지 않게), 그 아래는 이력 | (학력 위, 툴 아래), 700 미만은 한 줄 */
-  .cols { display: grid; gap: 28px 40px; grid-template-columns: 1.4fr 1fr; grid-template-areas: 'rec edu' 'rec tool'; grid-template-rows: auto 1fr; align-items: start; margin-top: 12px; }
-  .rec { grid-area: rec; } .edu { grid-area: edu; } .tool { grid-area: tool; }
-  .plain { list-style: none; padding: 0; margin: 12px 0 0; }
-  .more-records { border-top: 1px solid var(--line); margin-top: 16px; padding-top: 16px; font-size: 14px; }
-  .more-records summary { cursor: pointer; padding: 8px 0; }
+  /* 시안 고르기: 스위치가 없으면 기본(def), 있으면 그 번호만 */
+  .opt { display: none; }
+  :global(html:not([data-studio])) .opt.def, :global(html[data-studio='1']) .o1, :global(html[data-studio='2']) .o2, :global(html[data-studio='3']) .o3 { display: block; }
+
+  /* 공통 */
+  .lead { font-size: 17px; font-weight: var(--type-web-lead-weight); line-height: var(--type-web-lead-leading); letter-spacing: var(--type-web-lead-tracking); max-width: 38em; }
+  .plain { list-style: none; padding: 0; margin: 8px 0 0; }
   .plain li { font-size: var(--type-web-small-size); line-height: var(--type-web-small-leading); letter-spacing: var(--type-web-small-tracking); color: var(--muted); }
+  .more { border-top: 1px solid var(--line); margin-top: 16px; padding-top: 8px; font-size: 14px; }
+  .more summary, .open { cursor: pointer; padding: 8px 0; }
   .tools { list-style: none; padding: 0; margin: 12px 0 0; font-size: var(--type-web-small-size); line-height: var(--type-web-small-leading); letter-spacing: 0; color: var(--muted); }
-  .tools li + li { margin-top: 4px; }
-  .tools a { display: flex; align-items: center; gap: 12px; min-height: 40px; width: fit-content; color: inherit; text-decoration: none; }
+  .tools a { display: flex; align-items: center; gap: 12px; min-height: 40px; width: fit-content; }
   .tools a:hover { color: var(--accent); }
-  .tools img { width: 28px; height: 28px; object-fit: contain; flex: none; }
+  .tools img, .icons img { width: 28px; height: 28px; object-fit: contain; flex: none; }
+  h3.gap { margin-top: 28px; }
+
+  /* 시안 1 */
+  .statement { font-size: clamp(22px, calc(14px + 1.1vw), 34px); font-weight: 500; line-height: 1.45; letter-spacing: -0.02em; max-width: 24em; }
+  .band { display: grid; gap: 40px 32px; margin-top: 56px; }
+  .grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; }
+  .flow :global(li) { break-inside: avoid; }
   @media (min-width: 1024px) {
-    .cols { grid-column: 1 / -1; column-gap: 32px; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-areas: 'rec edu edu' 'rec tool tool'; }
-    .tools { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 32px; } /* 툴 9개를 3열로: 오른쪽 8열을 채우고 높이를 이력과 맞춘다 */
-    .tools li + li { margin-top: 0; }
+    .band { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+    .b-rec { grid-column: 1 / span 8; }
+    .b-side { grid-column: 9 / -1; }
+    .flow :global(.records) { columns: 2; column-gap: 32px; }
   }
-  @media (max-width: 700px) { .cols { grid-template-columns: 1fr; grid-template-areas: 'rec' 'edu' 'tool'; grid-template-rows: none; } }
+
+  /* 시안 2 */
+  .years { list-style: none; padding: 0; margin: 48px 0 0; display: grid; gap: 32px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  .years > li { border-top: 1px solid var(--line); padding-top: 12px; }
+  .yr { font-size: clamp(40px, calc(16px + 3vw), 72px); font-weight: 600; line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .w { margin-top: 20px; font-size: var(--type-web-small-size); line-height: var(--type-web-small-leading); letter-spacing: var(--type-web-small-tracking); }
+  .w strong { display: block; margin-bottom: 4px; }
+  .w p { color: var(--muted); }
+  .w p + p { margin-top: 2px; }
+  .w a, .v a { text-decoration: underline; text-underline-offset: 3px; }
+  .extra { font-size: var(--type-web-caption-size); }
+  .strip { display: grid; gap: 28px 32px; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--line); }
+  .tools.row { display: flex; flex-wrap: wrap; gap: 0 28px; }
+  @media (min-width: 1024px) { .strip { grid-template-columns: 4fr 8fr; } }
+
+  /* 시안 3 */
+  .ed .lead { margin-top: 18px; }
+  .facts { margin: 28px 0 0; font-size: var(--type-web-small-size); line-height: var(--type-web-small-leading); letter-spacing: var(--type-web-small-tracking); }
+  .facts div { display: grid; grid-template-columns: 3em minmax(0, 1fr); gap: 12px; padding: 8px 0; border-top: 1px solid var(--line); }
+  .facts dt { color: var(--muted); }
+  .facts dd { margin: 0; }
+  .facts .ln { display: block; }
+  @media (max-width: 600px) { .lead br, .statement br { display: none; } } /* 좁은 화면은 줄을 강제로 끊지 않고 흐르게 */
+  .icons { list-style: none; display: flex; flex-wrap: wrap; gap: 4px; padding: 0; margin: 20px 0 0; }
+  .icons a { display: grid; place-items: center; width: 44px; height: 44px; border-radius: var(--radius-sm); opacity: 0.85; }
+  .icons a:hover { opacity: 1; background: var(--ink-2); }
+  .cap { font-size: var(--type-web-label-size); font-weight: var(--type-web-label-weight); letter-spacing: var(--type-web-label-tracking); color: var(--muted); }
+  .credits { margin-top: 12px; }
+  .cr { display: grid; gap: 4px 32px; padding: 16px 0; border-top: 1px solid var(--line); font-size: var(--type-web-small-size); line-height: var(--type-web-small-leading); letter-spacing: var(--type-web-small-tracking); }
+  .k { display: flex; justify-content: space-between; gap: 16px; }
+  .k span { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .v { list-style: none; padding: 0; margin: 0; color: var(--muted); }
+  .v li + li { margin-top: 2px; }
+  .cr.late { display: none; }
+  .credits.all .cr.late { display: grid; }
+  .open { display: block; width: 100%; text-align: left; margin-top: 4px; background: none; border: 0; border-top: 1px solid var(--line); color: var(--paper); font-size: 14px; }
+  @media (min-width: 1024px) {
+    .pin { position: sticky; top: 92px; align-self: start; }
+    .cr { grid-template-columns: minmax(0, 3fr) minmax(0, 5fr); }
+    .k { flex-direction: row; }
+  }
 </style>
+<script>
+  // 시안 3 「이력 더 보기」: 숨긴 크레딧 줄을 펼친다
+  document.querySelectorAll<HTMLButtonElement>('#studio .open').forEach((b) => {
+    const label = b.textContent;
+    b.addEventListener('click', () => {
+      const open = b.previousElementSibling!.classList.toggle('all');
+      b.setAttribute('aria-expanded', String(open));
+      b.textContent = open ? '이력 접기' : label;
+    });
+  });
+</script>
