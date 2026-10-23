@@ -4,9 +4,9 @@ export const site = {
   email: 'unistudio@yeongungod.com',
   hero: {
     title: '장면의 흐름부터\n소리의 호흡까지', // 10-07 사용자: 문장부호 없이 두 줄
-    sub: '다양한 영상 제작부터 영화·웹콘텐츠 사운드까지. 보고 듣는 경험을 다듬습니다.',
+    sub: '기획·촬영·편집부터 사운드까지, 한 사람이 처음부터 끝까지 맡습니다.', // 10-23 포지션 개편
   },
-  servicesTitle: '작업 범위에 맞춰, 촬영부터 편집·사운드까지',
+  servicesTitle: '촬영·편집부터 사운드까지 한 번에',
   // desc의 \n은 화면에서 줄바꿈(Services.astro white-space: pre-line)
   services: [
     { title: '영상 제작', desc: '기획·촬영·편집 작업.\n유튜브·홍보영상·웹콘텐츠 등 롱폼부터 숏폼까지.' },
@@ -33,19 +33,19 @@ export const site = {
     { workId: '13c50bd8-fe2d-8051-bc48-cf0f28f42e1c', year: '2023', title: '제27회 부천국제판타스틱영화제', detail: '엑스라지 부문 상영 · 월드 프리미어', source: 'https://www.bifan.kr/bifan/history_program_view.asp?pk_seq=6677&sc_category1=&sc_year=2023' },
   ],
   about: {
-    intro: '영화·음악·라이브에서 쌓아온 사운드 경험을 바탕으로,\n유튜브·홍보영상·웹콘텐츠 제작까지 함께합니다.',
-    edu: '서울예술대학교 방송영상과 음향 전공 (2019–2024)',
+    intro: '기획부터 촬영·편집·사운드까지,\n영상 한 편을 처음부터 끝까지 직접 만듭니다.',
+    edu: '서울예술대학교 영상학부 방송영상전공(세부전공 음향) · 2024 졸업', // 10-23 졸업증명서 공식 표기
     awards: [
       { workId: '13c50bd8-fe2d-8088-a6c3-d5c4005aa5f1', year: '2024.12', title: '제24회 대한민국국제청소년영화제', body: '「날치」 작품상 대학부 은상' },
       { workId: '13c50bd8-fe2d-8018-89db-f6d1e9dc6a61', year: '2023.12', title: '서울아트비디오페스티벌', body: '「살아지다」 음향상' },
-      { workId: '13c50bd8-fe2d-8051-bc48-cf0f28f42e1c', year: '2023.11', title: '제18회 대한민국대학영화제', body: '「침묵」 최우수작품상 · 여자연기상' },
+      { workId: '13c50bd8-fe2d-8051-bc48-cf0f28f42e1c', year: '2023.11', title: '제18회 대한민국대학영화제', body: '「침묵」 최우수작품상' }, // 10-23 여자연기상(배우 상) 제외
       { workId: '13c50bd8-fe2d-803e-b044-dc4018d720dc', year: '2023.08', title: '제1회 싸이파이안페스타', body: '「PD님이 책임지세요」 관객상' },
       { workId: '18350bd8-fe2d-80ad-8629-cd48100b612d', year: '2025.11', title: '제20회 대한민국 대학영화제', body: '「안녕한 우리」 서울경제진흥원상' },
-      { workId: '13c50bd8-fe2d-802f-a785-c54af55fc4dd', year: '2021.10', title: '제6회 충무로영화제', body: '「목화토금수」 올해의 각본상' },
-      { year: '2021.05', title: '대한민국 육군 아미로그 공모전', body: '최우수상' },
-      { year: '2020.01', title: '주식회사 아론 이어폰 광고 공모전', body: '동상' },
+      // 10-23 「목화토금수」 각본상 제외(본인 역할 녹음, 각본상과 무관)
+      { year: '2021.05', title: '대한민국 육군 아미로그 공모전', body: '최우수상 (팀 출품)' },
+      { year: '2020.01', title: '주식회사 아론 이어폰 광고 공모전', body: '동상 (팀 출품)' },
     ],
     tools: ['Pro Tools', 'Cubase', 'Ableton Live', 'Premiere Pro', 'After Effects', 'Photoshop', 'iZotope', 'Waves', 'UAD'],
-    certs: ['Pro Tools 101 · 110 (Avid)', 'ACA Premiere · Illustrator (Adobe)'],
+    certs: ['ACA Premiere · Illustrator (Adobe, 2020)', 'Pro Tools 101 · 110 교육 이수 (Avid)'], // 10-23 Pro Tools는 자격이 아니라 교육 이수
   },
 };
