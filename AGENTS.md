@@ -12,7 +12,7 @@
 | 주소 | https://yeongungod.com (www는 apex로 308) |
 | 스택 | **Astro 5 정적 사이트.** 의존성은 `astro` 하나. 프레임워크·UI 라이브러리·Tailwind 없음 |
 | 저장소 | `github.com/yeongungod/unifolio` · 기본 브랜치 `main` |
-| 배포 | Vercel 프로젝트 `unifolio`. **`main`에 push하면 자동 배포** |
+| 배포 | Cloudflare Pages 프로젝트 `unifolio`. **`main`에 push하면 자동 배포** (Vercel 프로젝트는 2026-10-26 정리) |
 | 페이지 | `/` 원페이지(대표작 무대·Services·함께한 곳·Studio·Contact) · `/work/` 전체 작업 표 · `/admin` Google 로그인 관리 · 404 |
 
 2026-09-17에 기존 Next.js(once-ui) 템플릿을 통째로 걷어내고 교체했다(커밋 `dda47aa`). 작업 브랜치 `rebuild-astro`는 역사 보관용이다. 새 작업을 거기에 올리지 말 것.
@@ -60,9 +60,8 @@ npm test                           # 포트폴리오 동기화·격리·반영 �
 ## 4. 규칙
 
 **배포**
-- 🔴 **배포는 `git push origin main` 하나뿐이다. `vercel` CLI로 배포하지 말 것.** CLI 배포는 커밋 작성자 미인증으로 `BLOCKED` 된다(09-16에 겪음). Vercel API로 상태를 볼 일이 있으면 `readyStateReason`을 확인.
-- **09-22 사용자 결정으로 추가된 경로:** 관리자 본인이 비공개 미리보기를 확인하고 `게시`를 누르면, 선택된 공개 데이터만 GitHub main에 기록하여 기존 Git 연동 배포를 요청한다. 관리자의 이 클릭은 해당 스냅샷 게시 승인이다. 개발 작업의 commit/push나 시험 게시를 상시 승인한 것은 아니다. Vercel CLI 금지는 유지한다.
-- 프리뷰 URL은 Vercel SSO 보호라 로그인 없이는 302가 난다. 고장이 아니다.
+- 🔴 **배포는 `git push origin main` 하나뿐이다. `wrangler`·`vercel` CLI로 배포하지 말 것.** Cloudflare Pages가 Git 연동으로 빌드한다(미리보기 분기 없음).
+- **09-22 사용자 결정으로 추가된 경로:** 관리자 본인이 비공개 미리보기를 확인하고 `게시`를 누르면, 선택된 공개 데이터만 GitHub main에 기록하여 기존 Git 연동 배포를 요청한다. 관리자의 이 클릭은 해당 스냅샷 게시 승인이다. 개발 작업의 commit/push나 시험 게시를 상시 승인한 것은 아니다. CLI 배포 금지는 유지한다.
 - push는 곧 공개 배포다. **push 전에 바뀐 내용을 사용자에게 보여 주고 확인받는다.** 커밋도 사용자가 요청할 때만.
 
 **내용**
@@ -81,7 +80,7 @@ npm test                           # 포트폴리오 동기화·격리·반영 �
 **코드**
 - 의존성을 늘리지 않는다. CSS로 되는 걸 JS로 하지 않는다. 가장 짧게 동작하는 쪽으로.
 - 이 PC는 Windows 11 + Git Bash + PowerShell 5.1. 파이썬은 `PYTHONUTF8=1`. bash heredoc 안 백슬래시 경로는 깨지니 경로가 든 스크립트는 파일로 쓴 뒤 실행.
-- `.superpowers/`·`tmp/`·`dist/`·`.vercel/`과 `.env*`는 gitignore(빈 설정 예시 `.env.notion.example`·`.env.admin.example`만 예외). **노션 미리보기 사본·백업·토큰 파일을 commit/push하거나 Vercel/Drive에 올리지 않는다.** 관리자의 서비스 키는 사용자 승인된 Vercel 서버 환경변수에만 등록한다. `portfolio:apply`는 공개용 파일을 만들므로 별도 사용자 요청 때만 실행한다.
+- `.superpowers/`·`tmp/`·`dist/`·`.vercel/`과 `.env*`는 gitignore(빈 설정 예시 `.env.notion.example`·`.env.admin.example`만 예외). **노션 미리보기 사본·백업·토큰 파일을 commit/push하거나 Cloudflare/Drive에 올리지 않는다.** 관리자의 서비스 키는 사용자 승인된 Cloudflare Pages 환경변수(Secret)에만 등록한다. `portfolio:apply`는 공개용 파일을 만들므로 별도 사용자 요청 때만 실행한다.
 
 ## 5. 현재 상태와 열려 있는 일 (2026-09-22)
 

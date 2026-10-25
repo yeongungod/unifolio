@@ -13,7 +13,7 @@
 3. 이미지가 필요하면 JPG·PNG·WebP를 올린다. 파일은 비공개 버킷에만 저장된다. 영상 원본 업로드는 없으며 공개 영상 URL을 입력한다.
 4. **초안 저장**을 누른다. 공개 사이트는 그대로다.
 5. **저장된 초안 미리보기**에서 대표작·전체 목록·목록에서 빠질 작품을 확인한다. 비공개 작업은 제외된다.
-6. 확인 체크 후 **게시**를 누르면 검토한 내용만 GitHub main에 기록하고 기존 Vercel Git 연동 배포를 요청한다. 화면의 요청 성공과 실제 배포 완료는 구분한다.
+6. 확인 체크 후 **게시**를 누르면 검토한 내용만 GitHub main에 기록하고 Cloudflare Pages Git 연동 배포를 요청한다. 화면의 요청 성공과 실제 배포 완료는 구분한다.
 
 노션 자동 동기화는 없다. 관리자가 운영을 시작하면 새 작업의 정본은 관리자 초안이다. 기존 노션 `portfolio:apply`를 함께 실행하면 공개 원본이 충돌할 수 있으므로, 두 입력 경로를 동시에 사용하지 않는다. 노션 원본은 삭제하지 않는다.
 
@@ -48,13 +48,13 @@ on conflict do nothing;
 
 SQL은 서버가 검증한 Google identity와 등록 UUID를 매 요청에 확인한다. 초안은 인증된 관리자만 읽고 저장할 수 있다. 이미지 버킷은 private이며 관리자 UUID 폴더에만 추가·읽기를 허용한다. 업데이트·삭제 권한은 주지 않아 미리보기 뒤에 파일 내용이 몰래 바뀌지 않는다. 불필요한 업로드 정리는 관리자 콘솔에서 사용 여부를 확인한 후 따로 한다.
 
-### Vercel과 GitHub
+### Cloudflare Pages와 GitHub
 
-Vercel 프로젝트의 서버 환경변수에 `.env.admin.example`의 키를 설정한다. `SUPABASE_PUBLISHABLE_KEY`는 `sb_publishable_`로 시작하는 공개 키만 허용하며 secret/service-role 키를 사용하지 않는다. `PORTFOLIO_GITHUB_TOKEN`은 이 저장소 하나에만 Contents read/write 권한을 가진 fine-grained 토큰이다. 토큰 값은 브라우저로 보내거나 Git에 기록하지 않는다. 프로젝트 설정과 환경변수 변경만 하고, 최초 코드 배포는 사용자 push 요청을 받은 뒤 기존 Git 연동으로 한다. Vercel CLI는 쓰지 않는다.
+Cloudflare Pages 프로젝트의 환경변수(토큰은 Secret)에 `.env.admin.example`의 키를 설정한다. `SUPABASE_PUBLISHABLE_KEY`는 `sb_publishable_`로 시작하는 공개 키만 허용하며 secret/service-role 키를 사용하지 않는다. `PORTFOLIO_GITHUB_TOKEN`은 이 저장소 하나에만 Contents read/write 권한을 가진 fine-grained 토큰이다. 토큰 값은 브라우저로 보내거나 Git에 기록하지 않는다. 프로젝트 설정과 환경변수 변경만 하고, 최초 코드 배포는 사용자 push 요청을 받은 뒤 기존 Git 연동으로 한다. CLI 배포는 쓰지 않는다.
 
-`api/portfolio.js`는 Supabase `/auth/v1/user`에 세션을 검증받고 DB의 owner 등록을 다시 확인한다. 저장된 초안의 revision·해시, 현재 Git main head, 마지막 공개 원본 해시를 모두 대조한다. 선택한 공개 필드만 새 데이터 파일로 만들고, 선택된 이미지 파일만 공개 경로에 복사한다. 고정된 데이터 경로와 AGENTS 5절을 한 Git tree로 작성한다. main 갱신은 `force:false`라 다른 변경을 덮어쓰지 않는다.
+`api/portfolio.js`(Cloudflare 진입점 `functions/api/portfolio.js`)는 Supabase `/auth/v1/user`에 세션을 검증받고 DB의 owner 등록을 다시 확인한다. 저장된 초안의 revision·해시, 현재 Git main head, 마지막 공개 원본 해시를 모두 대조한다. 선택한 공개 필드만 새 데이터 파일로 만들고, 선택된 이미지 파일만 공개 경로에 복사한다. 고정된 데이터 경로와 AGENTS 5절을 한 Git tree로 작성한다. main 갱신은 `force:false`라 다른 변경을 덮어쓰지 않는다.
 
-Git 변경 뒤의 Vercel 배포 실패는 자동 롤백하지 않는다. 실패가 나면 해당 커밋과 배포 로그를 확인하고 기존 정상 공개 사이트를 보존한다. UI는 성공을 ‘GitHub 반영·배포 확인 필요’로 표시한다.
+Git 변경 뒤의 Cloudflare 배포 실패는 자동 롤백하지 않는다. 실패가 나면 해당 커밋과 배포 로그를 확인하고 기존 정상 공개 사이트를 보존한다. UI는 성공을 ‘GitHub 반영·배포 확인 필요’로 표시한다.
 
 ## 검증과 미완료 항목
 

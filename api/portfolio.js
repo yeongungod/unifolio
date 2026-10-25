@@ -84,7 +84,7 @@ export default async function handler(req, res) {
     assertReview({ revision: latest.revision, hash: digest(JSON.stringify(latest.document)), head }, review);
     const archive = `${JSON.stringify(out.archive, null, 2)}\n`, featured = featuredSource(out.featured);
     const base = sourceHash(archive, featured);
-    const status = `**관리자 게시 요청 (${new Date().toISOString()})**: 저장된 초안 ${draft.revision}에서 공개 선택한 전체 작업 ${out.archive.length}건·대표작 9건을 반영했다. 비공개 초안과 미선택 업로드는 제외했다. GitHub 변경 반영 후 Vercel 배포 완료 확인은 별도다.\n\n`;
+    const status = `**관리자 게시 요청 (${new Date().toISOString()})**: 저장된 초안 ${draft.revision}에서 공개 선택한 전체 작업 ${out.archive.length}건·대표작 9건을 반영했다. 비공개 초안과 미선택 업로드는 제외했다. GitHub 변경 반영 후 Cloudflare 배포 완료 확인은 별도다.\n\n`;
     if (!/^## 5\..*$/m.test(agents)) fail('상태 기록 위치를 확인하지 못했습니다.');
     const tree = [
       { path: 'src/data/archive.json', content: archive },

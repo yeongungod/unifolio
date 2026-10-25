@@ -26,7 +26,7 @@ web
 ## Operating Context
 
 - 문서는 Claude·Codex가 스크립트로 생성한다(HTML→PDF는 Chrome headless, 슬라이드는 python-pptx). 사용자가 직접 PPT·워드에서 편집하는 경우는 드물다.
-- 산출물 보관: `G:\91_uniStudio\`. 사이트 저장소: `github.com/yeongungod/unifolio` (Astro 정적, Vercel 자동 배포, `/admin` 관리자 게시가 main에 직접 커밋).
+- 산출물 보관: `G:\91_uniStudio\`. 사이트 저장소: `github.com/yeongungod/unifolio` (Astro 정적, Cloudflare Pages 자동 배포, `/admin` 관리자 게시가 main에 직접 커밋).
 - 기관 서류는 인쇄·흑백 복사될 수 있다. 흰 종이 기준으로 읽혀야 한다.
 
 ## Capabilities and Constraints
