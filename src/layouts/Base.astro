@@ -16,6 +16,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   {noindex && <meta name="robots" content="noindex, nofollow" />}
   {noindex && <meta name="referrer" content="no-referrer" />}
   <link rel="canonical" href={canonical} />
+  <meta name="naver-site-verification" content="248a1d10c93b2120e4662e6ec972a8aac394d2c7" />
   <link rel="icon" href="/favicon.ico" sizes="48x48" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -32,7 +33,17 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
-  {Astro.url.pathname === '/' && <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@type': 'Organization', name: site.nameEn, alternateName: site.name, url: Astro.site, logo: new URL('/apple-touch-icon.png', Astro.site), email: site.email })} />}
+  {/* 구조화 데이터: 화면에 안 보임. 지역(시군까지)·대표 이름은 11-08 사용자 승인, 번지·전화는 넣지 않는다 */}
+  {Astro.url.pathname === '/' && <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org', '@type': 'ProfessionalService',
+    name: site.nameEn, alternateName: site.name, url: Astro.site,
+    logo: new URL('/apple-touch-icon.png', Astro.site), image: new URL('/og.png', Astro.site),
+    email: site.email, description: site.hero.sub,
+    founder: { '@type': 'Person', name: '박영운' },
+    address: { '@type': 'PostalAddress', addressRegion: '경기도', addressLocality: '양평군', addressCountry: 'KR' },
+    areaServed: { '@type': 'Country', name: '대한민국' },
+    knowsAbout: site.services.map((s) => s.title),
+  })} />}
 </head>
 <body class={bodyClass}>
   <a class="skip-link no-print" href="#main">본문 바로가기</a>
